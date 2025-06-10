@@ -64,7 +64,7 @@ const Experience: React.FC = () => {
     {
       date: "2020 - Present",
       title: "B.S. in Computer Engineering",
-      organization: "University of Technology",
+      organization: "University of RWANDA",
       description: "Specializing in software systems and cloud computing. Relevant coursework includes distributed systems, cloud architecture, and web development.",
       icon: <GraduationCap size={24} />,
     },
