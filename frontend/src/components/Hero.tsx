@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowDown, Github, Twitter, Mail } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
@@ -52,12 +52,12 @@ const Hero: React.FC = () => {
                 <Github size={24} />
               </a>
               <a 
-                href="https://linkedin.com" 
+                href="https://twitter.com" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
               >
-                <Linkedin size={24} />
+                <Twitter size={24} />
               </a>
               <a 
                 href="mailto:contact@example.com" 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Mail } from 'lucide-react';
+import { Menu, X, Github, Twitter, Mail } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 const Navbar: React.FC = () => {
@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center space-x-4">
             <div className="hidden md:flex items-center space-x-4">
               <a 
-                href="https://github.com" 
+                href="https://github.com/didier-building" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
@@ -71,12 +71,12 @@ const Navbar: React.FC = () => {
                 <Github size={20} />
               </a>
               <a 
-                href="https://linkedin.com" 
+                href="https://x.com/didier53053" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
               >
-                <Linkedin size={20} />
+                <Twitter size={20} />
               </a>
             </div>
             
@@ -119,12 +119,12 @@ const Navbar: React.FC = () => {
               <Github size={20} />
             </a>
             <a 
-              href="https://linkedin.com" 
+              href="https://twitter.com" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
             >
-              <Linkedin size={20} />
+              <Twitter size={20} />
             </a>
             <a 
               href="mailto:contact@example.com" 

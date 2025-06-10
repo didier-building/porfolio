@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Send, Github, Linkedin } from 'lucide-react';
+import { Mail, Send, Github, Twitter } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -199,12 +199,12 @@ const Contact: React.FC = () => {
                   <Github size={24} />
                 </a>
                 <a 
-                  href="https://linkedin.com" 
+                  href="https://twitter.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
                 >
-                  <Linkedin size={24} />
+                  <Twitter size={24} />
                 </a>
               </div>
             </div>
