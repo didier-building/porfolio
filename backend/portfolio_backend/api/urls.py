@@ -1,15 +1,15 @@
-from django.urls import path
-from .views import ProjectView, SkillView, ExperienceView, EducationView, ContactView, TechnologyView
-from .authentication import CustomAuthenticationBackend
-from .permissions import IsAuthenticated
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
 
+router = DefaultRouter()
+router.register(r'projects', views.ProjectViewSet, basename='project')
+router.register(r'skills', views.SkillViewSet, basename='skill')
+router.register(r'experiences', views.ExperienceViewSet, basename='experience')
+router.register(r'educations', views.EducationViewSet, basename='education')
+router.register(r'contacts', views.ContactViewSet, basename='contact')
+router.register(r'technologies', views.TechnologyViewSet, basename='technology')
+
 urlpatterns = [
-    path('projects/', ProjectView.as_view(authentication_classes=[CustomAuthenticationBackend], permission_classes=[IsAuthenticated])),
-    path('skills/', SkillView.as_view()),
-    path('experiences/', ExperienceView.as_view()),
-    path('educations/', EducationView.as_view()),
-    path('contacts/', ContactView.as_view()),
-    path('technologies/', TechnologyView.as_view()),
-    path('projects/<int:pk>/', views.ProjectDetail.as_view(), name='project-detail'),
+    path('', include(router.urls)),
 ]

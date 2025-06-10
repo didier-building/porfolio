@@ -24,7 +24,7 @@ const Contact: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
@@ -46,27 +46,40 @@ const Contact: React.FC = () => {
       return;
     }
     
-    // In a real application, you would send the form data to your backend or a form service
-    // For now, we'll just simulate a successful submission
-    setFormStatus({
-      type: 'success',
-      message: 'Message sent successfully! I\'ll get back to you soon.'
-    });
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    });
-    
-    // Reset status after 5 seconds
-    setTimeout(() => {
-      setFormStatus({
-        type: null,
-        message: ''
+    try {
+      const response = await fetch('http://localhost:8000/api/contacts/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-    }, 5000);
+      
+      if (response.ok) {
+        setFormStatus({
+          type: 'success',
+          message: 'Message sent successfully! I\'ll get back to you soon.'
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+      } else {
+        const errorData = await response.json();
+        setFormStatus({
+          type: 'error',
+          message: errorData.message || 'Something went wrong. Please try again.'
+        });
+      }
+    } catch (error) {
+      setFormStatus({
+        type: 'error',
+        message: 'Network error. Please check your connection and try again.'
+      });
+    }
   };
 
   return (

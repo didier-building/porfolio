@@ -1,32 +1,35 @@
 from rest_framework import serializers
 from .models import Project, Skill, Experience, Education, Contact, Technology
 
+class TechnologySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Technology
+        fields = '__all__'
 
 class ProjectSerializer(serializers.ModelSerializer):
+    technologies = TechnologySerializer(many=True, read_only=True)
+    
     class Meta:
         model = Project
-        fields = ['id', 'title', 'description', 'start_date', 'end_date', 'technologies']
+        fields = ['id', 'title', 'description', 'image', 'start_date', 'end_date', 
+                 'technologies', 'github_url', 'live_url', 'created_at', 'updated_at']
+
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
-        fields = ['id', 'name', 'level']
+        fields = '__all__'
 
 class ExperienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experience
-        fields = ['id', 'company', 'position', 'start_date', 'end_date', 'description']
+        fields = '__all__'
 
 class EducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Education
-        fields = ['id', 'institution', 'degree', 'start_date', 'end_date', 'description']
+        fields = '__all__'
 
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
-        fields = ['id', 'name', 'email', 'phone', 'message']
-
-class TechnologySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Technology
-        fields = ['id', 'name']
+        fields = '__all__'

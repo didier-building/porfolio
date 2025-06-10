@@ -1,5 +1,6 @@
 import React from 'react';
 import { Code, Cloud, Database, Server, Layout, Terminal } from 'lucide-react';
+import { useSkills } from '../hooks/useSkills';
 
 const SkillCategory: React.FC<{
   title: string;
@@ -34,68 +35,35 @@ const SkillCategory: React.FC<{
 };
 
 const Skills: React.FC = () => {
-  const skillCategories = [
-    {
-      title: 'Frontend Development',
-      icon: <Layout size={24} />,
-      skills: [
-        { name: 'HTML/CSS', level: 9 },
-        { name: 'JavaScript', level: 8.5 },
-        { name: 'React', level: 8 },
-        { name: 'TypeScript', level: 7.5 },
-      ],
-    },
-    {
-      title: 'Backend Development',
-      icon: <Code size={24} />,
-      skills: [
-        { name: 'Node.js', level: 8 },
-        { name: 'Python', level: 7 },
-        { name: 'Go', level: 6 },
-        { name: 'Java', level: 7 },
-      ],
-    },
-    {
-      title: 'Cloud & DevOps',
-      icon: <Cloud size={24} />,
-      skills: [
-        { name: 'AWS', level: 7.5 },
-        { name: 'Docker', level: 8 },
-        { name: 'Kubernetes', level: 7 },
-        { name: 'CI/CD', level: 7.5 },
-      ],
-    },
-    {
-      title: 'Database',
-      icon: <Database size={24} />,
-      skills: [
-        { name: 'SQL', level: 8 },
-        { name: 'MongoDB', level: 7.5 },
-        { name: 'Redis', level: 6.5 },
-        { name: 'PostgreSQL', level: 7 },
-      ],
-    },
-    {
-      title: 'Infrastructure',
-      icon: <Server size={24} />,
-      skills: [
-        { name: 'Terraform', level: 7 },
-        { name: 'Ansible', level: 6.5 },
-        { name: 'Networking', level: 6 },
-        { name: 'Security', level: 6.5 },
-      ],
-    },
-    {
-      title: 'Blockchain',
-      icon: <Terminal size={24} />,
-      skills: [
-        { name: 'Solidity', level: 6 },
-        { name: 'Web3.js', level: 5.5 },
-        { name: 'Smart Contracts', level: 6 },
-        { name: 'DApps', level: 5 },
-      ],
-    },
-  ];
+  const { skills, loading, error } = useSkills();
+  
+  if (loading) return <div className="text-center py-10">Loading skills...</div>;
+  if (error) return <div className="text-center py-10 text-red-500">{error}</div>;
+  
+  // Group skills by category
+  const skillsByCategory = skills.reduce((acc, skill) => {
+    if (!acc[skill.category]) {
+      acc[skill.category] = [];
+    }
+    acc[skill.category].push({ name: skill.name, level: skill.proficiency / 10 });
+    return acc;
+  }, {} as Record<string, { name: string; level: number }[]>);
+  
+  // Map categories to icons
+  const categoryIcons: Record<string, React.ReactNode> = {
+    'Frontend Development': <Layout size={24} />,
+    'Backend Development': <Code size={24} />,
+    'Cloud & DevOps': <Cloud size={24} />,
+    'Database': <Database size={24} />,
+    'Infrastructure': <Server size={24} />,
+    'Blockchain': <Terminal size={24} />,
+  };
+  
+  const skillCategories = Object.keys(skillsByCategory).map(category => ({
+    title: category,
+    icon: categoryIcons[category] || <Code size={24} />,
+    skills: skillsByCategory[category],
+  }));
 
   return (
     <section id="skills" className="py-20 bg-slate-50 dark:bg-slate-900">
