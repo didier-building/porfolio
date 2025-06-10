@@ -2,7 +2,7 @@
 
 A modern, full-stack portfolio application built with React (frontend) and Django (backend) designed for software engineers and developers to showcase their skills, projects, and professional experience.
 
-![Portfolio Preview](https://imanirahari.netlify.app/)
+![Portfolio Preview](https://via.placeholder.com/800x400?text=Portfolio+Preview)
 
 ## Features
 
