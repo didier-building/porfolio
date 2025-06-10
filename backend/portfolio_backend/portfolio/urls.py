@@ -1,0 +1,1 @@
+router.register(r'blog', views.BlogPostViewSet)

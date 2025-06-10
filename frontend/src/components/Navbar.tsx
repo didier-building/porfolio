@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Moon, Sun, Github, Linkedin, Mail } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Mail } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 const Navbar: React.FC = () => {
@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <a href="#home" className="text-xl font-bold text-slate-900 dark:text-white">
-              Portfolio<span className="text-teal-600">.</span>
+              FindMe<span className="text-teal-600">.</span>
             </a>
           </div>
           

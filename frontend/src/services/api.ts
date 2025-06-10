@@ -10,6 +10,8 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  // Add timeout to prevent hanging requests
+  timeout: 10000,
 });
 
 // Add detailed logging for requests and responses
@@ -31,6 +33,7 @@ api.interceptors.response.use(
   },
   error => {
     console.error(`API Error from ${error.config?.url}:`, error.response?.data || error.message);
+    // Always return a rejected promise to ensure loading states are updated
     return Promise.reject(error);
   }
 );
@@ -39,24 +42,23 @@ api.interceptors.response.use(
 export const projectsApi = {
   getAll: () => api.get('/projects/'),
   getById: (id: number) => api.get(`/projects/${id}/`),
-  create: (data: any) => api.post('/projects/', data),
-  update: (id: number, data: any) => api.put(`/projects/${id}/`, data),
-  delete: (id: number) => api.delete(`/projects/${id}/`),
 };
 
 export const skillsApi = {
   getAll: () => api.get('/skills/'),
-  getById: (id: number) => api.get(`/skills/${id}/`),
 };
 
 export const experiencesApi = {
   getAll: () => api.get('/experiences/'),
-  getById: (id: number) => api.get(`/experiences/${id}/`),
 };
 
 export const educationApi = {
   getAll: () => api.get('/educations/'),
-  getById: (id: number) => api.get(`/educations/${id}/`),
+};
+
+export const blogApi = {
+  getAll: () => api.get('/blog/'),
+  getBySlug: (slug: string) => api.get(`/blog/${slug}/`),
 };
 
 export const contactApi = {
