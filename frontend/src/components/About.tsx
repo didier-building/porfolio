@@ -14,7 +14,7 @@ const About: React.FC = () => {
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <p className="text-slate-700 dark:text-slate-300 mb-6">
                 I am a Computer & Software Engineering student with a passion for building innovative solutions
-                using modern technologies. My journey in tech began when I built my first website at the age of 15,
+                using modern technologies. My journey in tech began when I built my first website at the age of 22,
                 and I've been hooked ever since.
               </p>
               
@@ -45,6 +45,15 @@ const About: React.FC = () => {
               <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
                 <span className="text-slate-700 dark:text-slate-300 font-medium">Detail Oriented</span>
               </div>
+              <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
+                <span className="text-slate-700 dark:text-slate-300 font-medium">Team Player</span>
+              </div>
+              <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
+                <span className="text-slate-700 dark:text-slate-300 font-medium">Creative Thinker</span>
+              </div>
+              <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
+                <span className="text-slate-700 dark:text-slate-300 font-medium"> Continuous Learner</span>
+              </div>
             </div>
           </div>
           
@@ -53,7 +62,7 @@ const About: React.FC = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-indigo-500 rounded-2xl blur-xl opacity-20"></div>
               <div className="relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
                 <img 
-                  src="https://images.pexels.com/photos/4709285/pexels-photo-4709285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                  src="/photo@@-1.jpg" 
                   alt="About me"
                   className="w-full h-auto object-cover rounded-2xl"
                 />

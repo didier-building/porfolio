@@ -14,10 +14,10 @@ const Hero: React.FC = () => {
                 Hello, I'm
               </h2>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white">
-                John Doe
+                IMANIRAHARI Didier
               </h1>
               <h3 className="text-xl sm:text-2xl font-medium text-slate-700 dark:text-slate-300">
-                Software & Cloud Engineer
+                Software & Cloud Engineer & Blockchain Enthusiast
               </h3>
             </div>
             
