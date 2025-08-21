@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { projectsApi } from '../services/api';
 
 const isDev = import.meta.env.DEV;
@@ -25,41 +25,51 @@ const Projects: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>('All');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [retryCount, setRetryCount] = useState<number>(0);
+
+  const maxRetries = 3;
+
+  const fetchProjects = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await projectsApi.getAll();
+
+      // Handle both paginated and non-paginated responses
+      const projectsData = response.data.results || response.data;
+
+      setProjects(projectsData);
+      setFilteredProjects(projectsData);
+
+      // Extract unique technologies
+      const techs = new Set<string>();
+      projectsData.forEach((project: Project) => {
+        project.technologies?.forEach(tech => {
+          techs.add(tech.name);
+        });
+      });
+      setTechnologies(Array.from(techs));
+    } catch (error: unknown) {
+      if (isDev) {
+        console.error('Error fetching projects:', error);
+      }
+      setError('Failed to load projects. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        const response = await projectsApi.getAll();
-        
-        // Handle both paginated and non-paginated responses
-        const projectsData = response.data.results || response.data;
-        
-        setProjects(projectsData);
-        setFilteredProjects(projectsData);
-        
-        // Extract unique technologies
-        const techs = new Set<string>();
-        projectsData.forEach((project: Project) => {
-          project.technologies?.forEach(tech => {
-            techs.add(tech.name);
-          });
-        });
-        setTechnologies(Array.from(techs));
-      } catch (error: unknown) {
-        if (isDev) {
-          console.error('Error fetching projects:', error);
-        }
-        setError('Failed to load projects. Please try again later.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchProjects();
-  }, []);
+  }, [fetchProjects]);
+
+  const handleRetry = () => {
+    if (retryCount < maxRetries) {
+      setRetryCount(prev => prev + 1);
+      fetchProjects();
+    }
+  };
 
   const handleFilterClick = (filter: string) => {
     setActiveFilter(filter);
@@ -93,12 +103,18 @@ const Projects: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-red-500">{error}</p>
-            <button 
-              onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
-            >
-              Retry
-            </button>
+            {retryCount < maxRetries ? (
+              <button
+                onClick={handleRetry}
+                className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+              >
+                Retry (Attempt {retryCount + 1} of {maxRetries})
+              </button>
+            ) : (
+              <p className="mt-4 text-sm text-slate-500">
+                Retry limit reached. Please try again later.
+              </p>
+            )}
           </div>
         </div>
       </section>
