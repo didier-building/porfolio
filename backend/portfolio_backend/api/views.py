@@ -1,8 +1,6 @@
 import logging
-import os
 
 import requests
-logger = logging.getLogger(__name__)
 
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
@@ -13,7 +11,6 @@ from django.conf import settings
 from rest_framework import viewsets, permissions, filters
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import (
     Project,
@@ -35,6 +32,8 @@ from .serializers import (
     SocialProfileSerializer,
     CommsDocumentSerializer,
 )
+
+logger = logging.getLogger(__name__)
 
 # Custom permission class
 class IsAdminUserOrReadOnly(permissions.BasePermission):
@@ -171,33 +170,37 @@ class ContactViewSet(viewsets.ModelViewSet):
             return [permissions.AllowAny()]
         return [RequireAuthenticated(), permissions.IsAdminUser()]
 
-    @method_decorator(ratelimit(key='ip', rate='5/m', method='POST', block=True))
-      def create(self, request, *args, **kwargs):
+    @method_decorator(ratelimit(key="ip", rate="5/m", method="POST", block=True))
+    def create(self, request, *args, **kwargs):
         # Honeypot field
-        if request.data.get('website'):
-            return Response({'message': 'Spam detected'}, status=400)
+        if request.data.get("website"):
+            return Response({"message": "Spam detected"}, status=400)
 
-          # CAPTCHA verification (Cloudflare Turnstile)
-          token = request.data.get('captchaToken')
-          secret = getattr(settings, 'TURNSTILE_SECRET', None)
-          if secret:
-              resp = requests.post(
-                  'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-                  data={'secret': secret, 'response': token},
-                  timeout=5,
-              )
-              if not resp.json().get('success'):
-                  return Response({'message': 'Invalid CAPTCHA'}, status=400)
+        # CAPTCHA verification (Cloudflare Turnstile)
+        token = request.data.get("captchaToken")
+        secret = getattr(settings, "TURNSTILE_SECRET", None)
+        if secret:
+            resp = requests.post(
+                "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+                data={"secret": secret, "response": token},
+                timeout=5,
+            )
+            if not resp.json().get("success"):
+                return Response({"message": "Invalid CAPTCHA"}, status=400)
 
         response = super().create(request, *args, **kwargs)
 
-        contact = Contact.objects.get(pk=response.data['id'])
+        contact = Contact.objects.get(pk=response.data["id"])
         send_mail(
-            subject=f'New Contact Form Submission: {contact.name}',
-            message=f'Name: {contact.name}\nEmail: {contact.email}\nMessage: {contact.message}',
-            from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@example.com'),
-            recipient_list=[getattr(settings, 'ADMIN_EMAIL', settings.EMAIL_HOST_USER)],
+            subject=f"New Contact Form Submission: {contact.name}",
+            message=(
+                f"Name: {contact.name}\nEmail: {contact.email}\nMessage: {contact.message}"
+            ),
+            from_email=getattr(settings, "DEFAULT_FROM_EMAIL", "noreply@example.com"),
+            recipient_list=[
+                getattr(settings, "ADMIN_EMAIL", settings.EMAIL_HOST_USER)
+            ],
             fail_silently=False,
         )
 
-      return response
+        return response

@@ -1,8 +1,12 @@
-import os, sys, json, re, pdfplumber
+import json
+import os
+import re
+import sys
+
+import faiss
+import pdfplumber
 from pathlib import Path
 from sentence_transformers import SentenceTransformer
-import faiss
-import numpy as np
 from unidecode import unidecode
 
 BASE = Path(__file__).resolve().parent
