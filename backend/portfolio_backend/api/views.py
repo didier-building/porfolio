@@ -1,4 +1,8 @@
 import logging
+import os
+
+import requests
+import openai
 
 logger = logging.getLogger(__name__)
 
@@ -9,10 +13,13 @@ from django_ratelimit.decorators import ratelimit
 from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import viewsets, permissions
-from .models import Project, Skill, Experience, Education, Contact, Technology
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Project, Skill, Experience, Education, Contact, Technology, Profile
 from .serializers import (
     ProjectSerializer, SkillSerializer, ExperienceSerializer,
-    EducationSerializer, ContactSerializer, TechnologySerializer
+    EducationSerializer, ContactSerializer, TechnologySerializer,
+    ProfileSerializer,
 )
 
 # Custom permission class
@@ -90,28 +97,67 @@ class TechnologyViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
+# Profile ViewSet
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAdminUserOrReadOnly]
+
 # Add rate limiting and email notifications to Contact ViewSet
 class ContactViewSet(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
-    
-    @method_decorator(ratelimit(key='ip', rate='5/h', method='POST', block=True))
+    permission_classes = [IsAdminUserOrReadOnly]
+
+    @method_decorator(ratelimit(key='ip', rate='5/m', method='POST', block=True))
     def create(self, request, *args, **kwargs):
+        # Honeypot field
+        if request.data.get('website'):
+            return Response({'message': 'Spam detected'}, status=400)
+
+        # CAPTCHA verification (optional)
+        token = request.data.get('captcha')
+        secret = getattr(settings, 'RECAPTCHA_SECRET_KEY', None)
+        if secret:
+            resp = requests.post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                data={'secret': secret, 'response': token},
+                timeout=5,
+            )
+            if not resp.json().get('success'):
+                return Response({'message': 'Invalid CAPTCHA'}, status=400)
+
         response = super().create(request, *args, **kwargs)
-        
-        # Send email notification
+
         contact = Contact.objects.get(pk=response.data['id'])
         send_mail(
             subject=f'New Contact Form Submission: {contact.name}',
             message=f'Name: {contact.name}\nEmail: {contact.email}\nMessage: {contact.message}',
-            from_email=settings.DEFAULT_FROM_EMAIL if hasattr(settings, 'DEFAULT_FROM_EMAIL') else 'noreply@example.com',
-            recipient_list=[settings.ADMIN_EMAIL if hasattr(settings, 'ADMIN_EMAIL') else settings.EMAIL_HOST_USER],
+            from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@example.com'),
+            recipient_list=[getattr(settings, 'ADMIN_EMAIL', settings.EMAIL_HOST_USER)],
             fail_silently=False,
         )
-        
+
         return response
-    
+
     def get_permissions(self):
         if self.action == 'create':
             return []
-        return [permissions.IsAdminUser()]
+        return super().get_permissions()
+
+
+class AIChatView(APIView):
+    @method_decorator(ratelimit(key='ip', rate='10/m', method='POST', block=True))
+    @method_decorator(ratelimit(key='user', rate='20/m', method='POST', block=True))
+    def post(self, request):
+        prompt = request.data.get('prompt', '')
+        api_key = os.getenv('OPENAI_API_KEY')
+        if not api_key:
+            return Response({'response': f'Echo: {prompt}'})
+        client = openai.OpenAI(api_key=api_key)
+        completion = client.chat.completions.create(
+            model='gpt-3.5-turbo',
+            messages=[{'role': 'user', 'content': prompt}]
+        )
+        text = completion.choices[0].message.content
+        return Response({'response': text})
