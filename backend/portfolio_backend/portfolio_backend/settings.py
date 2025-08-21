@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
+    'portfolio.apps.PortfolioConfig',
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
@@ -101,17 +102,12 @@ STATIC_URL = 'static/'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # For development only
-# For production, use:
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "https://yourdomain.com",
-# ]
+# CORS / CSRF settings
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
 
 # For production
 if not DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = False
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -135,6 +131,14 @@ REST_FRAMEWORK = {
         'anon': '100/day',
         'user': '1000/day'
     }
+}
+
+# Simple JWT settings
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
 # Spectacular settings

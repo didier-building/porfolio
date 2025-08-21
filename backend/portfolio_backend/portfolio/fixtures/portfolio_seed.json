@@ -1,0 +1,26 @@
+[
+  {
+    "model": "portfolio.socialprofile",
+    "pk": 1,
+    "fields": {
+      "platform": "GitHub",
+      "url": "https://github.com/example"
+    }
+  },
+  {
+    "model": "portfolio.socialprofile",
+    "pk": 2,
+    "fields": {
+      "platform": "X",
+      "url": "https://x.com/example"
+    }
+  },
+  {
+    "model": "portfolio.commsdocument",
+    "pk": 1,
+    "fields": {
+      "title": "Master CV",
+      "file": "comms/master-cv.pdf"
+    }
+  }
+]
