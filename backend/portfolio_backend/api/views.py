@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 from django_ratelimit.decorators import ratelimit
+from django_ratelimit.core import is_ratelimited
 from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import viewsets, permissions
@@ -32,6 +33,17 @@ class IsAdminUserOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return request.user and request.user.is_staff
+
+
+class IsAuthenticatedOrAPIKey(permissions.BasePermission):
+    """Allow access to authenticated users or requests with a valid API key."""
+
+    def has_permission(self, request, view):
+        if request.user and request.user.is_authenticated:
+            return True
+        api_key = request.headers.get('X-API-Key')
+        expected = getattr(settings, 'AI_API_KEY', os.getenv('AI_API_KEY'))
+        return bool(api_key and expected and api_key == expected)
 
 # Optimize Project ViewSet
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -147,17 +159,56 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 
 class AIChatView(APIView):
-    @method_decorator(ratelimit(key='ip', rate='10/m', method='POST', block=True))
-    @method_decorator(ratelimit(key='user', rate='20/m', method='POST', block=True))
+    permission_classes = [IsAuthenticatedOrAPIKey]
+
     def post(self, request):
+        def user_or_api_key(req):
+            if req.user and req.user.is_authenticated:
+                return str(req.user.pk)
+            return req.headers.get('X-API-Key')
+
+        api_key_header = request.headers.get('X-API-Key')
+        expected_api_key = getattr(settings, 'AI_API_KEY', os.getenv('AI_API_KEY'))
+        authenticated = request.user.is_authenticated or (
+            api_key_header and expected_api_key and api_key_header == expected_api_key
+        )
+
+        if authenticated:
+            limited = is_ratelimited(
+                request,
+                group='ai-chat-auth',
+                key=user_or_api_key,
+                rate='20/m',
+                method='POST',
+                increment=True,
+            )
+        else:
+            limited = is_ratelimited(
+                request,
+                group='ai-chat-anon',
+                key='ip',
+                rate='5/m',
+                method='POST',
+                increment=True,
+            )
+
+        if limited:
+            return Response({'detail': 'Too many requests'}, status=429)
+
+        if not authenticated:
+            return Response(
+                {'detail': 'Authentication credentials were not provided.'},
+                status=401,
+            )
+
         prompt = request.data.get('prompt', '')
-        api_key = os.getenv('OPENAI_API_KEY')
-        if not api_key:
+        openai_api_key = os.getenv('OPENAI_API_KEY')
+        if not openai_api_key:
             return Response({'response': f'Echo: {prompt}'})
-        client = openai.OpenAI(api_key=api_key)
+        client = openai.OpenAI(api_key=openai_api_key)
         completion = client.chat.completions.create(
             model='gpt-3.5-turbo',
-            messages=[{'role': 'user', 'content': prompt}]
+            messages=[{'role': 'user', 'content': prompt}],
         )
         text = completion.choices[0].message.content
         return Response({'response': text})
