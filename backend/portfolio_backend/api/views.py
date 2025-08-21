@@ -119,24 +119,32 @@ class ContactViewSet(viewsets.ModelViewSet):
         token = request.data.get('captcha')
         secret = getattr(settings, 'RECAPTCHA_SECRET_KEY', None)
         if secret:
-            resp = requests.post(
-                'https://www.google.com/recaptcha/api/siteverify',
-                data={'secret': secret, 'response': token},
-                timeout=5,
-            )
-            if not resp.json().get('success'):
-                return Response({'message': 'Invalid CAPTCHA'}, status=400)
+            try:
+                resp = requests.post(
+                    'https://www.google.com/recaptcha/api/siteverify',
+                    data={'secret': secret, 'response': token},
+                    timeout=5,
+                )
+                if not resp.json().get('success'):
+                    return Response({'message': 'Invalid CAPTCHA'}, status=400)
+            except requests.RequestException:
+                logger.exception("CAPTCHA validation failed")
+                return Response({'message': 'CAPTCHA validation failed'}, status=500)
 
         response = super().create(request, *args, **kwargs)
 
         contact = Contact.objects.get(pk=response.data['id'])
-        send_mail(
-            subject=f'New Contact Form Submission: {contact.name}',
-            message=f'Name: {contact.name}\nEmail: {contact.email}\nMessage: {contact.message}',
-            from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@example.com'),
-            recipient_list=[getattr(settings, 'ADMIN_EMAIL', settings.EMAIL_HOST_USER)],
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                subject=f'New Contact Form Submission: {contact.name}',
+                message=f'Name: {contact.name}\nEmail: {contact.email}\nMessage: {contact.message}',
+                from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@example.com'),
+                recipient_list=[getattr(settings, 'ADMIN_EMAIL', settings.EMAIL_HOST_USER)],
+                fail_silently=False,
+            )
+        except Exception:
+            logger.exception("Failed to send email notification")
+            return Response({'message': 'Failed to send notification email'}, status=500)
 
         return response
 
