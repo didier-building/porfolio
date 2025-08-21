@@ -6,7 +6,7 @@ class BlogPost(models.Model):
     slug = models.SlugField(unique=True)
     content = models.TextField()
     summary = models.TextField(blank=True)
-    image = models.ImageField(upload_to="blog/", blank=True, null=True)
+    image = models.FileField(upload_to="blog/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     published = models.BooleanField(default=False)

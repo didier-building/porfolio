@@ -100,7 +100,7 @@ class ProjectAPITest(BaseAPITest):
             data=json.dumps(data),
             content_type='application/json'
         )
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
     
     def test_create_project_as_admin(self):
         self.authenticate_as_admin()
@@ -286,7 +286,7 @@ class ContactAPITest(BaseAPITest):
     
     def test_get_contacts_unauthenticated(self):
         response = self.client.get(reverse('contact-list'))
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
     
     def test_get_contacts_as_admin(self):
         self.authenticate_as_admin()

@@ -12,7 +12,9 @@ from django.views.decorators.vary import vary_on_cookie
 from django_ratelimit.decorators import ratelimit
 from django.core.mail import send_mail
 from django.conf import settings
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, filters
+from rest_framework.exceptions import NotAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Project, Skill, Experience, Education, Contact, Technology, Profile
@@ -31,17 +33,40 @@ class IsAdminUserOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        return request.user and request.user.is_staff
+        if not request.user or not request.user.is_authenticated:
+            raise NotAuthenticated()
+        return request.user.is_staff
+
+
+class RequireAuthenticated(permissions.BasePermission):
+    """Permission that explicitly requires an authenticated user."""
+
+    def has_permission(self, request, view):
+        if not request.user or not request.user.is_authenticated:
+            raise NotAuthenticated()
+        return True
 
 # Optimize Project ViewSet
 class ProjectViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
     queryset = Project.objects.prefetch_related('technologies').all()
     serializer_class = ProjectSerializer
-    permission_classes = [IsAdminUserOrReadOnly]  # This should allow GET requests
-    filterset_fields = ['technologies']
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'description']
     ordering_fields = ['start_date', 'end_date', 'title']
-    
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return [permissions.AllowAny()]
+        return [RequireAuthenticated(), permissions.IsAdminUser()]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        tech = self.request.query_params.get('technologies')
+        if tech:
+            queryset = queryset.filter(technologies__id=tech)
+        return queryset
+
     def list(self, request, *args, **kwargs):
         logger.debug(f"Projects list requested by {request.user}")
         projects = self.get_queryset()
@@ -53,12 +78,21 @@ class SkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
     permission_classes = [IsAdminUserOrReadOnly]
-    
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['proficiency', 'name']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category = self.request.query_params.get('category')
+        if category:
+            queryset = queryset.filter(category=category)
+        return queryset
+
     @method_decorator(cache_page(60 * 30))
     @method_decorator(vary_on_cookie)
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
-    
+
     @method_decorator(cache_page(60 * 30))
     @method_decorator(vary_on_cookie)
     def retrieve(self, request, *args, **kwargs):
@@ -69,6 +103,10 @@ class ExperienceViewSet(viewsets.ModelViewSet):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
     permission_classes = [IsAdminUserOrReadOnly]
+
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['position', 'company', 'description']
+    ordering_fields = ['start_date', 'end_date', 'company']
     
     @method_decorator(cache_page(60 * 30))
     @method_decorator(vary_on_cookie)
@@ -105,9 +143,14 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
 # Add rate limiting and email notifications to Contact ViewSet
 class ContactViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
-    permission_classes = [IsAdminUserOrReadOnly]
+
+    def get_permissions(self):
+        if self.action == 'create':
+            return [permissions.AllowAny()]
+        return [RequireAuthenticated(), permissions.IsAdminUser()]
 
     @method_decorator(ratelimit(key='ip', rate='5/m', method='POST', block=True))
     def create(self, request, *args, **kwargs):
@@ -139,11 +182,6 @@ class ContactViewSet(viewsets.ModelViewSet):
         )
 
         return response
-
-    def get_permissions(self):
-        if self.action == 'create':
-            return []
-        return super().get_permissions()
 
 
 class AIChatView(APIView):
