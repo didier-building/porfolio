@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Mail, Send, Github, Twitter } from 'lucide-react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    website: '',
   });
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   
   const [formStatus, setFormStatus] = useState<{
     type: 'success' | 'error' | null;
@@ -47,12 +52,13 @@ const Contact: React.FC = () => {
     }
     
     try {
-      const response = await fetch('http://localhost:8000/api/contacts/', {
+      const token = await recaptchaRef.current?.executeAsync();
+      const response = await fetch(`${apiUrl}/comms/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, captcha: token }),
       });
       
       if (response.ok) {
@@ -65,7 +71,8 @@ const Contact: React.FC = () => {
         setFormData({
           name: '',
           email: '',
-          message: ''
+          message: '',
+          website: '',
         });
       } else {
         const errorData = await response.json();
@@ -109,6 +116,15 @@ const Contact: React.FC = () => {
               )}
               
               <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  className="hidden"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
                 <div className="mb-6">
                   <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Your Name
@@ -165,6 +181,7 @@ const Contact: React.FC = () => {
                   <Send size={18} className="mr-2" />
                   Send Message
                 </button>
+                {siteKey && <ReCAPTCHA ref={recaptchaRef} sitekey={siteKey} size="invisible" />}
               </form>
             </div>
           </div>
