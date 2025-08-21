@@ -44,7 +44,7 @@ export const blogApi = {
 };
 
 export const contactApi = {
-  submit: (data: unknown) => api.post('/contacts/', data),
+  submit: (data: unknown) => api.post('/comms/', data),
 };
 
 export default api;
