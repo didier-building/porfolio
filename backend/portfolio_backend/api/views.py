@@ -154,10 +154,17 @@ class AIChatView(APIView):
         api_key = os.getenv('OPENAI_API_KEY')
         if not api_key:
             return Response({'response': f'Echo: {prompt}'})
-        client = openai.OpenAI(api_key=api_key)
-        completion = client.chat.completions.create(
-            model='gpt-3.5-turbo',
-            messages=[{'role': 'user', 'content': prompt}]
-        )
-        text = completion.choices[0].message.content
-        return Response({'response': text})
+        try:
+            client = openai.OpenAI(api_key=api_key)
+            completion = client.chat.completions.create(
+                model='gpt-3.5-turbo',
+                messages=[{'role': 'user', 'content': prompt}]
+            )
+            text = completion.choices[0].message.content
+            return Response({'response': text})
+        except Exception as e:
+            logger.exception("OpenAI completion failed")
+            return Response(
+                {'error': 'Service temporarily unavailable', 'details': str(e)},
+                status=503,
+            )
