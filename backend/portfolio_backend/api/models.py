@@ -22,7 +22,7 @@ class Project(models.Model):
     """
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to=project_image_path, null=True, blank=True)
+    image = models.FileField(upload_to=project_image_path, null=True, blank=True)
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
     technologies = models.ManyToManyField('Technology', related_name='projects')
