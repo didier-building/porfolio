@@ -7,76 +7,18 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Contact',
+            name="Contact",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('email', models.EmailField(max_length=254)),
-                ('message', models.TextField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=100)),
+                ("email", models.EmailField(max_length=254)),
+                ("message", models.TextField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
             ],
-        ),
-        migrations.CreateModel(
-            name='Education',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('institution', models.CharField(max_length=200)),
-                ('degree', models.CharField(max_length=200)),
-                ('description', models.TextField()),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField(blank=True, null=True)),
-            ],
-            options={
-                'verbose_name_plural': 'Education',
-            },
-        ),
-        migrations.CreateModel(
-            name='Experience',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('company', models.CharField(max_length=200)),
-                ('position', models.CharField(max_length=200)),
-                ('description', models.TextField()),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField(blank=True, null=True)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Skill',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('proficiency', models.IntegerField(default=0)),
-                ('category', models.CharField(blank=True, max_length=100)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Technology',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-            ],
-            options={
-                'verbose_name_plural': 'Technologies',
-            },
-        ),
-        migrations.CreateModel(
-            name='Project',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200)),
-                ('description', models.TextField()),
-                ('image', models.URLField(blank=True, null=True)),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField(blank=True, null=True)),
-                ('github_url', models.URLField(blank=True, null=True)),
-                ('live_url', models.URLField(blank=True, null=True)),
-                ('technologies', models.ManyToManyField(blank=True, to='api.technology')),
-            ],
+            options={"ordering": ["-created_at"]},
         ),
     ]
