@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { commsApi } from '../services/api';
+import { commsApi, MEDIA_BASE } from '../services/api';
 
 interface CommsDocument {
   id: number;
@@ -17,10 +17,8 @@ export default function Comms() {
       .catch((err) => console.error('Failed to load documents', err));
   }, []);
 
-  const resolveUrl = (path: string) =>
-    path.startsWith('http')
-      ? path
-      : `${import.meta.env.VITE_API_URL?.replace('/api', '')}${path}`;
+    const resolveUrl = (path: string) =>
+      path.startsWith('http') ? path : `${MEDIA_BASE}${path}`;
 
   return (
     <section className="p-8 max-w-3xl mx-auto">

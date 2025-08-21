@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { blogApi } from '../services/api';
+import { blogApi, MEDIA_BASE } from '../services/api';
 
 interface BlogPost {
   id: number;
@@ -26,7 +26,7 @@ export default function Blog() {
   const resolveImage = (img: string) =>
     img.startsWith('http')
       ? img
-      : `${import.meta.env.VITE_API_URL?.replace('/api', '')}${img}`;
+      : `${MEDIA_BASE}${img}`;
 
   if (isLoading) {
     return (

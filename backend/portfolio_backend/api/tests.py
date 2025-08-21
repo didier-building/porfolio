@@ -4,7 +4,15 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Project, Technology, Skill, Experience, Education, Contact, Profile
+from .models import (
+    Project,
+    Technology,
+    Skill,
+    Experience,
+    Education,
+    Contact,
+    SocialProfile,
+)
 from datetime import date
 import json
 
@@ -295,16 +303,18 @@ class ContactAPITest(BaseAPITest):
         self.assertEqual(len(response.data['results']), 1)
 
 
-class ProfileAPITest(BaseAPITest):
+class SocialProfileAPITest(BaseAPITest):
     def setUp(self):
         super().setUp()
-        Profile.objects.create(name="John Doe", title="Dev", bio="Bio")
+        SocialProfile.objects.create(
+            platform="GitHub", handle="john", url="https://github.com/john"
+        )
 
     def test_get_profiles(self):
-        response = self.client.get(reverse('profile-list'))
+        response = self.client.get(reverse('socialprofile-list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data['results']), 1)
-        self.assertEqual(response.data['results'][0]['name'], 'John Doe')
+        self.assertEqual(response.data['results'][0]['platform'], 'GitHub')
 
 class AuthenticationTest(BaseAPITest):
     def test_obtain_token(self):

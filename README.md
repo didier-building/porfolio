@@ -64,8 +64,8 @@ A modern, full-stack portfolio application built with React (frontend) and Djang
 
 3. Copy environment file and update variables:
    ```bash
-   cp .env.example .env
-   # set VITE_API_URL and VITE_RECAPTCHA_SITE_KEY
+     cp .env.example .env
+     # set VITE_API_URL and VITE_TURNSTILE_SITE_KEY
    ```
 
 4. Start the development server:
@@ -107,9 +107,9 @@ A modern, full-stack portfolio application built with React (frontend) and Djang
 
 6. Copy environment file and update variables:
    ```bash
-   cp .env.example .env
-   # set DJANGO_SECRET_KEY, ALLOWED_HOSTS, CORS_ALLOWED_ORIGINS, CSRF_TRUSTED_ORIGINS,
-   # OPENAI_API_KEY and RECAPTCHA_SECRET_KEY
+     cp .env.example .env
+     # set SECRET_KEY, ALLOWED_HOSTS, CORS_ALLOWED_ORIGINS, CSRF_TRUSTED_ORIGINS,
+     # ADMIN_EMAIL, DEFAULT_FROM_EMAIL, TURNSTILE_SECRET
    ```
 
 7. Start the development server:
@@ -118,6 +118,34 @@ A modern, full-stack portfolio application built with React (frontend) and Djang
    ```
 
 8. The backend will be available at `http://localhost:8000`
+
+## Local AI (no OpenAI)
+
+- Install Ollama → `ollama pull llama3.1:8b`
+- Prepare DB/media/seed:
+  ```
+  cd backend/portfolio_backend
+  python manage.py migrate
+  python manage.py loaddata ../portfolio/fixtures/portfolio_seed.json
+  mkdir -p ../media/comms
+  # place your CV at backend/portfolio_backend/media/comms/master-cv.pdf
+  ```
+- Build KB:
+  `uv run python backend/portfolio_backend/api/build_kb.py`
+- Run:
+  - Start Ollama daemon (default 11434); test: `ollama run llama3.1:8b` then exit
+  - `uv run manage.py runserver`
+- Test endpoints (curl):
+  ```
+  curl -s -X POST http://localhost:8000/api/ai/jobmatch/analyze/ \
+    -H 'Content-Type: application/json' \
+    -d '{"job_description":"Django/DRF with Docker and some Vyper"}'
+  curl -s -X POST http://localhost:8000/api/ai/project-explainer/chat/ \
+    -H 'Content-Type: application/json' \
+    -d '{"question":"Explain the supply-chain tracker tech stack."}'
+  ```
+- Swagger: http://localhost:8000/api/docs
+- Note: responses include "engine":"ollama"; no OpenAI key required.
 
 ## Project Structure
 
@@ -198,16 +226,16 @@ API documentation is available at:
 - ReDoc: `/api/redoc/`
 
 ### AI Endpoints
-POST `/api/ai/chat/`
-```json
-{ "prompt": "Hello" }
-```
-Without `OPENAI_API_KEY` the endpoint echoes the prompt. When the key is set, it returns the model response.
+POST `/api/ai/jobmatch/analyze/`
+
+POST `/api/ai/project-explainer/chat/`
+
+Responses contain `engine: "ollama"` and require no OpenAI key.
 
 ### Contact Form Protections
-The contact endpoint `/api/comms/` implements:
+The contact endpoint `/api/contact/` implements:
 - Honeypot field `website`
-- reCAPTCHA validation when `RECAPTCHA_SECRET_KEY` is set
+- Turnstile validation when `TURNSTILE_SECRET` is set
 - Rate limit of **5 requests per minute per IP**
 
 ## Customization
@@ -226,7 +254,7 @@ The contact endpoint `/api/comms/` implements:
 - [ ] `/api/docs/` reachable
 - [ ] `/api/comms/` and `/api/profiles/` return seeded data
 - [ ] Contact form rejects spam and rate limits after 5 posts/min/IP
-- [ ] AI endpoint returns JSON without key and model output with key
+- [ ] AI endpoints return JSON with `engine: ollama`
 - [ ] Netlify build succeeds (`npm run build`)
 - [ ] `backend/didier-portfolio.service` works on Ubuntu
 

@@ -30,10 +30,12 @@ export default function ProjectBot() {
     setMessages((m) => [...m, userMsg]);
     setInput('');
     try {
-      const res = await aiApi.projectExplainerChat({ project: selected.id, message: userMsg.content });
-      const reply =
-        res.data?.message || res.data?.response || 'No response available.';
-      setMessages((m) => [...m, { role: 'bot', content: reply }]);
+        const res = await aiApi.projectExplainerChat({
+          question: userMsg.content,
+          project_ids: [selected.id],
+        });
+        const reply = res.data?.answer || 'No response available.';
+        setMessages((m) => [...m, { role: 'bot', content: reply }]);
     } catch (err) {
       console.error(err);
       setMessages((m) => [...m, { role: 'bot', content: 'No response available.' }]);

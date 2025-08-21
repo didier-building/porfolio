@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'portfolio',
     'rest_framework',
     'corsheaders',
+    'django_filters',
     'rest_framework_simplejwt',
     'drf_spectacular',
     # 'debug_toolbar',  # Comment this out for now
@@ -124,6 +125,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_THROTTLE_CLASSES': [
@@ -139,9 +143,7 @@ REST_FRAMEWORK = {
 # Spectacular settings
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Portfolio API',
-    'DESCRIPTION': 'API for managing portfolio content',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
 }
 
 # Cache settings
@@ -154,8 +156,9 @@ CACHES = {
 
 # Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # For development
-DEFAULT_FROM_EMAIL = 'portfolio@example.com'
-ADMIN_EMAIL = 'your-email@example.com'  # Change this to your email
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'noreply@example.com')
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', 'you@example.com')
+TURNSTILE_SECRET = os.getenv('TURNSTILE_SECRET', '')
 
 # For production
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

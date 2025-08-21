@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { blogApi } from '../services/api';
+import { blogApi, MEDIA_BASE } from '../services/api';
 
 interface BlogPost {
   title: string;
@@ -23,10 +23,8 @@ export default function BlogDetail() {
       .finally(() => setLoading(false));
   }, [slug]);
 
-  const resolveImage = (img?: string) =>
-    img && !img.startsWith('http')
-      ? `${import.meta.env.VITE_API_URL?.replace('/api', '')}${img}`
-      : img;
+    const resolveImage = (img?: string) =>
+      img && !img.startsWith('http') ? `${MEDIA_BASE}${img}` : img;
 
   if (loading) {
     return <div className="p-8">Loading...</div>;

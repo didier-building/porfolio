@@ -90,10 +90,35 @@ class Contact(models.Model):
         ordering = ['-created_at']  # Add default ordering
 
 
-class Profile(models.Model):
-    name = models.CharField(max_length=100)
-    title = models.CharField(max_length=200, blank=True)
-    bio = models.TextField(blank=True)
+class SocialProfile(models.Model):
+    platform = models.CharField(max_length=100)
+    handle = models.CharField(max_length=100)
+    url = models.URLField()
+
+    class Meta:
+        ordering = ['platform']
 
     def __str__(self):
-        return self.name
+        return f"{self.platform}: {self.handle}"
+
+
+def comms_document_path(instance, filename):
+    return f"comms/{filename}"
+
+
+class CommsDocument(models.Model):
+    DOC_TYPES = [
+        ('cv', 'CV'),
+        ('other', 'Other'),
+    ]
+
+    title = models.CharField(max_length=200)
+    doc_type = models.CharField(max_length=50, choices=DOC_TYPES)
+    file = models.FileField(upload_to=comms_document_path)
+    published = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
