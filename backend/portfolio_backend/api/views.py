@@ -2,8 +2,6 @@ import logging
 import os
 
 import requests
-import openai
-
 logger = logging.getLogger(__name__)
 
 from django.utils.decorators import method_decorator
@@ -17,11 +15,25 @@ from rest_framework.exceptions import NotAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Project, Skill, Experience, Education, Contact, Technology, Profile
+from .models import (
+    Project,
+    Skill,
+    Experience,
+    Education,
+    Contact,
+    Technology,
+    SocialProfile,
+    CommsDocument,
+)
 from .serializers import (
-    ProjectSerializer, SkillSerializer, ExperienceSerializer,
-    EducationSerializer, ContactSerializer, TechnologySerializer,
-    ProfileSerializer,
+    ProjectSerializer,
+    SkillSerializer,
+    ExperienceSerializer,
+    EducationSerializer,
+    ContactSerializer,
+    TechnologySerializer,
+    SocialProfileSerializer,
+    CommsDocumentSerializer,
 )
 
 # Custom permission class
@@ -135,11 +147,18 @@ class TechnologyViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-# Profile ViewSet
-class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+# SocialProfile ViewSet
+class SocialProfileViewSet(viewsets.ModelViewSet):
+    queryset = SocialProfile.objects.all()
+    serializer_class = SocialProfileSerializer
     permission_classes = [IsAdminUserOrReadOnly]
+
+
+class CommsDocumentViewSet(viewsets.ModelViewSet):
+    queryset = CommsDocument.objects.filter(published=True)
+    serializer_class = CommsDocumentSerializer
+    http_method_names = ['get']
+    permission_classes = [permissions.AllowAny]
 
 # Add rate limiting and email notifications to Contact ViewSet
 class ContactViewSet(viewsets.ModelViewSet):
@@ -153,22 +172,22 @@ class ContactViewSet(viewsets.ModelViewSet):
         return [RequireAuthenticated(), permissions.IsAdminUser()]
 
     @method_decorator(ratelimit(key='ip', rate='5/m', method='POST', block=True))
-    def create(self, request, *args, **kwargs):
+      def create(self, request, *args, **kwargs):
         # Honeypot field
         if request.data.get('website'):
             return Response({'message': 'Spam detected'}, status=400)
 
-        # CAPTCHA verification (optional)
-        token = request.data.get('captcha')
-        secret = getattr(settings, 'RECAPTCHA_SECRET_KEY', None)
-        if secret:
-            resp = requests.post(
-                'https://www.google.com/recaptcha/api/siteverify',
-                data={'secret': secret, 'response': token},
-                timeout=5,
-            )
-            if not resp.json().get('success'):
-                return Response({'message': 'Invalid CAPTCHA'}, status=400)
+          # CAPTCHA verification (Cloudflare Turnstile)
+          token = request.data.get('captchaToken')
+          secret = getattr(settings, 'TURNSTILE_SECRET', None)
+          if secret:
+              resp = requests.post(
+                  'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+                  data={'secret': secret, 'response': token},
+                  timeout=5,
+              )
+              if not resp.json().get('success'):
+                  return Response({'message': 'Invalid CAPTCHA'}, status=400)
 
         response = super().create(request, *args, **kwargs)
 
@@ -181,28 +200,4 @@ class ContactViewSet(viewsets.ModelViewSet):
             fail_silently=False,
         )
 
-        return response
-
-
-class AIChatView(APIView):
-    @method_decorator(ratelimit(key='ip', rate='10/m', method='POST', block=True))
-    @method_decorator(ratelimit(key='user', rate='20/m', method='POST', block=True))
-    def post(self, request):
-        prompt = request.data.get('prompt', '')
-        api_key = os.getenv('OPENAI_API_KEY')
-        if not api_key:
-            return Response({'response': f'Echo: {prompt}'})
-        try:
-            client = openai.OpenAI(api_key=api_key)
-            completion = client.chat.completions.create(
-                model='gpt-3.5-turbo',
-                messages=[{'role': 'user', 'content': prompt}]
-            )
-            text = completion.choices[0].message.content
-            return Response({'response': text})
-        except Exception as e:
-            logger.exception("OpenAI completion failed")
-            return Response(
-                {'error': 'Service temporarily unavailable', 'details': str(e)},
-                status=503,
-            )
+      return response

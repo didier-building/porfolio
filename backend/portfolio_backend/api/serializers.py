@@ -1,5 +1,14 @@
 from rest_framework import serializers
-from .models import Project, Skill, Experience, Education, Contact, Technology, Profile
+from .models import (
+    Project,
+    Skill,
+    Experience,
+    Education,
+    Contact,
+    Technology,
+    SocialProfile,
+    CommsDocument,
+)
 
 class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,7 +44,14 @@ class ContactSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+
+class SocialProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Profile
+        model = SocialProfile
+        fields = '__all__'
+
+
+class CommsDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommsDocument
         fields = '__all__'

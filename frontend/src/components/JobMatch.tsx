@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { aiApi } from '../services/api';
 
-interface JobMatchResult {
-  score: number;
-  rationale: string;
-  strengths: string[];
-  gaps: string[];
-  pitch: string;
-  keywords: string[];
-}
+  interface JobMatchResult {
+    match_score: number;
+    rationale: string;
+    strengths: string[];
+    gaps: string[];
+    pitch: string;
+    keywords: string[];
+  }
 
 export default function JobMatch() {
   const [text, setText] = useState('');
@@ -17,19 +17,19 @@ export default function JobMatch() {
 
   const analyze = async () => {
     setLoading(true);
-    try {
-      const res = await aiApi.jobMatchAnalyze({ text });
-      setResult(res.data);
+      try {
+        const res = await aiApi.jobMatchAnalyze({ job_description: text });
+        setResult(res.data);
     } catch (err) {
       console.error(err);
-      setResult({
-        score: 0,
-        rationale: 'No analysis available.',
-        strengths: [],
-        gaps: [],
-        pitch: '',
-        keywords: [],
-      });
+          setResult({
+            match_score: 0,
+            rationale: 'No analysis available.',
+            strengths: [],
+            gaps: [],
+            pitch: '',
+            keywords: [],
+          });
     } finally {
       setLoading(false);
     }
@@ -55,7 +55,7 @@ export default function JobMatch() {
       {result && (
         <div className="mt-6 space-y-4">
           <div>
-            <strong>Score:</strong> {result.score}
+              <strong>Score:</strong> {result.match_score}
           </div>
           <div>
             <strong>Rationale:</strong> {result.rationale}

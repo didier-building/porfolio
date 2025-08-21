@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { projectsApi } from '../services/api';
+import { projectsApi, MEDIA_BASE } from '../services/api';
 
 const isDev = import.meta.env.DEV;
 
@@ -171,7 +171,7 @@ const Projects: React.FC = () => {
                   <img 
                     src={project.image.startsWith('http') 
                       ? project.image 
-                      : `${import.meta.env.VITE_API_URL?.replace('/api', '')}${project.image}`} 
+                      : `${MEDIA_BASE}${project.image}`}
                     alt={project.title} 
                     className="w-full h-48 object-cover"
                     onError={(e) => {

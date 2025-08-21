@@ -1,0 +1,31 @@
+[
+  {
+    "model": "api.socialprofile",
+    "pk": 1,
+    "fields": {
+      "platform": "GitHub",
+      "handle": "didier-building",
+      "url": "https://github.com/didier-building"
+    }
+  },
+  {
+    "model": "api.socialprofile",
+    "pk": 2,
+    "fields": {
+      "platform": "X",
+      "handle": "didier53053",
+      "url": "https://x.com/didier53053"
+    }
+  },
+  {
+    "model": "api.commsdocument",
+    "pk": 1,
+    "fields": {
+      "title": "Master CV (Aug 2025)",
+      "doc_type": "cv",
+      "file": "comms/master-cv.pdf",
+      "published": true
+    }
+  }
+]
+
