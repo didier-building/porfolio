@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 def project_image_path(instance, filename):
     """Generate file path for project images"""
@@ -38,7 +39,9 @@ class Project(models.Model):
 
 class Skill(models.Model):
     name = models.CharField(max_length=100)
-    proficiency = models.IntegerField(default=0)  # 0-100
+    proficiency = models.IntegerField(
+        default=0, validators=[MinValueValidator(0), MaxValueValidator(100)]
+    )  # 0-100
     category = models.CharField(max_length=100, blank=True)
     
     class Meta:
