@@ -74,6 +74,7 @@ const Contact: React.FC = () => {
           message: '',
           website: '',
         });
+        recaptchaRef.current?.reset();
       } else {
         const errorData = await response.json();
         setFormStatus({
@@ -81,7 +82,7 @@ const Contact: React.FC = () => {
           message: errorData.message || 'Something went wrong. Please try again.'
         });
       }
-    } catch (error) {
+    } catch {
       setFormStatus({
         type: 'error',
         message: 'Network error. Please check your connection and try again.'
