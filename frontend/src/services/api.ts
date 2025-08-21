@@ -1,44 +1,26 @@
 import axios from 'axios';
 
-// Log the API URL for debugging
-const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
-console.log('API URL:', apiUrl);
-
-// Create axios instance with base URL
 const api = axios.create({
-  baseURL: apiUrl,
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  // Add timeout to prevent hanging requests
   timeout: 10000,
 });
 
-// Add detailed logging for requests and responses
-api.interceptors.request.use(
-  config => {
-    console.log(`Making ${config.method?.toUpperCase()} request to: ${config.baseURL}${config.url}`);
-    return config;
-  },
-  error => {
-    console.error('Request error:', error);
-    return Promise.reject(error);
-  }
-);
+export const aiApi = {
+  jobMatchAnalyze: (payload: any) => api.post('/ai/job-match/analyze/', payload),
+  projectExplainerChat: (payload: any) => api.post('/ai/project-explainer/chat/', payload),
+};
 
-api.interceptors.response.use(
-  response => {
-    console.log(`Response from ${response.config.url}:`, response.data);
-    return response;
-  },
-  error => {
-    console.error(`API Error from ${error.config?.url}:`, error.response?.data || error.message);
-    // Always return a rejected promise to ensure loading states are updated
-    return Promise.reject(error);
-  }
-);
+export const commsApi = {
+  list: () => api.get('/docs/'),
+};
 
-// API services for each endpoint
+export const profilesApi = {
+  list: () => api.get('/profiles/'),
+};
+
 export const projectsApi = {
   getAll: () => api.get('/projects/'),
   getById: (id: number) => api.get(`/projects/${id}/`),
@@ -57,7 +39,8 @@ export const educationApi = {
 };
 
 export const blogApi = {
-  getAll: () => api.get('/blog/'),
+  list: (kind?: string) =>
+    api.get('/blog/', kind ? { params: { kind } } : undefined),
   getBySlug: (slug: string) => api.get(`/blog/${slug}/`),
 };
 
