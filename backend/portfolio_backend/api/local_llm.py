@@ -1,5 +1,7 @@
-import json, requests
+import json
 from pathlib import Path
+
+import requests
 
 BASE = Path(__file__).resolve().parent
 KB_DIR = BASE / "kb"
@@ -7,8 +9,10 @@ KB_DIR = BASE / "kb"
 
 def _load_index():
     import faiss
+
     idx = faiss.read_index(str(KB_DIR / "faiss.index"))
-    corpus = [json.loads(l) for l in open(KB_DIR / "corpus.jsonl", "r")]
+    with open(KB_DIR / "corpus.jsonl", "r") as corpus_file:
+        corpus = [json.loads(line) for line in corpus_file]
     return idx, corpus
 
 
@@ -24,8 +28,8 @@ def retrieve(query: str, top_k=6):
     from sentence_transformers import SentenceTransformer
     enc = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
     q = enc.encode([query], normalize_embeddings=True, convert_to_numpy=True)
-    D, I = index.search(q, top_k)
-    return [corpus[i] for i in I[0]]
+    distances, indices = index.search(q, top_k)
+    return [corpus[i] for i in indices[0]]
 
 
 def ollama_chat(system: str, user: str, model="llama3.1:8b", temperature=0.2) -> str:
