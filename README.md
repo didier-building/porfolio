@@ -62,12 +62,18 @@ A modern, full-stack portfolio application built with React (frontend) and Djang
    npm install
    ```
 
-3. Start the development server:
+3. Copy environment file and update variables:
+   ```bash
+   cp .env.example .env
+   # set VITE_API_URL and VITE_RECAPTCHA_SITE_KEY
+   ```
+
+4. Start the development server:
    ```bash
    npm run dev
    ```
 
-4. The frontend will be available at `http://localhost:5173`
+5. The frontend will be available at `http://localhost:5173`
 
 ### Backend Setup
 1. Navigate to the backend directory:
@@ -93,17 +99,25 @@ A modern, full-stack portfolio application built with React (frontend) and Djang
    uv run manage.py migrate
    ```
 
-5. Create a superuser:
+5. Seed initial data and create a superuser:
    ```bash
+   uv run manage.py seed
    uv run manage.py createsuperuser
    ```
 
-6. Start the development server:
+6. Copy environment file and update variables:
+   ```bash
+   cp .env.example .env
+   # set DJANGO_SECRET_KEY, ALLOWED_HOSTS, CORS_ALLOWED_ORIGINS, CSRF_TRUSTED_ORIGINS,
+   # OPENAI_API_KEY and RECAPTCHA_SECRET_KEY
+   ```
+
+7. Start the development server:
    ```bash
    uv run manage.py runserver
    ```
 
-7. The backend will be available at `http://localhost:8000`
+8. The backend will be available at `http://localhost:8000`
 
 ## Project Structure
 
@@ -183,11 +197,38 @@ API documentation is available at:
 - Swagger UI: `/api/docs/`
 - ReDoc: `/api/redoc/`
 
+### AI Endpoints
+POST `/api/ai/chat/`
+```json
+{ "prompt": "Hello" }
+```
+Without `OPENAI_API_KEY` the endpoint echoes the prompt. When the key is set, it returns the model response.
+
+### Contact Form Protections
+The contact endpoint `/api/comms/` implements:
+- Honeypot field `website`
+- reCAPTCHA validation when `RECAPTCHA_SECRET_KEY` is set
+- Rate limit of **5 requests per minute per IP**
+
 ## Customization
 
 1. Update personal information in the Django admin panel
 2. Modify frontend components to match your design preferences
 3. Add new sections by creating new models and components
+
+## Troubleshooting
+
+- **CORS 403**: ensure the frontend origin is listed in `CORS_ALLOWED_ORIGINS`.
+- **CSRF 403/404**: verify the site URL in `CSRF_TRUSTED_ORIGINS` and send the `X-CSRFToken` header.
+
+## Acceptance Checklist
+
+- [ ] `/api/docs/` reachable
+- [ ] `/api/comms/` and `/api/profiles/` return seeded data
+- [ ] Contact form rejects spam and rate limits after 5 posts/min/IP
+- [ ] AI endpoint returns JSON without key and model output with key
+- [ ] Netlify build succeeds (`npm run build`)
+- [ ] `backend/didier-portfolio.service` works on Ubuntu
 
 ## License
 
