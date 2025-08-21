@@ -28,13 +28,19 @@ export function useProjects() {
     const fetchProjects = async () => {
       try {
         setLoading(true);
-        console.log("Fetching projects...");
+        if (import.meta.env.DEV) {
+          console.log("Fetching projects...");
+        }
         const response = await projectsApi.getAll();
-        console.log("API response:", response);
+        if (import.meta.env.DEV) {
+          console.log("API response:", response);
+        }
         
         // Handle both paginated and non-paginated responses
         const projectsData = response.data.results || response.data;
-        console.log("Projects data:", projectsData);
+        if (import.meta.env.DEV) {
+          console.log("Projects data:", projectsData);
+        }
         
         setProjects(projectsData);
         setError(null);

@@ -13,10 +13,14 @@ const ApiTest: React.FC = () => {
       setError(null);
       
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
-      console.log(`Testing API: ${apiUrl}${endpoint}`);
-      
+      if (import.meta.env.DEV) {
+        console.log(`Testing API: ${apiUrl}${endpoint}`);
+      }
+
       const response = await axios.get(`${apiUrl}${endpoint}`);
-      console.log('API Response:', response);
+      if (import.meta.env.DEV) {
+        console.log('API Response:', response);
+      }
       setData(response.data);
     } catch (err: any) {
       console.error('API Test Error:', err);

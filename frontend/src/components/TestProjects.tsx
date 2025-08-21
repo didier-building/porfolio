@@ -12,7 +12,9 @@ export default function TestProjects() {
         setLoading(true);
         // Use a direct URL to avoid any issues with environment variables
         const response = await axios.get('http://localhost:8000/api/projects/');
-        console.log('Direct API response:', response.data);
+        if (import.meta.env.DEV) {
+          console.log('Direct API response:', response.data);
+        }
         setData(response.data);
         setError(null);
       } catch (err: any) {
