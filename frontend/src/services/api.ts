@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
@@ -8,18 +9,6 @@ const api = axios.create({
   timeout: 10000,
 });
 
-export const aiApi = {
-  jobMatchAnalyze: (payload: any) => api.post('/ai/job-match/analyze/', payload),
-  projectExplainerChat: (payload: any) => api.post('/ai/project-explainer/chat/', payload),
-};
-
-export const commsApi = {
-  list: () => api.get('/docs/'),
-};
-
-export const profilesApi = {
-  list: () => api.get('/profiles/'),
-};
 
 export const projectsApi = {
   getAll: () => api.get('/projects/'),
@@ -45,7 +34,7 @@ export const blogApi = {
 };
 
 export const contactApi = {
-  submit: (data: any) => api.post('/contacts/', data),
+  submit: (data: unknown) => api.post('/contacts/', data),
 };
 
 export default api;

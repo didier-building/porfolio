@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { projectsApi } from '../services/api';
 
+const isDev = import.meta.env.DEV;
+
 interface Technology {
   id: number;
   name: string;
@@ -29,10 +31,8 @@ const Projects: React.FC = () => {
       try {
         setIsLoading(true);
         setError(null);
-        console.log("Fetching projects...");
-        
+
         const response = await projectsApi.getAll();
-        console.log("Projects response:", response.data);
         
         // Handle both paginated and non-paginated responses
         const projectsData = response.data.results || response.data;
@@ -48,8 +48,10 @@ const Projects: React.FC = () => {
           });
         });
         setTechnologies(Array.from(techs));
-      } catch (error: any) {
-        console.error('Error fetching projects:', error);
+      } catch (error: unknown) {
+        if (isDev) {
+          console.error('Error fetching projects:', error);
+        }
         setError('Failed to load projects. Please try again later.');
       } finally {
         setIsLoading(false);
@@ -157,7 +159,9 @@ const Projects: React.FC = () => {
                     alt={project.title} 
                     className="w-full h-48 object-cover"
                     onError={(e) => {
-                      console.error(`Failed to load image: ${project.image}`);
+                      if (isDev) {
+                        console.error(`Failed to load image: ${project.image}`);
+                      }
                       e.currentTarget.style.display = 'none';
                     }}
                   />
