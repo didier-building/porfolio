@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Briefcase, GraduationCap } from 'lucide-react';
+import { Calendar, GraduationCap } from 'lucide-react';
 
 interface TimelineItemProps {
   date: string;
@@ -48,32 +48,39 @@ const TimelineItem: React.FC<TimelineItemProps> = ({
 const Experience: React.FC = () => {
   const experiences = [
     {
-      date: "2022 - Present",
-      title: "Software Engineering Intern",
-      organization: "Tech Innovations Inc.",
-      description: "Developing cloud-native microservices using Kubernetes, Docker, and Go. Implementing CI/CD pipelines and monitoring solutions.",
-      icon: <Briefcase size={24} />,
-    },
-    {
-      date: "2021 - 2022",
-      title: "Web Development Freelancer",
-      organization: "Self-employed",
-      description: "Built responsive web applications for various clients using React, Node.js, and MongoDB. Implemented payment processing and authentication systems.",
-      icon: <Briefcase size={24} />,
-    },
-    {
-      date: "2020 - Present",
-      title: "B.S. in Computer Engineering",
-      organization: "University of RWANDA",
-      description: "Specializing in software systems and cloud computing. Relevant coursework includes distributed systems, cloud architecture, and web development.",
+      date: '',
+      title: 'Bachelor’s in Computer and Software Engineering',
+      organization: 'University of Rwanda',
+      description: 'Kigali, Rwanda',
       icon: <GraduationCap size={24} />,
     },
     {
-      date: "2020 - 2021",
-      title: "Open Source Contributor",
-      organization: "Various Projects",
-      description: "Contributed to several open-source projects related to Kubernetes operators, React components, and developer tools.",
-      icon: <Briefcase size={24} />,
+      date: '',
+      title: 'Kubernetes and Cloud Native Essentials (LFS250)',
+      organization: 'The Linux Foundation',
+      description: '',
+      icon: <GraduationCap size={24} />,
+    },
+    {
+      date: '',
+      title: 'CCNAv7: Enterprise Networking, Security, and Automation',
+      organization: 'Cisco Networking Academy',
+      description: '',
+      icon: <GraduationCap size={24} />,
+    },
+    {
+      date: '',
+      title: 'CCNAv7: Introduction to Networks',
+      organization: 'Cisco Networking Academy',
+      description: '',
+      icon: <GraduationCap size={24} />,
+    },
+    {
+      date: '',
+      title: 'IT Essentials: PC Hardware and Software',
+      organization: 'Cisco Networking Academy',
+      description: '',
+      icon: <GraduationCap size={24} />,
     },
   ];
 

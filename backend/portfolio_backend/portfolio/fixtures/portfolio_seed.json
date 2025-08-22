@@ -26,6 +26,124 @@
       "file": "comms/master-cv.pdf",
       "published": true
     }
+  },
+  {
+    "model": "api.commsdocument",
+    "pk": 2,
+    "fields": {
+      "title": "Cover Letter Template",
+      "doc_type": "other",
+      "file": "comms/cover-letter-template.pdf",
+      "published": true
+    }
+  },
+  {
+    "model": "api.commsdocument",
+    "pk": 3,
+    "fields": {
+      "title": "Portfolio Projects",
+      "doc_type": "other",
+      "file": "comms/portfolio-projects.pdf",
+      "published": true
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 1,
+    "fields": {
+      "name": "API",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 2,
+    "fields": {
+      "name": "Docker",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 3,
+    "fields": {
+      "name": "Git",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 4,
+    "fields": {
+      "name": "GitHub",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 5,
+    "fields": {
+      "name": "Heroku",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 6,
+    "fields": {
+      "name": "Kubernetes",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 7,
+    "fields": {
+      "name": "Linux",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 8,
+    "fields": {
+      "name": "Netlify",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 9,
+    "fields": {
+      "name": "Python",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 10,
+    "fields": {
+      "name": "REST",
+      "proficiency": 0,
+      "category": ""
+    }
+  },
+  {
+    "model": "api.skill",
+    "pk": 11,
+    "fields": {
+      "name": "Railway",
+      "proficiency": 0,
+      "category": ""
+    }
   }
 ]
-

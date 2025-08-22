@@ -14,17 +14,15 @@ const Hero: React.FC = () => {
                 Hello, I'm
               </h2>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white">
-                IMANIRAHARI Didier
+                Didier IMANIRAHARI
               </h1>
               <h3 className="text-xl sm:text-2xl font-medium text-slate-700 dark:text-slate-300">
-                Software & Cloud Engineer & Blockchain Enthusiast
+                Developer
               </h3>
             </div>
-            
+
             <p className="text-slate-600 dark:text-slate-400 text-lg max-w-xl leading-relaxed">
-              I specialize in building modern web applications, cloud-native infrastructure, 
-              and exploring blockchain technologies. Passionate about creating scalable and 
-              efficient solutions for complex problems.
+              Project-driven developer with interests in Python/Django, blockchain basics, and web automation.
             </p>
             
             <div className="flex space-x-4">
@@ -43,24 +41,24 @@ const Hero: React.FC = () => {
             </div>
             
             <div className="flex items-center space-x-6">
-              <a 
-                href="https://github.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://github.com/didier-building"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
               >
                 <Github size={24} />
               </a>
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://x.com/didier53053"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
               >
                 <Twitter size={24} />
               </a>
-              <a 
-                href="mailto:contact@example.com" 
+              <a
+                href="mailto:didier53053@gmail.com"
                 className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
               >
                 <Mail size={24} />
