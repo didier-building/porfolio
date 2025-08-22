@@ -25,8 +25,6 @@ def clean(t: str) -> str:
 
 def load_pdf(path: Path):
     out = []
-    if not path.exists():
-        return out
     with pdfplumber.open(str(path)) as pdf:
         for page in pdf.pages:
             out.append(clean(page.extract_text() or ""))
@@ -46,6 +44,15 @@ def main():
     corpus = []
 
     # 1) CV
+    missing_docs = [p for p in DOCS if not p.exists()]
+    if missing_docs:
+        missing_list = "\n".join(str(p) for p in missing_docs)
+        raise FileNotFoundError(
+            "Required document(s) not found:\n"
+            f"{missing_list}\n"
+            "Please place the file(s) at the specified path(s) before running this script."
+        )
+
     for p in DOCS:
         for page in load_pdf(p):
             for c in chunk(page, 250, 40):
