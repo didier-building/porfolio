@@ -6,8 +6,4 @@ drf-spectacular
 djangorestframework-simplejwt
 django-ratelimit
 requests
-Pillow
-sentence-transformers
-faiss-cpu
-pdfplumber
-unidecode
+
