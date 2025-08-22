@@ -45,6 +45,10 @@ export const projectsApi = {
   getAll: () => api.get('/projects/'),
 };
 
+export const skillsApi = {
+  getAll: () => api.get('/skills/'),
+};
+
 export const contactApi = {
   submit: (data: unknown) => api.post('/contact/', data),
 };
