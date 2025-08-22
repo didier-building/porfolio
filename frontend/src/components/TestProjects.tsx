@@ -1,32 +1,34 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { projectsApi } from '../services/api';
 
 export default function TestProjects() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isDev = import.meta.env.DEV;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Use a direct URL to avoid any issues with environment variables
-        const response = await axios.get('http://localhost:8000/api/projects/');
-        if (import.meta.env.DEV) {
-          console.log('Direct API response:', response.data);
+        const response = await projectsApi.getAll();
+        if (isDev) {
+          console.log('Projects API response:', response.data);
         }
         setData(response.data);
         setError(null);
-      } catch (err: any) {
-        console.error('Error in test component:', err);
-        setError(err.message);
+      } catch (err: unknown) {
+        if (isDev) {
+          console.error('Error loading projects:', err);
+        }
+        setError('Failed to load projects. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [isDev]);
 
   return (
     <div className="p-8">
