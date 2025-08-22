@@ -1,0 +1,5 @@
+sentence-transformers
+faiss-cpu
+pdfplumber
+unidecode
+torch==2.2.2
