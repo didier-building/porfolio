@@ -14,13 +14,11 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: |
-          pip install -r backend/requirements.txt flake8 ruff
+          pip install -r backend/requirements.txt ruff
       - name: Migrate
         run: python backend/portfolio_backend/manage.py migrate --noinput
       - name: Lint
-        run: |
-          flake8 backend/portfolio_backend
-          ruff backend/portfolio_backend
+        run: ruff check backend/portfolio_backend
       - name: Tests
         run: python backend/portfolio_backend/manage.py test
 
@@ -34,6 +32,6 @@ jobs:
       - name: Install
         run: npm ci --prefix frontend
       - name: Typecheck
-        run: npx tsc --noEmit --project frontend/tsconfig.json
+        run: npm run typecheck --prefix frontend
       - name: Build
         run: npm run build --prefix frontend
