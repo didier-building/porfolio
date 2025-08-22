@@ -122,6 +122,10 @@ A modern, full-stack portfolio application built with React (frontend) and Djang
 ## Local AI (no OpenAI)
 
 - Install Ollama → `ollama pull llama3.1:8b`
+- Install KB dependencies (CPU wheel):
+  ```bash
+  pip install --extra-index-url https://download.pytorch.org/whl/cpu -r backend/requirements-kb.txt
+  ```
 - Prepare DB/media/seed:
   ```
   cd backend/portfolio_backend

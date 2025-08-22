@@ -2,3 +2,4 @@ sentence-transformers
 faiss-cpu
 pdfplumber
 unidecode
+
