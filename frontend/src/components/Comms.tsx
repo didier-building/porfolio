@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import Meta from './Meta';
+import useInView from '../hooks/useInView';
 import { commsApi, MEDIA_BASE } from '../services/api';
 
 interface CommsDocument {
@@ -9,20 +11,35 @@ interface CommsDocument {
 
 export default function Comms() {
   const [docs, setDocs] = useState<CommsDocument[]>([]);
+  const { ref, inView } = useInView<HTMLDivElement>();
 
   useEffect(() => {
+    if (!inView || docs.length) return;
+    const controller = new AbortController();
     commsApi
-      .list()
+      .list({ signal: controller.signal })
       .then((res) => setDocs(res.data))
-      .catch((err) => console.error('Failed to load documents', err));
-  }, []);
+      .catch((err) => {
+        if (!controller.signal.aborted) {
+          console.error('Failed to load documents', err);
+        }
+      });
+    return () => controller.abort();
+  }, [inView, docs.length]);
 
-    const resolveUrl = (path: string) =>
-      path.startsWith('http') ? path : `${MEDIA_BASE}${path}`;
+  const resolveUrl = (path: string) =>
+    path.startsWith('http') ? path : `${MEDIA_BASE}${path}`;
 
   return (
-    <section className="p-8 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Documents</h1>
+    <div
+      ref={ref}
+      aria-labelledby="docs-heading"
+      className="p-8 max-w-3xl mx-auto"
+    >
+      <Meta title="Docs" description="Downloadable documents" />
+      <h2 id="docs-heading" className="text-2xl font-bold mb-4">
+        Documents
+      </h2>
       <ul className="space-y-2">
         {docs.map((doc) => (
           <li key={doc.id}>
@@ -36,6 +53,6 @@ export default function Comms() {
           </li>
         ))}
       </ul>
-    </section>
+    </div>
   );
 }

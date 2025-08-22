@@ -1,28 +1,47 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Experience from './components/Experience';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+
+const Journal = lazy(() => import('./components/Journal'));
+const JobMatch = lazy(() => import('./components/JobMatch'));
+const ProjectBot = lazy(() => import('./components/ProjectBot'));
+const Comms = lazy(() => import('./components/Comms'));
+const Profiles = lazy(() => import('./components/Profiles'));
 
 function App() {
-  // Add smooth scrolling for anchor links
   useEffect(() => {
+    const legacyMap: Record<string, string> = {
+      '/journal': '#journal',
+      '/ai/job-match': '#job-match',
+      '/ai/project-bot': '#project-bot',
+      '/docs': '#docs',
+      '/profiles': '#profiles',
+    };
+
+    const navigateToHash = (hash: string) => {
+      const element = document.querySelector(hash);
+      if (element) {
+        window.history.replaceState(null, '', `/${hash}`);
+        window.scrollTo({
+          top: element.getBoundingClientRect().top + window.pageYOffset - 80,
+          behavior: 'smooth',
+        });
+      }
+    };
+
+    const initialHash = legacyMap[window.location.pathname] || window.location.hash;
+    if (initialHash) {
+      navigateToHash(initialHash);
+    }
+
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
+      if (target.tagName !== 'A') return;
+      const href = target.getAttribute('href');
+      if (!href) return;
+      const hash = href.startsWith('#') ? href : legacyMap[href];
+      if (hash) {
         e.preventDefault();
-        const href = target.getAttribute('href') as string;
-        const element = document.querySelector(href);
-        if (element) {
-          window.scrollTo({
-            top: element.getBoundingClientRect().top + window.pageYOffset - 80,
-            behavior: 'smooth'
-          });
-        }
+        navigateToHash(hash);
       }
     };
 
@@ -34,14 +53,32 @@ function App() {
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
       <Navbar />
       <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Experience />
-        <Contact />
+        <section id="journal">
+          <Suspense fallback={<div>Loading...</div>}>
+            <Journal />
+          </Suspense>
+        </section>
+        <section id="job-match">
+          <Suspense fallback={<div>Loading...</div>}>
+            <JobMatch />
+          </Suspense>
+        </section>
+        <section id="project-bot">
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProjectBot />
+          </Suspense>
+        </section>
+        <section id="docs">
+          <Suspense fallback={<div>Loading...</div>}>
+            <Comms />
+          </Suspense>
+        </section>
+        <section id="profiles">
+          <Suspense fallback={<div>Loading...</div>}>
+            <Profiles />
+          </Suspense>
+        </section>
       </main>
-      <Footer />
     </div>
   );
 }

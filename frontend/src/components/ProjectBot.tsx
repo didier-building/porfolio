@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Meta from './Meta';
+import useInView from '../hooks/useInView';
 import { aiApi, projectsApi } from '../services/api';
 
 interface Project {
@@ -16,72 +18,107 @@ export default function ProjectBot() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const { ref, inView } = useInView<HTMLDivElement>();
+  const [open, setOpen] = useState(false);
+  const controllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
+    if (!inView || !open || projects.length) return;
+    const controller = new AbortController();
+    controllerRef.current = controller;
     projectsApi
-      .getAll()
+      .getAll({ signal: controller.signal })
       .then((res) => setProjects(res.data))
-      .catch((err) => console.error('Failed to load projects', err));
-  }, []);
+      .catch((err) => {
+        if (!controller.signal.aborted) {
+          console.error('Failed to load projects', err);
+        }
+      });
+    return () => controller.abort();
+  }, [inView, open, projects.length]);
 
   const sendMessage = async () => {
     if (!selected || !input) return;
     const userMsg: Message = { role: 'user', content: input };
     setMessages((m) => [...m, userMsg]);
     setInput('');
+    const controller = new AbortController();
+    controllerRef.current = controller;
     try {
-        const res = await aiApi.projectExplainerChat({
+      const res = await aiApi.projectExplainerChat(
+        {
           question: userMsg.content,
           project_ids: [selected.id],
-        });
-        const reply = res.data?.answer || 'No response available.';
-        setMessages((m) => [...m, { role: 'bot', content: reply }]);
+        },
+        { signal: controller.signal },
+      );
+      const reply = res.data?.answer || 'No response available.';
+      setMessages((m) => [...m, { role: 'bot', content: reply }]);
     } catch (err) {
-      console.error(err);
-      setMessages((m) => [...m, { role: 'bot', content: 'No response available.' }]);
+      if (!controller.signal.aborted) {
+        console.error(err);
+        setMessages((m) => [...m, { role: 'bot', content: 'No response available.' }]);
+      }
     }
   };
 
+  useEffect(() => () => controllerRef.current?.abort(), []);
+
   return (
-    <section className="p-8 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Project Explainer Bot</h1>
-      <div className="flex flex-wrap gap-2 mb-4">
-        {projects.map((p) => (
-          <button
-            key={p.id}
-            onClick={() => setSelected(p)}
-            className={`px-3 py-1 rounded-full border ${selected?.id === p.id ? 'bg-teal-600 text-white' : ''}`}
-          >
-            {p.title}
-          </button>
-        ))}
-      </div>
+    <div
+      ref={ref}
+      aria-labelledby="project-bot-heading"
+      className="p-8 max-w-3xl mx-auto"
+    >
+      <Meta title="Project Bot" description="Chat about portfolio projects" />
+      <details onToggle={(e) => setOpen(e.currentTarget.open)}>
+        <summary id="project-bot-heading" className="text-2xl font-bold mb-4">
+          Project Explainer Bot
+        </summary>
+        {inView && open && (
+          <>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {projects.map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => setSelected(p)}
+                  className={`px-3 py-1 rounded-full border ${
+                    selected?.id === p.id ? 'bg-teal-600 text-white' : ''
+                  }`}
+                >
+                  {p.title}
+                </button>
+              ))}
+            </div>
 
-      <div className="border rounded-md p-4 h-64 overflow-y-auto mb-4">
-        {messages.map((m, i) => (
-          <div key={i} className={`mb-2 ${m.role === 'user' ? 'text-right' : ''}`}>
-            <span className="inline-block px-2 py-1 rounded bg-slate-200">
-              {m.content}
-            </span>
-          </div>
-        ))}
-      </div>
+            <div className="border rounded-md p-4 h-64 overflow-y-auto mb-4">
+              {messages.map((m, i) => (
+                <div key={i} className={`mb-2 ${m.role === 'user' ? 'text-right' : ''}`}>
+                  <span className="inline-block px-2 py-1 rounded bg-slate-200">
+                    {m.content}
+                  </span>
+                </div>
+              ))}
+            </div>
 
-      <div className="flex gap-2">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 border rounded-md p-2"
-          placeholder="Ask about the project..."
-        />
-        <button
-          onClick={sendMessage}
-          disabled={!selected}
-          className="px-4 py-2 bg-teal-600 text-white rounded-md disabled:opacity-50"
-        >
-          Send
-        </button>
-      </div>
-    </section>
+            <div className="flex gap-2">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className="flex-1 border rounded-md p-2"
+                placeholder="Ask about the project..."
+              />
+              <button
+                onClick={sendMessage}
+                disabled={!selected}
+                className="px-4 py-2 bg-teal-600 text-white rounded-md disabled:opacity-50"
+              >
+                Send
+              </button>
+            </div>
+          </>
+        )}
+      </details>
+    </div>
   );
 }

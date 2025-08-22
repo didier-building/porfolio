@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { type AxiosRequestConfig } from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -22,27 +22,35 @@ api.interceptors.request.use((config) => {
 });
 
 export const aiApi = {
-  jobMatchAnalyze: (data: { job_description: string }) =>
-    api.post('/ai/jobmatch/analyze/', data),
-  projectExplainerChat: (data: { question: string; project_ids?: number[] }) =>
-    api.post('/ai/project-explainer/chat/', data),
+  jobMatchAnalyze: (
+    data: { job_description: string },
+    config?: AxiosRequestConfig,
+  ) => api.post('/ai/jobmatch/analyze/', data, config),
+  projectExplainerChat: (
+    data: { question: string; project_ids?: number[] },
+    config?: AxiosRequestConfig,
+  ) => api.post('/ai/project-explainer/chat/', data, config),
 };
 
 export const commsApi = {
-  list: () => api.get('/comms/'),
+  list: (config?: AxiosRequestConfig) => api.get('/comms/', config),
 };
 
 export const profilesApi = {
-  list: () => api.get('/profiles/'),
+  list: (config?: AxiosRequestConfig) => api.get('/profiles/', config),
 };
 
 export const blogApi = {
-  list: (params?: Record<string, unknown>) => api.get('/blog/', { params }),
-  getBySlug: (slug: string) => api.get(`/blog/${slug}/`),
+  list: (
+    params?: Record<string, unknown>,
+    config?: AxiosRequestConfig,
+  ) => api.get('/blog/', { params, ...config }),
+  getBySlug: (slug: string, config?: AxiosRequestConfig) =>
+    api.get(`/blog/${slug}/`, config),
 };
 
 export const projectsApi = {
-  getAll: () => api.get('/projects/'),
+  getAll: (config?: AxiosRequestConfig) => api.get('/projects/', config),
 };
 
 export const skillsApi = {
