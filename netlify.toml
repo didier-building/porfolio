@@ -6,3 +6,28 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "/journal"
+  to = "/#journal"
+  status = 301
+
+[[redirects]]
+  from = "/ai/job-match"
+  to = "/#job-match"
+  status = 301
+
+[[redirects]]
+  from = "/ai/project-bot"
+  to = "/#project-bot"
+  status = 301
+
+[[redirects]]
+  from = "/docs"
+  to = "/#docs"
+  status = 301
+
+[[redirects]]
+  from = "/profiles"
+  to = "/#profiles"
+  status = 301

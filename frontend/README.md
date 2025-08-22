@@ -7,10 +7,9 @@ A modern, responsive portfolio website built with React, TypeScript, and Tailwin
 - 🌓 Dark/Light theme toggle
 - 📱 Fully responsive design
 - 🎨 Modern UI with smooth animations
-- 🎯 Interactive project filtering
-- 📊 Visual skill progress indicators
-- 📝 Contact form with validation
-- 🔄 Smooth scroll navigation
+- 📰 Journal, AI Job Match, Project Bot, Docs, and Profiles sections
+- ⏱️ Lazy-loaded feature modules
+- 🔄 Smooth scroll navigation via hash anchors
 
 ## Tech Stack
 
@@ -37,18 +36,22 @@ A modern, responsive portfolio website built with React, TypeScript, and Tailwin
 ```
 src/
 ├── components/     # React components
-├── data/          # Data files
-├── App.tsx        # Main application component
+├── hooks/          # Reusable hooks (e.g., useInView)
+├── App.tsx        # Main single-page application with hash sections
 └── main.tsx       # Application entry point
 ```
 
+## Single-page Sections
+
+Each major feature renders within a `<section id="...">` block in `App.tsx`.
+Anchors follow the format `#feature-name` (e.g., `#journal`, `#job-match`).
+Feature modules are lazy-loaded and fetch data only when scrolled into view.
+
 ## Customization
 
-1. Update personal information in `Hero.tsx`
-2. Modify projects in `Projects.tsx`
-3. Update skills in `Skills.tsx`
-4. Edit experience timeline in `Experience.tsx`
-5. Customize contact information in `Contact.tsx`
+1. Update API endpoints in `src/services/api.ts`
+2. Adjust section IDs and navigation links in `App.tsx` and `Navbar.tsx`
+3. Extend lazy-loaded features by following the existing section pattern
 
 ## Building for Production
 
