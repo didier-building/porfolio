@@ -1,6 +1,7 @@
-# Professional Portfolio Website
+# Professional Portfolio Website    
 
 A modern, responsive portfolio website built with React, TypeScript, and Tailwind CSS. This portfolio is designed for software engineers and developers to showcase their skills, projects, and professional experience.
+@author: magentle
 
 ## Features
 
