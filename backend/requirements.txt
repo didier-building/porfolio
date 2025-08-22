@@ -6,4 +6,4 @@ drf-spectacular
 djangorestframework-simplejwt
 django-ratelimit
 requests
-Pillow
+
