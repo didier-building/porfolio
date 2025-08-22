@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Mail, Send, Github, Twitter } from 'lucide-react';
-import ReCAPTCHA from 'react-google-recaptcha';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -9,9 +8,7 @@ const Contact: React.FC = () => {
     message: '',
     website: '',
   });
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
-  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   
   const [formStatus, setFormStatus] = useState<{
     type: 'success' | 'error' | null;
@@ -52,13 +49,12 @@ const Contact: React.FC = () => {
     }
     
     try {
-      const token = await recaptchaRef.current?.executeAsync();
       const response = await fetch(`${apiUrl}/comms/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...formData, captcha: token }),
+        body: JSON.stringify(formData),
       });
       
       if (response.ok) {
@@ -74,7 +70,6 @@ const Contact: React.FC = () => {
           message: '',
           website: '',
         });
-        recaptchaRef.current?.reset();
       } else {
         const errorData = await response.json();
         setFormStatus({
@@ -181,11 +176,10 @@ const Contact: React.FC = () => {
                 >
                   <Send size={18} className="mr-2" />
                   Send Message
-                </button>
-                {siteKey && <ReCAPTCHA ref={recaptchaRef} sitekey={siteKey} size="invisible" />}
-              </form>
+                  </button>
+                </form>
+              </div>
             </div>
-          </div>
           
           <div className="space-y-8">
             <div className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm p-8">
