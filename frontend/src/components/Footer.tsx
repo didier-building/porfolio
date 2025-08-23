@@ -71,10 +71,10 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
             <p className="text-slate-400 mb-2">
-              Email: <a href="mailto:contact@example.com" className="hover:text-white transition-colors">contact@example.com</a>
+              Email: <a href="mailto:didier53053@gmail.com" className="hover:text-white transition-colors">contact@example.com</a>
             </p>
             <p className="text-slate-400">
-              Based in: San Francisco, CA
+              Based in: Kigali, RWANDA
             </p>
           </div>
         </div>
