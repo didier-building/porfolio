@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
         
         <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-slate-400 text-sm mb-4 sm:mb-0">
-            © {new Date().getFullYear()} John Doe. All rights reserved.
+            © {new Date().getFullYear()} IMANIRAHARI Didier. All rights reserved.
           </p>
           <button 
             onClick={scrollToTop}

@@ -133,7 +133,7 @@ const Contact: React.FC = () => {
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition-colors text-slate-900 dark:text-white"
-                      placeholder="John Doe"
+                      placeholder=""
                     />
                   </div>
                 </div>
@@ -150,7 +150,7 @@ const Contact: React.FC = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition-colors text-slate-900 dark:text-white"
-                      placeholder="your.email@example.com"
+                      placeholder=""
                     />
                   </div>
                 </div>
@@ -192,7 +192,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div className="ml-4">
                     <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Email</h4>
-                    <a href="mailto:contact@example.com" className="text-teal-600 dark:text-teal-500 hover:underline">contact@example.com</a>
+                    <a href="mailto:didier53053@gmail.com" className="text-teal-600 dark:text-teal-500 hover:underline">contact@example.com</a>
                   </div>
                 </div>
               </div>
