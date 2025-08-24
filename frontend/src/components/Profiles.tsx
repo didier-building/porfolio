@@ -19,7 +19,7 @@ export default function Profiles() {
     const controller = new AbortController();
     profilesApi
       .list({ signal: controller.signal })
-      .then((res) => setProfiles(res.data))
+      .then((res) => setProfiles(Array.isArray(res.data) ? res.data : []))
       .catch((err) => {
         if (!controller.signal.aborted) {
           console.error('Failed to load profiles', err);
