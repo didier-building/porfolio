@@ -119,37 +119,8 @@ A modern, full-stack portfolio application built with React (frontend) and Djang
 
 8. The backend will be available at `http://localhost:8000`
 
-## Local AI (no OpenAI)
-
-- Install Ollama → `ollama pull llama3.1:8b`
-- Install KB dependencies (CPU wheel):
-  ```bash
-  pip install --extra-index-url https://download.pytorch.org/whl/cpu -r backend/requirements-kb.txt
-  ```
-- Prepare DB/media/seed:
-  ```
-  cd backend/portfolio_backend
-  python manage.py migrate
-  python manage.py loaddata ../portfolio/fixtures/portfolio_seed.json
-  mkdir -p ../media/comms
-  # place your CV at backend/portfolio_backend/media/comms/master-cv.pdf
-  ```
-- Build KB:
-  `uv run python backend/portfolio_backend/api/build_kb.py`
-- Run:
-  - Start Ollama daemon (default 11434); test: `ollama run llama3.1:8b` then exit
-  - `uv run manage.py runserver`
-- Test endpoints (curl):
-  ```
-  curl -s -X POST http://localhost:8000/api/ai/jobmatch/analyze/ \
-    -H 'Content-Type: application/json' \
-    -d '{"job_description":"Django/DRF with Docker and some Vyper"}'
-  curl -s -X POST http://localhost:8000/api/ai/project-explainer/chat/ \
-    -H 'Content-Type: application/json' \
-    -d '{"question":"Explain the supply-chain tracker tech stack."}'
-  ```
-- Swagger: http://localhost:8000/api/docs
-- Note: responses include "engine":"ollama"; no OpenAI key required.
+> **Note:** Experimental knowledge-base and local LLM endpoints have
+> been removed. The project now ships only the core portfolio API.
 
 ## Project Structure
 
