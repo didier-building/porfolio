@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Meta from './Meta';
 import useInView from '../hooks/useInView';
 import { blogApi } from '../services/api';
+import { fallbackPosts } from '../data/blogData';
 
 interface BlogPost {
   id: number;
@@ -24,6 +25,8 @@ export default function Journal() {
       .catch((err) => {
         if (!controller.signal.aborted) {
           console.error('Failed to load journal', err);
+          // Use fallback posts when API call fails
+          setPosts(fallbackPosts);
         }
       });
     return () => controller.abort();

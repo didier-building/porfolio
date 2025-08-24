@@ -53,6 +53,9 @@ Feature modules are lazy-loaded and fetch data only when scrolled into view.
 1. Update API endpoints in `src/services/api.ts`
 2. Adjust section IDs and navigation links in `App.tsx` and `Navbar.tsx`
 3. Extend lazy-loaded features by following the existing section pattern
+4. When the backend API is unavailable, the application falls back to local data
+   defined in `src/data`. Update these files to display your own projects,
+   profiles, documents and blog posts without a running server.
 
 ## Building for Production
 

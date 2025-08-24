@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { blogApi, MEDIA_BASE } from '../services/api';
+import { fallbackPosts } from '../data/blogData';
 
 interface BlogPost {
   title: string;
@@ -19,7 +20,12 @@ export default function BlogDetail() {
     blogApi
       .getBySlug(slug)
       .then((res) => setPost(res.data))
-      .catch((err) => console.error('Failed to load post', err))
+      .catch((err) => {
+        console.error('Failed to load post', err);
+        // Use fallback content when API call fails
+        const local = fallbackPosts.find((p) => p.slug === slug);
+        if (local) setPost(local);
+      })
       .finally(() => setLoading(false));
   }, [slug]);
 

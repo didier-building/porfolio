@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Meta from './Meta';
 import useInView from '../hooks/useInView';
 import { profilesApi } from '../services/api';
+import { fallbackProfiles } from '../data/profilesData';
 
 interface SocialProfile {
   id: number;
@@ -23,6 +24,8 @@ export default function Profiles() {
       .catch((err) => {
         if (!controller.signal.aborted) {
           console.error('Failed to load profiles', err);
+          // Use fallback data when API call fails
+          setProfiles(fallbackProfiles);
         }
       });
     return () => controller.abort();
