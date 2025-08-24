@@ -6,12 +6,12 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 from django_ratelimit.decorators import ratelimit
-from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import viewsets, permissions, filters
 from rest_framework.exceptions import NotAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
+from .tasks import send_contact_email
 from .models import (
     Project,
     Skill,
@@ -189,18 +189,5 @@ class ContactViewSet(viewsets.ModelViewSet):
                 return Response({"message": "Invalid CAPTCHA"}, status=400)
 
         response = super().create(request, *args, **kwargs)
-
-        contact = Contact.objects.get(pk=response.data["id"])
-        send_mail(
-            subject=f"New Contact Form Submission: {contact.name}",
-            message=(
-                f"Name: {contact.name}\nEmail: {contact.email}\nMessage: {contact.message}"
-            ),
-            from_email=getattr(settings, "DEFAULT_FROM_EMAIL", "noreply@example.com"),
-            recipient_list=[
-                getattr(settings, "ADMIN_EMAIL", settings.EMAIL_HOST_USER)
-            ],
-            fail_silently=False,
-        )
-
+        send_contact_email.delay(response.data["id"])
         return response

@@ -1,11 +1,11 @@
 import { lazy, Suspense, useEffect } from 'react';
-import Navbar from './components/Navbar';
+import { Navbar } from './components';
 
-const Journal = lazy(() => import('./components/Journal'));
-const JobMatch = lazy(() => import('./components/JobMatch'));
-const ProjectBot = lazy(() => import('./components/ProjectBot'));
-const Comms = lazy(() => import('./components/Comms'));
-const Profiles = lazy(() => import('./components/Profiles'));
+const Journal = lazy(() => import('./components').then((m) => ({ default: m.Journal })));
+const JobMatch = lazy(() => import('./components').then((m) => ({ default: m.JobMatch })));
+const ProjectBot = lazy(() => import('./components').then((m) => ({ default: m.ProjectBot })));
+const Comms = lazy(() => import('./components').then((m) => ({ default: m.Comms })));
+const Profiles = lazy(() => import('./components').then((m) => ({ default: m.Profiles })));
 
 function App() {
   useEffect(() => {

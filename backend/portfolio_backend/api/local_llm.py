@@ -1,7 +1,11 @@
 import json
 from pathlib import Path
+import os
 
-import requests
+try:
+    import google.generativeai as genai
+except Exception:  # pragma: no cover - optional dependency
+    genai = None
 
 BASE = Path(__file__).resolve().parent
 KB_DIR = BASE / "kb"
@@ -32,20 +36,16 @@ def retrieve(query: str, top_k=6):
     return [corpus[i] for i in indices[0]]
 
 
-def ollama_chat(system: str, user: str, model="llama3.1:8b", temperature=0.2) -> str:
-    url = "http://localhost:11434/api/chat"
-    payload = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ],
-        "options": {"temperature": temperature},
-    }
-    r = requests.post(url, json=payload, timeout=120)
-    r.raise_for_status()
-    data = r.json()
-    if "message" in data:
-        return data["message"]["content"]
-    return ""
-
+def ollama_chat(system: str, user: str, model: str = "gemini-pro", temperature: float = 0.2) -> str:
+    if genai is None:
+        return ""  # library not installed
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        return ""  # API key required
+    genai.configure(api_key=api_key)
+    prompt = f"{system}\n\n{user}"
+    response = genai.GenerativeModel(model).generate_content(
+        prompt,
+        generation_config=genai.GenerationConfig(temperature=temperature),
+    )
+    return getattr(response, "text", "")
