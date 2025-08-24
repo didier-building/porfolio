@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 venv/
 node_modules/
+
+backend/portfolio_backend/db.sqlite3
