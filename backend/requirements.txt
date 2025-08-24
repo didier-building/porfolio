@@ -6,4 +6,6 @@ drf-spectacular
 djangorestframework-simplejwt
 django-ratelimit
 requests
+celery[redis]
+google-generativeai
 
