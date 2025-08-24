@@ -20,7 +20,7 @@ export default function Journal() {
     const controller = new AbortController();
     blogApi
       .list(undefined, { signal: controller.signal })
-      .then((res) => setPosts(res.data))
+      .then((res) => setPosts(Array.isArray(res.data) ? res.data : []))
       .catch((err) => {
         if (!controller.signal.aborted) {
           console.error('Failed to load journal', err);

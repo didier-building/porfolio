@@ -18,7 +18,7 @@ export default function Comms() {
     const controller = new AbortController();
     commsApi
       .list({ signal: controller.signal })
-      .then((res) => setDocs(res.data))
+      .then((res) => setDocs(Array.isArray(res.data) ? res.data : []))
       .catch((err) => {
         if (!controller.signal.aborted) {
           console.error('Failed to load documents', err);
