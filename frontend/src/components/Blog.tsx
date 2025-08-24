@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { blogApi, MEDIA_BASE } from '../services/api';
+import { fallbackPosts } from '../data/blogData';
 
 interface BlogPost {
   id: number;
@@ -19,7 +20,11 @@ export default function Blog() {
     blogApi
       .list()
       .then((res) => setPosts(res.data))
-      .catch((err) => console.error('Error fetching blog posts:', err))
+      .catch((err) => {
+        console.error('Error fetching blog posts:', err);
+        // Use fallback posts when API call fails
+        setPosts(fallbackPosts);
+      })
       .finally(() => setIsLoading(false));
   }, []);
 
