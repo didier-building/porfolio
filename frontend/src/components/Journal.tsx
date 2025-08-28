@@ -20,9 +20,12 @@ export default function Journal() {
     const controller = new AbortController();
     blogApi
       .list(undefined, { signal: controller.signal })
-      .then((res) => setPosts(res.data))
+      .then((res) => {
+        const data = Array.isArray(res.data) ? res.data : res.data?.results || [];
+        setPosts(data);
+      })
       .catch((err) => {
-        if (!controller.signal.aborted) {
+        if (!controller.signal.aborted && import.meta.env.DEV) {
           console.error('Failed to load journal', err);
         }
       });
@@ -40,7 +43,7 @@ export default function Journal() {
         Journal
       </h2>
       <ul className="space-y-6">
-        {posts.map((post) => (
+        {Array.isArray(posts) && posts.map((post) => (
           <li key={post.id}>
             <h3 className="text-xl font-semibold text-teal-600">
               {post.title}

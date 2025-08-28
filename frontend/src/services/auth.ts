@@ -18,7 +18,9 @@ const authService = {
       localStorage.setItem('refreshToken', response.data.refresh);
       return true;
     } catch (error) {
-      console.error('Login failed:', error);
+      if (import.meta.env.DEV) {
+        console.error('Login failed:', error);
+      }
       return false;
     }
   },
@@ -39,7 +41,9 @@ const authService = {
       localStorage.setItem('token', response.data.access);
       return true;
     } catch (error) {
-      console.error('Token refresh failed:', error);
+      if (import.meta.env.DEV) {
+        console.error('Token refresh failed:', error);
+      }
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
       return false;

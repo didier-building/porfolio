@@ -28,7 +28,10 @@ export default function ProjectBot() {
     controllerRef.current = controller;
     projectsApi
       .getAll({ signal: controller.signal })
-      .then((res) => setProjects(res.data))
+      .then((res) => {
+        const data = Array.isArray(res.data) ? res.data : res.data?.results || [];
+        setProjects(data);
+      })
       .catch((err) => {
         if (!controller.signal.aborted) {
           console.error('Failed to load projects', err);
@@ -78,7 +81,7 @@ export default function ProjectBot() {
         {inView && open && (
           <>
             <div className="flex flex-wrap gap-2 mb-4">
-              {projects.map((p) => (
+              {Array.isArray(projects) && projects.map((p) => (
                 <button
                   key={p.id}
                   onClick={() => setSelected(p)}

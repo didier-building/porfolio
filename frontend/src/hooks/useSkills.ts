@@ -1,12 +1,6 @@
 import { useState, useEffect } from 'react';
 import { skillsApi } from '../services/api';
-
-interface Skill {
-  id: number;
-  name: string;
-  proficiency: number;
-  category: string;
-}
+import type { Skill } from '../types';
 
 export function useSkills() {
   const [skills, setSkills] = useState<Skill[]>([]);
@@ -22,7 +16,9 @@ export function useSkills() {
         setError(null);
       } catch (err) {
         setError('Failed to fetch skills');
-        console.error(err);
+        if (import.meta.env.DEV) {
+          console.error(err);
+        }
       } finally {
         setLoading(false);
       }

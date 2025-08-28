@@ -19,7 +19,10 @@ export default function Profiles() {
     const controller = new AbortController();
     profilesApi
       .list({ signal: controller.signal })
-      .then((res) => setProfiles(res.data))
+      .then((res) => {
+        const data = Array.isArray(res.data) ? res.data : res.data?.results || [];
+        setProfiles(data);
+      })
       .catch((err) => {
         if (!controller.signal.aborted) {
           console.error('Failed to load profiles', err);
@@ -39,7 +42,7 @@ export default function Profiles() {
         Social Profiles
       </h2>
       <ul className="space-y-2">
-        {profiles.map((profile) => (
+        {Array.isArray(profiles) && profiles.map((profile) => (
           <li key={profile.id}>
             <a
               href={profile.url}

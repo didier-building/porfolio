@@ -1,20 +1,33 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { Navbar } from './components';
+import { Navbar, Hero, About, Footer, ErrorBoundary } from './components';
 
+const Projects = lazy(() => import('./components').then((m) => ({ default: m.Projects })));
+const Skills = lazy(() => import('./components').then((m) => ({ default: m.Skills })));
+const Experience = lazy(() => import('./components').then((m) => ({ default: m.Experience })));
+const Contact = lazy(() => import('./components').then((m) => ({ default: m.Contact })));
 const Journal = lazy(() => import('./components').then((m) => ({ default: m.Journal })));
 const JobMatch = lazy(() => import('./components').then((m) => ({ default: m.JobMatch })));
 const ProjectBot = lazy(() => import('./components').then((m) => ({ default: m.ProjectBot })));
-const Comms = lazy(() => import('./components').then((m) => ({ default: m.Comms })));
-const Profiles = lazy(() => import('./components').then((m) => ({ default: m.Profiles })));
+const CareerInsights = lazy(() => import('./components').then((m) => ({ default: m.CareerInsights })));
+const CVGenerator = lazy(() => import('./components/CVGenerator'));
+const SkillRecommendations = lazy(() => import('./components/SkillRecommendations'));
+const AIJournal = lazy(() => import('./components/AIJournal'));
 
 function App() {
   useEffect(() => {
     const legacyMap: Record<string, string> = {
+      '/about': '#about',
+      '/projects': '#projects',
+      '/skills': '#skills',
+      '/experience': '#experience',
+      '/contact': '#contact',
       '/journal': '#journal',
       '/ai/job-match': '#job-match',
       '/ai/project-bot': '#project-bot',
-      '/docs': '#docs',
-      '/profiles': '#profiles',
+      '/ai/career-insights': '#career-insights',
+      '/ai/cv-generator': '#cv-generator',
+      '/ai/skill-recommendations': '#skill-recommendations',
+      '/ai/journal': '#ai-journal',
     };
 
     const navigateToHash = (hash: string) => {
@@ -50,36 +63,87 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
-      <Navbar />
-      <main>
-        <section id="journal">
-          <Suspense fallback={<div>Loading...</div>}>
+    <ErrorBoundary>
+      <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
+        <Navbar />
+        <main>
+        <Hero />
+        
+        <section id="about">
+          <About />
+        </section>
+        
+        <section id="projects">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
+            <Projects />
+          </Suspense>
+        </section>
+        
+        <section id="skills">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
+            <Skills />
+          </Suspense>
+        </section>
+        
+        <section id="experience">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
+            <Experience />
+          </Suspense>
+        </section>
+        
+        <section id="contact">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
+            <Contact />
+          </Suspense>
+        </section>
+        
+        {/* AI Tools Section */}
+        <section id="journal" className="border-t border-slate-200 dark:border-slate-800">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
             <Journal />
           </Suspense>
         </section>
+        
         <section id="job-match">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
             <JobMatch />
           </Suspense>
         </section>
+        
         <section id="project-bot">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
             <ProjectBot />
           </Suspense>
         </section>
-        <section id="docs">
-          <Suspense fallback={<div>Loading...</div>}>
-            <Comms />
+
+        <section id="career-insights">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
+            <CareerInsights />
           </Suspense>
         </section>
-        <section id="profiles">
-          <Suspense fallback={<div>Loading...</div>}>
-            <Profiles />
+
+        <section id="cv-generator">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
+            <CVGenerator />
           </Suspense>
         </section>
-      </main>
-    </div>
+
+        <section id="skill-recommendations">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
+            <SkillRecommendations />
+          </Suspense>
+        </section>
+
+        <section id="ai-journal">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
+            <AIJournal />
+          </Suspense>
+        </section>
+        </main>
+
+        <Footer />
+      </div>
+    </ErrorBoundary>
   );
 }
 

@@ -14,13 +14,17 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: |
-          pip install -r backend/requirements.txt ruff
+          pip install uv
+          cd backend && uv sync
+          pip install ruff
       - name: Migrate
-        run: python backend/portfolio_backend/manage.py migrate --noinput
+        run: uv run manage.py migrate --noinput
+        working-directory: backend/portfolio_backend
       - name: Lint
         run: ruff check backend/portfolio_backend
       - name: Tests
-        run: python backend/portfolio_backend/manage.py test
+        run: uv run manage.py test
+        working-directory: backend/portfolio_backend
 
   frontend:
     runs-on: ubuntu-latest

@@ -17,6 +17,7 @@ const Contact: React.FC = () => {
     type: null,
     message: ''
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -48,8 +49,9 @@ const Contact: React.FC = () => {
       return;
     }
     
+    setLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/comms/`, {
+      const response = await fetch(`${apiUrl}/contact/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,6 +84,8 @@ const Contact: React.FC = () => {
         type: 'error',
         message: 'Network error. Please check your connection and try again.'
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -172,10 +176,11 @@ const Contact: React.FC = () => {
                 
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg transition-colors flex items-center"
+                  disabled={loading}
+                  className="px-6 py-3 bg-teal-600 hover:bg-teal-700 disabled:bg-teal-400 text-white font-medium rounded-lg transition-colors flex items-center"
                 >
                   <Send size={18} className="mr-2" />
-                  Send Message
+                  {loading ? 'Sending...' : 'Send Message'}
                   </button>
                 </form>
               </div>
@@ -240,4 +245,4 @@ const Contact: React.FC = () => {
   );
 };
 
-export default Contact;
+export default React.memo(Contact);

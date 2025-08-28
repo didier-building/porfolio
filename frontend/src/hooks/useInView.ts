@@ -6,11 +6,12 @@ export default function useInView<T extends HTMLElement>() {
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    if (!element || inView) return;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !inView) {
           setInView(true);
+          observer.disconnect();
         }
       });
     });
@@ -18,7 +19,7 @@ export default function useInView<T extends HTMLElement>() {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [inView]);
 
   return { ref, inView };
 }

@@ -24,11 +24,20 @@ const Navbar: React.FC = () => {
   };
 
   const navLinks = [
-    { name: 'Journal', href: '#journal' },
-    { name: 'Job Match', href: '#job-match' },
-    { name: 'Project Bot', href: '#project-bot' },
-    { name: 'Docs', href: '#docs' },
-    { name: 'Profiles', href: '#profiles' },
+    { name: 'About', href: '#about' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
+  const aiLinks = [
+    { name: '🎯 Job Match', href: '#job-match' },
+    { name: '💬 Project Chat', href: '#project-bot' },
+    { name: '📊 Career Insights', href: '#career-insights' },
+    { name: '📄 CV Generator', href: '#cv-generator' },
+    { name: '🎯 Skill Recommendations', href: '#skill-recommendations' },
+    { name: '📝 AI Journal', href: '#ai-journal' },
   ];
 
   return (
@@ -57,6 +66,28 @@ const Navbar: React.FC = () => {
                 {link.name}
               </a>
             ))}
+
+            {/* AI Features Dropdown */}
+            <div className="relative group">
+              <button className="text-sm font-medium text-slate-700 hover:text-teal-600 dark:text-slate-200 dark:hover:text-teal-500 transition-colors flex items-center">
+                🤖 AI Tools
+                <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-600 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                {aiLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-500 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
           
           <div className="flex items-center space-x-4">

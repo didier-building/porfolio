@@ -18,9 +18,12 @@ export default function Comms() {
     const controller = new AbortController();
     commsApi
       .list({ signal: controller.signal })
-      .then((res) => setDocs(res.data))
+      .then((res) => {
+        const data = Array.isArray(res.data) ? res.data : res.data?.results || [];
+        setDocs(data);
+      })
       .catch((err) => {
-        if (!controller.signal.aborted) {
+        if (!controller.signal.aborted && import.meta.env.DEV) {
           console.error('Failed to load documents', err);
         }
       });
@@ -41,7 +44,7 @@ export default function Comms() {
         Documents
       </h2>
       <ul className="space-y-2">
-        {docs.map((doc) => (
+        {Array.isArray(docs) && docs.map((doc) => (
           <li key={doc.id}>
             <a
               href={resolveUrl(doc.file)}
