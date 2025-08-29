@@ -8,7 +8,7 @@ import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 // Create axios instance with default config
-const recruiterApi = axios.create({
+const apiClient = axios.create({
   baseURL: `${API_BASE_URL}/v1`,
   headers: {
     'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ const recruiterApi = axios.create({
 });
 
 // Response interceptor for error handling
-recruiterApi.interceptors.response.use(
+apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 429) {
@@ -71,7 +71,7 @@ class RecruiterApiService {
     isRateLimited?: boolean;
   }> {
     try {
-      const response = await recruiterApi.post('/fit/analyze/', {
+      const response = await apiClient.post('/fit/analyze/', {
         job_description: jobDescription
       });
 
@@ -97,7 +97,7 @@ class RecruiterApiService {
    */
   async downloadCV(jobDescription?: string, email?: string, consent?: boolean): Promise<Blob> {
     try {
-      const response = await recruiterApi.post('/fit/cv/', {
+      const response = await apiClient.post('/fit/cv/', {
         job_description: jobDescription || '',
         email: email || '',
         consent: consent || false
@@ -117,7 +117,7 @@ class RecruiterApiService {
    */
   async chatWithPortfolio(message: string): Promise<ChatResponse> {
     try {
-      const response = await recruiterApi.post('/chat/', {
+      const response = await apiClient.post('/chat/', {
         message
       });
 
@@ -140,7 +140,7 @@ class RecruiterApiService {
    */
   async trackEvent(event: string, metadata?: Record<string, any>): Promise<void> {
     try {
-      await recruiterApi.post('/analytics/', {
+      await apiClient.post('/analytics/', {
         event,
         metadata: metadata || {}
       });
