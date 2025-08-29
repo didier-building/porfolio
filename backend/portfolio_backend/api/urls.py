@@ -24,6 +24,10 @@ router.register(r'career-documents', views.CareerDocumentViewSet, basename='care
 router.register(r'professional-profile', views.ProfessionalProfileViewSet, basename='professionalprofile')
 
 urlpatterns = [
+    # API v1 - Recruiter microsite (public + admin)
+    path('v1/', include('api.v1.urls', namespace='v1')),
+
+    # Legacy API routes (keep for backward compatibility)
     path('', include(router.urls)),
     path('ai/job-match/', JobMatchAnalyzerView.as_view(), name='job-match-analyzer'),
     path('ai/project-chat/', ProjectExplainerBotView.as_view(), name='project-explainer-bot'),
@@ -39,11 +43,9 @@ urlpatterns = [
     path('journal/goal-suggestions/', JournalGoalSuggestionsView.as_view(), name='journal-goal-suggestions'),
     path('journal/prompts/', JournalPromptsView.as_view(), name='journal-prompts'),
 
-    # Health Check Endpoints
+    # Minimal public health check
     path('health/', HealthCheckView.as_view(), name='health-check'),
-    path('health/detailed/', DetailedHealthCheckView.as_view(), name='detailed-health-check'),
-    path('health/ready/', ReadinessCheckView.as_view(), name='readiness-check'),
-    path('health/live/', LivenessCheckView.as_view(), name='liveness-check'),
+
     # Professional profile endpoints for frontend
     path('profile/skills/', views.ProfessionalSkillsView.as_view(), name='professional-skills'),
     path('profile/experience/', views.ProfessionalExperienceView.as_view(), name='professional-experience'),

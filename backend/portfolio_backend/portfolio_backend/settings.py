@@ -114,9 +114,30 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Kigali'
 USE_I18N = True
 USE_TZ = True
+
+# Cache configuration (Redis preferred, fallback to local memory)
+REDIS_URL = os.getenv('REDIS_URL')
+if REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': REDIS_URL,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
+        }
+    }
+else:
+    # Fallback to local memory cache for development
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'portfolio-cache',
+        }
+    }
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
@@ -131,6 +152,16 @@ else:
     CORS_ALLOWED_ORIGINS = [
         o.strip() for o in os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:5173").split(",") if o
     ]
+
+# Security settings for recruiter microsite
+DATA_UPLOAD_MAX_MEMORY_SIZE = 256 * 1024  # 256KB max request size
+FILE_UPLOAD_MAX_MEMORY_SIZE = 256 * 1024  # 256KB max file size
+
+# Content Security Policy (to be implemented in Nginx)
+CSP_DEFAULT_SRC = "'self'"
+CSP_SCRIPT_SRC = "'self' 'unsafe-inline'"
+CSP_STYLE_SRC = "'self' 'unsafe-inline'"
+CSP_IMG_SRC = "'self' data: https:"
 
 CSRF_TRUSTED_ORIGINS = [
     o.strip() for o in os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:5173").split(",") if o
@@ -165,7 +196,10 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '1000/hour' if DEBUG else '100/day',
-        'user': '5000/hour' if DEBUG else '1000/day'
+        'user': '5000/hour' if DEBUG else '1000/day',
+        'fit': '10/hour',
+        'chat': '20/hour',
+        'admin': '100/hour',
     }
 }
 

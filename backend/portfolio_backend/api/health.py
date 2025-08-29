@@ -17,12 +17,8 @@ class HealthCheckView(View):
     """Basic health check endpoint"""
     
     def get(self, request):
-        """Return basic health status"""
-        return JsonResponse({
-            'status': 'healthy',
-            'timestamp': time.time(),
-            'version': '1.0.0'
-        })
+        """Return minimal health status for public use"""
+        return JsonResponse({'ok': True})
 
 
 class DetailedHealthCheckView(View):

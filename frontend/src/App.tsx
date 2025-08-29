@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Navbar, Hero, About, Footer, ErrorBoundary } from './components';
+import RecruiterLanding from './pages/RecruiterLanding';
 
 const Projects = lazy(() => import('./components').then((m) => ({ default: m.Projects })));
 const Skills = lazy(() => import('./components').then((m) => ({ default: m.Skills })));
@@ -14,6 +15,10 @@ const SkillRecommendations = lazy(() => import('./components/SkillRecommendation
 const AIJournal = lazy(() => import('./components/AIJournal'));
 
 function App() {
+  // Check if this is the recruiter microsite
+  const isRecruiterSite = window.location.pathname === '/recruiter' ||
+                          window.location.search.includes('recruiter=true');
+
   useEffect(() => {
     const legacyMap: Record<string, string> = {
       '/about': '#about',
@@ -61,6 +66,15 @@ function App() {
     document.addEventListener('click', handleAnchorClick);
     return () => document.removeEventListener('click', handleAnchorClick);
   }, []);
+
+  // Return recruiter microsite if accessed via recruiter route
+  if (isRecruiterSite) {
+    return (
+      <ErrorBoundary>
+        <RecruiterLanding />
+      </ErrorBoundary>
+    );
+  }
 
   return (
     <ErrorBoundary>
