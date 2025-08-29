@@ -17,6 +17,16 @@ jobs:
           pip install uv
           cd backend && uv sync
           pip install ruff
+      - name: Set up environment variables
+        run: |
+          cd backend/portfolio_backend
+          echo "SECRET_KEY=test-secret-key-for-ci-cd-pipeline-only" > .env
+          echo "DEBUG=True" >> .env
+          echo "GOOGLE_GEMINI_API_KEY=test-key" >> .env
+          echo "ENVIRONMENT=testing" >> .env
+      - name: Django check
+        run: uv run manage.py check
+        working-directory: backend/portfolio_backend
       - name: Migrate
         run: uv run manage.py migrate --noinput
         working-directory: backend/portfolio_backend
