@@ -2,3 +2,45 @@ __pycache__/
 *.pyc
 venv/
 node_modules/
+
+# Environment files - NEVER commit these!
+.env
+.env.local
+.env.development
+.env.production
+backend/.env
+backend/.env.local
+backend/.env.development
+backend/.env.production
+backend/portfolio_backend/.env
+backend/portfolio_backend/.env.local
+backend/portfolio_backend/.env.development
+backend/portfolio_backend/.env.production
+
+# Sensitive files
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.json
+config.json
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+db.sqlite3
+
+# Log files
+*.log
+logs/
+portfolio.log
+
+# Media files with potentially sensitive content
+media/career_documents/
+media/document_ingestion/
+
+# Backup files
+*.tar.gz
+*.zip
+*backup*

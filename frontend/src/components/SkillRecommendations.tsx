@@ -89,7 +89,9 @@ const SkillRecommendations: React.FC = () => {
         setError('Invalid response from skill analysis. Please try again.');
       }
     } catch (err: any) {
-      console.error('Skill Gap Analysis Error:', err);
+      if (import.meta.env.DEV) {
+        console.error('Skill Gap Analysis Error:', err);
+      }
 
       if (err.response?.status === 404) {
         setError('Skill analysis service not found. Please contact support.');

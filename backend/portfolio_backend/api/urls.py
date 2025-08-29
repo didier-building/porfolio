@@ -7,7 +7,6 @@ from .views import (
     JournalEntryListCreateView, JournalInsightsView, JournalGoalSuggestionsView, JournalPromptsView
 )
 from .health import HealthCheckView, DetailedHealthCheckView, ReadinessCheckView, LivenessCheckView
-from .health import HealthCheckView, DetailedHealthCheckView, ReadinessCheckView, LivenessCheckView
 from .document_views import DocumentViewSet, ExtractedDataViewSet
 
 router = DefaultRouter()
