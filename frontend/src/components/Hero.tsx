@@ -38,11 +38,11 @@ const Hero: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <a 
-                href="#projects" 
+                href="#skills" 
                 className="px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2"
               >
-                <Briefcase size={20} />
-                View Projects
+                <Code size={20} />
+                View Skills
               </a>
               <a 
                 href="#contact" 
@@ -96,7 +96,7 @@ const Hero: React.FC = () => {
         
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <a href="#about" className="flex flex-col items-center text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+          <a href="#skills" className="flex flex-col items-center text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
             <span className="text-sm font-medium mb-2">Scroll to explore</span>
             <ArrowDown size={24} />
           </a>

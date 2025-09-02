@@ -69,10 +69,16 @@ const Skills: React.FC = () => {
     <section id="skills" className="py-20 bg-slate-50 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">My Skills</h2>
-          <div className="w-20 h-1 bg-teal-600 mx-auto"></div>
-          <p className="mt-4 text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            I've worked with a variety of technologies and frameworks. Here's an overview of my technical expertise.
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium mb-4">
+            <Code size={16} />
+            <span>Technical Expertise</span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-6">
+            Skills & Technologies
+          </h2>
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            Proficient in modern web technologies with hands-on experience building scalable applications. 
+            Continuously expanding expertise in emerging technologies and best practices.
           </p>
         </div>
         

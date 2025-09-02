@@ -155,8 +155,19 @@ const Projects: React.FC = () => {
     <section id="projects" className="py-20 bg-slate-50 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Projects</h2>
-          <div className="w-20 h-1 bg-teal-600 mx-auto"></div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium mb-4">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" clipRule="evenodd" />
+            </svg>
+            <span>Portfolio Showcase</span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-6">
+            Featured Projects
+          </h2>
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            A collection of applications and solutions I've built using modern technologies. 
+            Each project demonstrates different aspects of full-stack development and problem-solving.
+          </p>
         </div>
 
         {/* Filter Buttons */}
