@@ -1,90 +1,106 @@
 import React from 'react';
-import { ArrowDown, Github, Twitter, Mail } from 'lucide-react';
+import { ArrowDown, Github, Twitter, Mail, Code, Briefcase } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
     <section id="home" className="min-h-screen flex items-center relative overflow-hidden pt-16">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_25%_at_50%_50%,var(--tw-gradient-from)_0%,var(--tw-gradient-to)_100%)] from-teal-50 to-white dark:from-slate-900/50 dark:to-slate-950"></div>
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"></div>
+      
+      {/* Floating geometric shapes */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-20 left-10 w-20 h-20 bg-primary-100 dark:bg-primary-900/30 rounded-full animate-float"></div>
+        <div className="absolute top-40 right-20 w-16 h-16 bg-accent-100 dark:bg-accent-900/30 rounded-lg rotate-45 animate-float" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-40 left-20 w-12 h-12 bg-primary-200 dark:bg-primary-800/30 rounded-full animate-float" style={{animationDelay: '2s'}}></div>
+      </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
-            <div className="space-y-2">
-              <h2 className="text-lg sm:text-xl font-medium text-teal-600 dark:text-teal-500">
-                Hello, I'm
-              </h2>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white">
-                Didier IMANIRAHARI
+          <div className="space-y-8 animate-slide-up">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400">
+                <Code size={20} />
+                <span className="text-sm font-medium tracking-wide uppercase">Full-Stack Developer</span>
+              </div>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-white leading-tight">
+                Didier 
+                <span className="block text-primary-600 dark:text-primary-400">IMANIRAHARI</span>
               </h1>
-              <h3 className="text-xl sm:text-2xl font-medium text-slate-700 dark:text-slate-300">
-                Developer
-              </h3>
+              <p className="text-xl text-slate-600 dark:text-slate-300 font-medium">
+                Building robust web solutions with modern technologies
+              </p>
             </div>
 
             <p className="text-slate-600 dark:text-slate-400 text-lg max-w-xl leading-relaxed">
-              Project-driven developer with interests in Python/Django, blockchain basics, and web automation.
+              Passionate developer specializing in Python/Django backend development, 
+              React frontends, and modern web technologies. Creating scalable solutions 
+              that drive business results.
             </p>
             
-            <div className="flex space-x-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               <a 
                 href="#projects" 
-                className="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg transition-colors"
+                className="px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2"
               >
+                <Briefcase size={20} />
                 View Projects
               </a>
               <a 
                 href="#contact" 
-                className="px-6 py-3 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 hover:border-teal-600 dark:hover:border-teal-500 font-medium rounded-lg transition-colors"
+                className="px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-700 hover:border-primary-600 dark:hover:border-primary-500 font-semibold rounded-xl transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 flex items-center justify-center gap-2"
               >
-                Contact Me
+                <Mail size={20} />
+                Get In Touch
               </a>
             </div>
             
-            <div className="flex items-center space-x-6">
-              <a
-                href="https://github.com/didier-building"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
-              >
-                <Github size={24} />
-              </a>
-              <a
-                href="https://x.com/didier53053"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
-              >
-                <Twitter size={24} />
-              </a>
-              <a
-                href="mailto:didier53053@gmail.com"
-                className="text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
-              >
-                <Mail size={24} />
-              </a>
-            </div>
-          </div>
-          
-          <div className="relative hidden lg:block">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-teal-500 to-indigo-500 rounded-2xl blur-xl opacity-20 animate-pulse"></div>
-            <div className="relative bg-white dark:bg-slate-900 rounded-2xl overflow-hidden p-8 border border-slate-200 dark:border-slate-800">
-              <div className="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                <img 
-                  src="https://images.pexels.com/photos/3785927/pexels-photo-3785927.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                  alt="Developer"
-                  className="object-cover w-full h-full rounded-xl"
-                />
+            <div className="flex items-center space-x-6 pt-4">
+              <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">Connect with me:</span>
+              <div className="flex space-x-4">
+                <a
+                  href="https://github.com/didier-building"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-slate-100 dark:bg-slate-800 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-all duration-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transform hover:-translate-y-1"
+                >
+                  <Github size={20} />
+                </a>
+                <a
+                  href="https://x.com/didier53053"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-slate-100 dark:bg-slate-800 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-all duration-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transform hover:-translate-y-1"
+                >
+                  <Twitter size={20} />
+                </a>
+                <a
+                  href="#contact"
+                  className="p-3 bg-slate-100 dark:bg-slate-800 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-all duration-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transform hover:-translate-y-1"
+                >
+                  <Mail size={20} />
+                </a>
               </div>
             </div>
           </div>
+
+          {/* Right side - Professional photo placeholder */}
+          <div className="relative animate-slide-up" style={{animationDelay: '0.3s'}}>
+            <div className="relative">
+              <div className="w-80 h-80 mx-auto bg-gradient-to-br from-primary-100 to-primary-200 dark:from-slate-700 dark:to-slate-800 rounded-2xl shadow-2xl flex items-center justify-center">
+                <div className="text-6xl">👨‍💻</div>
+              </div>
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent-100 dark:bg-accent-900/30 rounded-full animate-float" style={{animationDelay: '1.5s'}}></div>
+              <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-primary-200 dark:bg-primary-800/30 rounded-xl rotate-12 animate-float" style={{animationDelay: '0.5s'}}></div>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <a href="#about" aria-label="Scroll down">
-          <ArrowDown className="text-slate-600 dark:text-slate-400" />
-        </a>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <a href="#about" className="flex flex-col items-center text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            <span className="text-sm font-medium mb-2">Scroll to explore</span>
+            <ArrowDown size={24} />
+          </a>
+        </div>
       </div>
     </section>
   );

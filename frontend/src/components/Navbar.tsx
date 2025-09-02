@@ -34,10 +34,6 @@ const Navbar: React.FC = () => {
   const aiLinks = [
     { name: '🎯 Job Match', href: '#job-match' },
     { name: '💬 Project Chat', href: '#project-bot' },
-    { name: '📊 Career Insights', href: '#career-insights' },
-    { name: '📄 CV Generator', href: '#cv-generator' },
-    { name: '🎯 Skill Recommendations', href: '#skill-recommendations' },
-    { name: '📝 AI Journal', href: '#ai-journal' },
   ];
 
   return (
@@ -51,8 +47,9 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <a href="#home" className="text-xl font-bold text-slate-900 dark:text-white">
-              FindMe<span className="text-teal-600">.</span>
+            <a href="#home" className="text-2xl font-bold text-slate-900 dark:text-white">
+              <span className="text-primary-600 dark:text-primary-400">Didier</span>
+              <span className="text-slate-900 dark:text-white">.</span>
             </a>
           </div>
           
@@ -61,7 +58,7 @@ const Navbar: React.FC = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm font-medium text-slate-700 hover:text-teal-600 dark:text-slate-200 dark:hover:text-teal-500 transition-colors"
+                className="text-sm font-medium text-slate-700 hover:text-primary-600 dark:text-slate-200 dark:hover:text-primary-400 transition-colors"
               >
                 {link.name}
               </a>
@@ -69,7 +66,7 @@ const Navbar: React.FC = () => {
 
             {/* AI Features Dropdown */}
             <div className="relative group">
-              <button className="text-sm font-medium text-slate-700 hover:text-teal-600 dark:text-slate-200 dark:hover:text-teal-500 transition-colors flex items-center">
+              <button className="text-sm font-medium text-slate-700 hover:text-primary-600 dark:text-slate-200 dark:hover:text-primary-400 transition-colors flex items-center">
                 🤖 AI Tools
                 <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -81,7 +78,7 @@ const Navbar: React.FC = () => {
                   <a
                     key={link.name}
                     href={link.href}
-                    className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-500 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                    className="block px-4 py-3 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-primary-600 dark:hover:text-primary-400 transition-colors first:rounded-t-lg last:rounded-b-lg"
                   >
                     {link.name}
                   </a>
@@ -133,7 +130,7 @@ const Navbar: React.FC = () => {
             <a
               key={link.name}
               href={link.href}
-              className="block text-base font-medium text-slate-700 hover:text-teal-600 dark:text-slate-200 dark:hover:text-teal-500"
+              className="block text-base font-medium text-slate-700 hover:text-primary-600 dark:text-slate-200 dark:hover:text-primary-400"
               onClick={() => setIsOpen(false)}
             >
               {link.name}
