@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { skillsApi } from '../services/api';
+import { fallbackSkills } from '../data/projectsData';
 import type { Skill } from '../types';
 
 export function useSkills() {
@@ -12,13 +13,14 @@ export function useSkills() {
       try {
         setLoading(true);
         const response = await skillsApi.getAll();
-        setSkills(response.data.results || response.data);
+        const skillsData = response.data.results || response.data;
+        setSkills(Array.isArray(skillsData) ? skillsData : []);
         setError(null);
       } catch (err) {
-        setError('Failed to fetch skills');
-        if (import.meta.env.DEV) {
-          console.error(err);
-        }
+        // Use fallback data when API fails
+        console.warn('API failed, using fallback skills data');
+        setSkills(fallbackSkills);
+        setError(null); // Don't show error since we have fallback data
       } finally {
         setLoading(false);
       }

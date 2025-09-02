@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { projectsApi, MEDIA_BASE } from '../services/api';
+import { fallbackProjects } from '../data/projectsData';
 
 const isDev = import.meta.env.DEV;
 
@@ -38,6 +39,10 @@ const Projects: React.FC = () => {
 
       // Handle both paginated and non-paginated responses
       const projectsData = response.data.results || response.data;
+      
+      if (!Array.isArray(projectsData)) {
+        throw new Error('Invalid projects data format');
+      }
 
       setProjects(projectsData);
       setFilteredProjects(projectsData);
@@ -52,10 +57,31 @@ const Projects: React.FC = () => {
       });
       setTechnologies(['All', ...Array.from(techs)]);
     } catch (error: unknown) {
-      if (import.meta.env.DEV) {
-        console.error('Error fetching projects:', error);
-      }
-      setError('Failed to load projects. Please try again later.');
+      console.warn('API failed, using fallback projects data');
+      // Use fallback data when API fails
+      const fallbackProjectsData = fallbackProjects.map(p => ({
+        id: p.id,
+        title: p.title,
+        description: p.description,
+        image_url: p.image,
+        github_url: p.links.github,
+        live_url: p.links.live,
+        technologies: p.technologies
+      }));
+      
+      setProjects(fallbackProjectsData);
+      setFilteredProjects(fallbackProjectsData);
+      
+      // Extract technologies from fallback data
+      const techs = new Set<string>();
+      fallbackProjectsData.forEach((project) => {
+        project.technologies?.forEach(tech => {
+          const techName = typeof tech === 'string' ? tech : tech.name;
+          techs.add(techName);
+        });
+      });
+      setTechnologies(['All', ...Array.from(techs)]);
+      setError(null); // Don't show error since we have fallback data
     } finally {
       setIsLoading(false);
     }
@@ -81,7 +107,10 @@ const Projects: React.FC = () => {
     }
     
     const filtered = projects.filter(project => 
-      project.technologies?.some(tech => tech.name === filter)
+      project.technologies?.some(tech => {
+        const techName = typeof tech === 'string' ? tech : tech.name;
+        return techName === filter;
+      })
     );
     setFilteredProjects(filtered);
   };
