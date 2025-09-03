@@ -75,16 +75,6 @@ function App() {
         <main>
         <Hero />
         
-        <section id="about">
-          <About />
-        </section>
-        
-        <section id="projects">
-          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
-            <Projects />
-          </Suspense>
-        </section>
-        
         <section id="skills">
           <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
             <Skills />
@@ -95,6 +85,16 @@ function App() {
           <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
             <Experience />
           </Suspense>
+        </section>
+        
+        <section id="projects">
+          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
+            <Projects />
+          </Suspense>
+        </section>
+        
+        <section id="about">
+          <About />
         </section>
         
         <section id="contact">
