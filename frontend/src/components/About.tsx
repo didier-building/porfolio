@@ -24,46 +24,48 @@ const About: React.FC = () => {
           <div className="order-2 lg:order-1">
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <p className="text-slate-700 dark:text-slate-300 mb-6">
-                I am a Computer & Software Engineering student with a passion for building innovative solutions
-                using modern technologies. My journey in tech began when I built my first website at the age of 22,
-                and I've been hooked ever since.
+                Results-oriented engineer focused on building reliable, production-style web platforms 
+                that interact with the physical world across logistics, healthcare, and education sectors. 
+                I translate evolving, real-world requirements into maintainable systems, document decisions 
+                clearly, and improve developer experience so teams move faster.
               </p>
               
               <p className="text-slate-700 dark:text-slate-300 mb-6">
-                Currently, I'm focused on developing my skills in <span className="text-teal-600 dark:text-teal-500 font-medium">web development</span>,
-                <span className="text-teal-600 dark:text-teal-500 font-medium"> cloud-native infrastructure</span>, and
-                <span className="text-teal-600 dark:text-teal-500 font-medium"> Kubernetes</span>. I'm also exploring
-                the exciting world of <span className="text-teal-600 dark:text-teal-500 font-medium">blockchain technology</span> and its applications.
+                My expertise spans <span className="text-teal-600 dark:text-teal-500 font-medium">Python/Django APIs</span>,
+                <span className="text-teal-600 dark:text-teal-500 font-medium"> React UIs</span>, and
+                <span className="text-teal-600 dark:text-teal-500 font-medium"> containerized deployments (Docker/Kubernetes)</span>. 
+                I have a solid foundation in distributed systems, Linux/networking, and relational data modeling with PostgreSQL/MySQL.
               </p>
               
               <p className="text-slate-700 dark:text-slate-300">
-                When I'm not coding, you can find me hiking in the mountains, reading tech blogs, or
-                contributing to open-source projects. I believe in continuous learning and am always
-                looking for new challenges to expand my knowledge and skills.
+                Currently pursuing BSc in Computer & Software Engineering at University of Rwanda while 
+                collaborating on production systems. I'm comfortable with services, queues, caching, 
+                retries, and observability - always focused on building systems that are ready to deploy 
+                and scale in real-world environments.
               </p>
             </div>
             
             <div className="mt-8 flex flex-wrap gap-4">
               <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
-                <span className="text-slate-700 dark:text-slate-300 font-medium">Problem Solver</span>
+                <span className="text-slate-700 dark:text-slate-300 font-medium">Production Systems</span>
               </div>
               <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
-                <span className="text-slate-700 dark:text-slate-300 font-medium">Tech Enthusiast</span>
+                <span className="text-slate-700 dark:text-slate-300 font-medium">API Design</span>
               </div>
               <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
-                <span className="text-slate-700 dark:text-slate-300 font-medium">Fast Learner</span>
+                <span className="text-slate-700 dark:text-slate-300 font-medium">DevOps Excellence</span>
               </div>
               <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
-                <span className="text-slate-700 dark:text-slate-300 font-medium">Detail Oriented</span>
+                <span className="text-slate-700 dark:text-slate-300 font-medium">Team Collaboration</span>
               </div>
               <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
-                <span className="text-slate-700 dark:text-slate-300 font-medium">Team Player</span>
+                <span className="text-slate-700 dark:text-slate-300 font-medium">System Architecture</span>
               </div>
               <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
-                <span className="text-slate-700 dark:text-slate-300 font-medium">Creative Thinker</span>
+                <span className="text-slate-700 dark:text-slate-300 font-medium">Performance Optimization</span>
               </div>
               <div className="bg-slate-100 dark:bg-slate-800 px-5 py-3 rounded-lg">
-                <span className="text-slate-700 dark:text-slate-300 font-medium"> Continuous Learner</span>
+                <span className="text-slate-700 dark:text-slate-300 font-medium">Documentation Focus</span>
               </div>
             </div>
           </div>
