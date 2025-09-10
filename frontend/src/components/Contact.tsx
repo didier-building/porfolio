@@ -93,17 +93,22 @@ const Contact: React.FC = () => {
     <section id="contact" className="py-20 bg-slate-50 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Get In Touch</h2>
-          <div className="w-20 h-1 bg-teal-600 mx-auto"></div>
-          <p className="mt-4 text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-100 to-purple-100 dark:from-primary-900/30 dark:to-purple-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium mb-6 shadow-sm backdrop-blur-sm border border-primary-200/50 dark:border-primary-700/30">
+            <Mail size={16} />
+            <span>Let's Connect</span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 font-display">
+            <span className="text-gradient-teal">Get In</span> Touch
+          </h2>
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Have a project in mind or want to discuss a potential opportunity? I'd love to hear from you!
           </p>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          <div className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="glass-card glass-card-hover">
             <div className="p-8">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Send Me a Message</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 font-display">Send Me a Message</h3>
               
               {formStatus.type && (
                 <div className={`mb-6 p-4 rounded-lg ${
@@ -126,9 +131,6 @@ const Contact: React.FC = () => {
                   autoComplete="off"
                 />
                 <div className="mb-6">
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    Your Name
-                  </label>
                   <div className="relative">
                     <input
                       type="text"
@@ -136,16 +138,16 @@ const Contact: React.FC = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition-colors text-slate-900 dark:text-white"
-                      placeholder=""
+                      className="form-input peer"
+                      placeholder=" "
                     />
+                    <label htmlFor="name" className="form-floating-label peer-focus:focused peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                      Your Name
+                    </label>
                   </div>
                 </div>
                 
                 <div className="mb-6">
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    Email Address
-                  </label>
                   <div className="relative">
                     <input
                       type="email"
@@ -153,87 +155,92 @@ const Contact: React.FC = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition-colors text-slate-900 dark:text-white"
-                      placeholder=""
+                      className="form-input peer"
+                      placeholder=" "
                     />
+                    <label htmlFor="email" className="form-floating-label peer-focus:focused peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                      Email Address
+                    </label>
                   </div>
                 </div>
                 
                 <div className="mb-6">
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition-colors text-slate-900 dark:text-white resize-none"
-                    placeholder="Hello, I'd like to discuss a project..."
-                  ></textarea>
+                  <div className="relative">
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={5}
+                      className="form-input peer resize-none"
+                      placeholder=" "
+                    ></textarea>
+                    <label htmlFor="message" className="form-floating-label peer-focus:focused peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                      Message
+                    </label>
+                  </div>
                 </div>
                 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-3 bg-teal-600 hover:bg-teal-700 disabled:bg-teal-400 text-white font-medium rounded-lg transition-colors flex items-center"
+                  className="btn-primary flex items-center justify-center w-full"
                 >
                   <Send size={18} className="mr-2" />
                   {loading ? 'Sending...' : 'Send Message'}
-                  </button>
+                </button>
                 </form>
               </div>
             </div>
           
           <div className="space-y-8">
-            <div className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm p-8">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Contact Information</h3>
+            <div className="glass-card glass-card-hover p-8">
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 font-display">Contact Information</h3>
               
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-500">
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-teal-100 to-primary-100 dark:from-teal-900/30 dark:to-primary-900/30 text-teal-600 dark:text-teal-400">
                     <Mail size={24} />
                   </div>
                   <div className="ml-4">
                     <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Email</h4>
-                    <a href="mailto:didier53053@gmail.com" className="text-teal-600 dark:text-teal-500 hover:underline">contact@example.com</a>
+                    <a href="mailto:didier53053@gmail.com" className="text-teal-600 dark:text-teal-400 hover:underline transition-colors">didier53053@gmail.com</a>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm p-8">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Follow Me</h3>
+            <div className="glass-card glass-card-hover p-8">
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 font-display">Follow Me</h3>
               
               <div className="flex flex-wrap gap-4">
                 <a 
-                  href="https://github.com" 
+                  href="https://github.com/didier-building" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100/80 dark:bg-slate-800/50 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50"
                 >
                   <Github size={24} />
                 </a>
                 <a 
-                  href="https://twitter.com" 
+                  href="https://x.com/didier53053" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100/80 dark:bg-slate-800/50 text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50"
                 >
                   <Twitter size={24} />
                 </a>
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-teal-500 to-indigo-600 rounded-xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-4">Let's Work Together!</h3>
+            <div className="bg-gradient-to-r from-primary-600 via-purple-600 to-teal-600 rounded-xl p-8 text-white shadow-xl">
+              <h3 className="text-2xl font-bold mb-4 font-display">Let's Work Together!</h3>
               <p className="mb-6 opacity-90">
                 I'm currently available for freelance work and open to discussing new opportunities.
               </p>
               <a 
                 href="#contact" 
-                className="inline-block px-6 py-3 bg-white text-teal-600 font-medium rounded-lg hover:bg-slate-100 transition-colors"
+                className="inline-block px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-medium rounded-lg hover:bg-white/30 transition-all duration-300 border border-white/30 hover:scale-105 transform"
               >
                 Hire Me
               </a>
