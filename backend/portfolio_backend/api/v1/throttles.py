@@ -3,8 +3,6 @@ Custom throttling for recruiter microsite
 """
 
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
-from rest_framework.response import Response
-from rest_framework import status
 from django.http import JsonResponse
 
 

@@ -5,7 +5,6 @@ Enforces portfolio-only discussions with source attribution
 
 import logging
 from typing import List, Dict, Any, Tuple
-from django.conf import settings
 import re
 
 logger = logging.getLogger(__name__)

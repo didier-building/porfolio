@@ -4,7 +4,7 @@ Provides intelligent skill gap analysis and learning recommendations
 """
 
 import logging
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any
 from datetime import datetime
 from .gemini_service import gemini_service
 

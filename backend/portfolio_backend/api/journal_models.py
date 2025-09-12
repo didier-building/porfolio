@@ -5,7 +5,6 @@ Professional journal with AI insights and analytics
 
 from django.db import models
 from django.utils import timezone
-import json
 
 
 class JournalEntry(models.Model):

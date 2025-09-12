@@ -3,9 +3,8 @@ Google Gemini AI Service
 Professional AI integration for portfolio features
 """
 
-import os
 import logging
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any
 from django.conf import settings
 
 try:
@@ -156,7 +155,7 @@ SUMMARY: [2-3 sentence professional summary]
         ai_persona = profile.get('ai_persona_description', '')
         projects = profile.get('projects_portfolio', [])
         skills = profile.get('technical_skills', {})
-        experience = profile.get('work_experience', [])
+        profile.get('work_experience', [])
         
         context = f"""
 {ai_persona}
@@ -172,7 +171,7 @@ KEY PROJECTS:
         for i, project in enumerate(projects[:3], 1):
             context += f"{i}. {project.get('name', 'Project')}: {project.get('description', 'Professional project')}\n"
         
-        context += f"\nTECHNICAL EXPERTISE:\n"
+        context += "\nTECHNICAL EXPERTISE:\n"
         for category, skill_list in skills.items():
             if skill_list:
                 context += f"- {category.title()}: {', '.join(skill_list[:5])}\n"
@@ -243,7 +242,7 @@ SALARY_RANGE: [Estimated range for current level]
                     try:
                         score = int(line.split(':')[1].strip())
                         result['compatibility_score'] = max(0, min(100, score))
-                    except:
+                    except (ValueError, IndexError):
                         pass
                 elif line.startswith('MATCHING_SKILLS:'):
                     skills = line.split(':', 1)[1].strip()

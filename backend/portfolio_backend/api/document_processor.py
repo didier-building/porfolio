@@ -3,8 +3,7 @@ import json
 import logging
 import PyPDF2
 import docx
-from typing import Dict, List, Any, Optional
-from django.conf import settings
+from typing import Dict, Any
 from django.utils import timezone
 from .models import Document, ExtractedData
 import requests

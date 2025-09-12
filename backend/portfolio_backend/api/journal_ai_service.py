@@ -4,11 +4,8 @@ Provides intelligent insights, analysis, and recommendations for journal entries
 """
 
 import logging
-from typing import Dict, List, Any, Optional
-from datetime import datetime, timedelta
-from django.utils import timezone
+from typing import Dict, List, Any
 from .gemini_service import gemini_service
-import re
 
 logger = logging.getLogger(__name__)
 
@@ -285,7 +282,7 @@ PROMPTS: [list each prompt on a new line, starting with "- "]
                 if line.startswith('SENTIMENT_SCORE:'):
                     try:
                         analysis['sentiment_score'] = float(line.split(':', 1)[1].strip())
-                    except:
+                    except (ValueError, IndexError):
                         analysis['sentiment_score'] = 0.0
                 elif line.startswith('KEY_THEMES:'):
                     themes = line.split(':', 1)[1].strip()
@@ -482,7 +479,7 @@ PROMPTS: [list each prompt on a new line, starting with "- "]
     # Fallback Methods
     def _get_fallback_analysis(self, content: str, title: str, category: str) -> Dict[str, Any]:
         """Fallback analysis when AI is unavailable"""
-        word_count = len(content.split())
+        len(content.split())
         
         # Simple keyword-based analysis
         positive_words = ['good', 'great', 'excellent', 'success', 'achieve', 'complete', 'learn']

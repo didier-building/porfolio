@@ -6,7 +6,7 @@ from .views import (
     CVGeneratorView, SkillGapAnalysisView, MarketTrendsView, CareerRecommendationsView,
     JournalEntryListCreateView, JournalInsightsView, JournalGoalSuggestionsView, JournalPromptsView
 )
-from .health import HealthCheckView, DetailedHealthCheckView, ReadinessCheckView, LivenessCheckView
+from .health import HealthCheckView
 from .document_views import DocumentViewSet, ExtractedDataViewSet
 
 router = DefaultRouter()

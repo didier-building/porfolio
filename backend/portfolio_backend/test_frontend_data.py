@@ -4,10 +4,8 @@ Test script to verify frontend data endpoints
 """
 
 import os
-import sys
 import django
 import requests
-import json
 
 # Setup Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_backend.settings')

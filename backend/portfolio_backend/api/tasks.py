@@ -37,7 +37,6 @@ def send_contact_email(contact_id: int) -> None:
 def process_career_document(document_id: str) -> dict:
     """Process uploaded career document"""
     import logging
-    from django.utils import timezone
 
     logger = logging.getLogger(__name__)
 

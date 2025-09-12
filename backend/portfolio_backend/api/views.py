@@ -1,5 +1,4 @@
 import logging
-import json
 from datetime import datetime, timedelta
 
 import requests
@@ -47,7 +46,7 @@ from .gemini_service import gemini_service
 from .cv_generator import cv_generator
 from .skill_recommender import skill_recommender
 from .journal_ai_service import journal_ai_service
-from .journal_models import JournalEntry, JournalGoal, JournalInsight, JournalTemplate
+from .journal_models import JournalEntry, JournalGoal
 
 logger = logging.getLogger(__name__)
 

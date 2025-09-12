@@ -11,7 +11,7 @@ from django.utils import timezone
 import logging
 
 from .throttles import AdminThrottle
-from .analytics import get_analytics_summary, track_event, AnalyticsEvent
+from .analytics import get_analytics_summary, track_event
 from ..views import (
     CareerInsightsView as BaseCareerInsightsView,
     SkillGapAnalysisView as BaseSkillGapAnalysisView,

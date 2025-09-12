@@ -6,12 +6,11 @@ Builds comprehensive professional profiles from processed career documents
 import logging
 from typing import Dict, List, Any, Optional
 from datetime import datetime
-from collections import defaultdict, Counter
+from collections import defaultdict
 
 from django.utils import timezone
-from django.db.models import Q
 
-from .models import CareerDocument, ProfessionalProfile, Project, Skill, Experience, Education
+from .models import CareerDocument, ProfessionalProfile
 
 logger = logging.getLogger(__name__)
 
