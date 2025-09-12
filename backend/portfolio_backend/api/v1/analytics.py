@@ -2,7 +2,6 @@
 Analytics tracking for recruiter microsite
 """
 
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,7 +9,6 @@ from django.utils import timezone
 from django.core.cache import cache
 import logging
 from typing import Dict, Any
-import json
 
 logger = logging.getLogger(__name__)
 
@@ -110,7 +108,7 @@ def get_analytics_summary() -> Dict[str, Any]:
     """Get analytics summary for admin dashboard"""
     try:
         # Get events from the last 24 hours
-        from datetime import datetime, timedelta
+        from datetime import timedelta
         
         now = timezone.now()
         hours = []

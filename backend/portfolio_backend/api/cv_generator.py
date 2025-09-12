@@ -3,11 +3,9 @@ AI-Powered CV Generator Service
 Generates customized CVs based on job descriptions and professional profile
 """
 
-import os
 import logging
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any
 from datetime import datetime
-from django.conf import settings
 from .gemini_service import gemini_service
 
 logger = logging.getLogger(__name__)
@@ -202,7 +200,7 @@ ATS_OPTIMIZATION: [Keywords and phrases optimized for Applicant Tracking Systems
                 return f"{start_date} - {end_date}"
             else:
                 return f"{start_date} - Present"
-        except:
+        except (ValueError, IndexError, AttributeError):
             return 'Present'
     
     def _calculate_customization_score(self, job_analysis: Dict, profile: Dict) -> int:

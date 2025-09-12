@@ -20,7 +20,7 @@ def admin_dashboard(request):
     # Get date ranges
     today = timezone.now().date()
     week_ago = today - timedelta(days=7)
-    month_ago = today - timedelta(days=30)
+    today - timedelta(days=30)
     
     # Analytics summary
     analytics_today = PortfolioAnalytics.objects.filter(date=today).first()

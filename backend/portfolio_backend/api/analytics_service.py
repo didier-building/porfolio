@@ -4,9 +4,8 @@ Comprehensive visitor analytics, engagement tracking, and performance metrics
 """
 
 import logging
-import json
-from typing import Dict, List, Any, Optional
-from datetime import datetime, timedelta
+from typing import Dict, List, Any
+from datetime import timedelta
 from django.utils import timezone
 from django.db import models
 from django.contrib.gis.geoip2 import GeoIP2

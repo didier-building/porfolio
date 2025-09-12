@@ -3,20 +3,15 @@ Professional Career Document Processing Pipeline
 Handles text extraction and structured data processing from career documents
 """
 
-import os
 import re
-import json
 import logging
 from typing import Dict, List, Any, Optional
-from datetime import datetime
-from pathlib import Path
 
 import PyPDF2
 import docx
-from django.conf import settings
 from django.utils import timezone
 
-from .models import CareerDocument, ProfessionalProfile
+from .models import CareerDocument
 
 logger = logging.getLogger(__name__)
 

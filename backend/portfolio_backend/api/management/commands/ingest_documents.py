@@ -3,7 +3,6 @@ Document Ingestion Management Command
 Automatically processes documents from the ingestion folder
 """
 
-import os
 import shutil
 import logging
 from pathlib import Path

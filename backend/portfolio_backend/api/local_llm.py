@@ -1,7 +1,6 @@
 import json
 import logging
 from pathlib import Path
-import os
 import requests
 from typing import List, Dict, Any, Optional
 

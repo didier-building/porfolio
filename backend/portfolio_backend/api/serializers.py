@@ -2,8 +2,7 @@ from rest_framework import serializers
 from .models import (
     Project, Skill, Experience, Education, Contact, Technology,
     SocialProfile, CommsDocument, Document, ExtractedData,
-    PortfolioAnalytics, JobMatchQuery, AIConversation,
-    CareerDocument, ProfessionalProfile
+    JobMatchQuery, CareerDocument, ProfessionalProfile
 )
 
 class TechnologySerializer(serializers.ModelSerializer):

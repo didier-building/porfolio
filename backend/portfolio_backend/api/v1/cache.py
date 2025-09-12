@@ -3,9 +3,7 @@ Caching utilities for recruiter microsite
 """
 
 import hashlib
-import json
 from django.core.cache import cache
-from django.conf import settings
 from typing import Optional, Dict, Any
 import logging
 
@@ -83,7 +81,6 @@ def get_portfolio_context_hash() -> str:
     # This would include projects, skills, experience data
     # For now, use a simple timestamp-based approach
     from django.utils import timezone
-    import time
     
     # Update this hash when portfolio content changes
     # For demo, we'll use a daily hash

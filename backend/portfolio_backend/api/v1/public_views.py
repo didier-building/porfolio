@@ -8,14 +8,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from django.utils import timezone
-from django.http import JsonResponse
 import logging
-import json
 
-from .throttles import FitAnalysisThrottle, ChatThrottle, get_throttle_response
+from .throttles import FitAnalysisThrottle, ChatThrottle
 from .cache import (
     cache_fit_analysis, get_cached_fit_analysis, 
-    redact_jd_for_logs, get_portfolio_context_hash
+    redact_jd_for_logs
 )
 from .analytics import track_event, AnalyticsEvent
 from ..gemini_service import gemini_service
@@ -156,7 +154,6 @@ Be specific, professional, and focus on demonstrable skills.
                 'generated_at': timezone.now().isoformat()
             }
             
-            current_section = None
             
             for line in lines:
                 line = line.strip()
@@ -167,7 +164,7 @@ Be specific, professional, and focus on demonstrable skills.
                     try:
                         score_text = line.split(':', 1)[1].strip()
                         analysis['score'] = int(''.join(filter(str.isdigit, score_text)))
-                    except:
+                    except (ValueError, IndexError):
                         analysis['score'] = 75  # Default
                 
                 elif line.startswith('SUMMARY:'):
