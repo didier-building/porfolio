@@ -51,62 +51,37 @@ const SkillCard: React.FC<{
   const levelColor = getSkillLevelColor(proficiency);
   
   return (
-    <div className="group relative bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700/50 rounded-lg p-3 hover:shadow-lg hover:border-teal-300 dark:hover:border-teal-500/50 transition-all duration-300 hover:scale-[1.02] transform-gpu h-32 flex flex-col">
+    <div className="group relative bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700/50 rounded-lg p-4 hover:shadow-lg hover:border-teal-300 dark:hover:border-teal-500/50 transition-all duration-300 hover:scale-[1.02] transform-gpu flex flex-col">
       {/* Glassmorphism effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-blue-500/5 dark:from-teal-500/10 dark:to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
       
       <div className="relative z-10 flex flex-col h-full">
-        {/* Header with title and level badge */}
-        <div className="flex items-start justify-between mb-2">
-          <div className="flex items-center space-x-2 min-w-0 flex-1">
-            <div className="flex-shrink-0">
-              <TechIcon name={name} />
-            </div>
-            <h4 className="font-semibold text-slate-900 dark:text-white text-xs leading-tight truncate">{name}</h4>
+        {/* Header with icon and title */}
+        <div className="flex items-center space-x-3 mb-3">
+          <div className="flex-shrink-0">
+            <TechIcon name={name} />
           </div>
-          <span className={`px-1.5 py-0.5 rounded-full text-xs font-medium flex-shrink-0 ml-1 ${levelColor}`}>
+          <h4 className="font-bold text-slate-900 dark:text-white text-sm leading-tight">{name}</h4>
+        </div>
+        
+        {/* Skill level badge - prominent */}
+        <div className="mb-3">
+          <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${levelColor}`}>
             {level}
           </span>
         </div>
         
-        {/* Progress Ring - smaller and centered */}
-        <div className="flex items-center justify-center flex-1 mb-2">
-          <div className="relative w-12 h-12">
-            <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
-              <path
-                className="text-slate-200 dark:text-slate-700"
-                stroke="currentColor"
-                strokeWidth="3"
-                fill="transparent"
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <path
-                className="text-teal-500"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeDasharray={`${proficiency}, 100`}
-                strokeLinecap="round"
-                fill="transparent"
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{proficiency}%</span>
-            </div>
-          </div>
-        </div>
-        
-        {/* Projects tooltip - compact at bottom */}
-        <div className="h-4 flex items-end">
-          {projectsUsed.length > 0 && (
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full">
-              <p className="text-xs text-slate-600 dark:text-slate-400 text-center leading-tight truncate">
-                Used in: {projectsUsed.slice(0, 1).join(', ')}
-                {projectsUsed.length > 1 && ` +${projectsUsed.length - 1}`}
+        {/* Projects tooltip - now always visible if projects exist */}
+        {projectsUsed.length > 0 && (
+          <div className="mt-auto">
+            <div className="group-hover:bg-slate-50 dark:group-hover:bg-slate-900/50 rounded-md p-2 transition-colors duration-300">
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-tight">
+                <span className="font-medium">Used in:</span> {projectsUsed.slice(0, 2).join(', ')}
+                {projectsUsed.length > 2 && ` +${projectsUsed.length - 2} more`}
               </p>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

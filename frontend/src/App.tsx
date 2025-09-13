@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { Navbar, Hero, About, Footer, ErrorBoundary } from './components';
+import { Navbar, Hero, About, Footer, ErrorBoundary, Services, TechnicalJournal } from './components';
 import AIAgentSecretary from './components/AIAgentSecretary';
 import ProjectCarousel from './components/ProjectCarousel';
 import RecruiterLanding from './pages/RecruiterLanding';
@@ -70,6 +70,12 @@ function App() {
         <main>
         <Hero />
         
+        <Services />
+        
+        <section id="about">
+          <About />
+        </section>
+        
         <section id="skills">
           <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
             <Skills />
@@ -86,9 +92,7 @@ function App() {
           <ProjectCarousel />
         </section>
         
-        <section id="about">
-          <About />
-        </section>
+        <TechnicalJournal />
         
         <section id="contact">
           <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
