@@ -18,16 +18,22 @@ interface Project {
   github_url?: string;
   live_url?: string;
   technologies: (Technology | string)[];
+  category?: string; // Add category for filtering
 }
 
 const ProjectCarousel: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState<number>(0);
+  const [activeFilter, setActiveFilter] = useState<string>('All');
 
   const maxRetries = 3;
+
+  // Filter categories
+  const filterCategories = ['All', 'Web', 'Blockchain', 'AI', 'IoT'];
 
   const fetchProjects = async () => {
     try {
@@ -41,7 +47,14 @@ const ProjectCarousel: React.FC = () => {
         throw new Error('Invalid projects data format');
       }
 
-      setProjects(projectsData);
+      // Add categories to projects based on title/description analysis
+      const categorizedProjects = projectsData.map((project: Project) => ({
+        ...project,
+        category: inferProjectCategory(project)
+      }));
+
+      setProjects(categorizedProjects);
+      setFilteredProjects(categorizedProjects);
       setError(null);
     } catch (err) {
       if (retryCount < maxRetries) {
@@ -52,23 +65,59 @@ const ProjectCarousel: React.FC = () => {
       }
       
       console.warn('API failed, using fallback projects data');
-      setProjects(fallbackProjects);
+      const categorizedFallback = fallbackProjects.map(project => ({
+        ...project,
+        category: inferProjectCategory(project)
+      }));
+      setProjects(categorizedFallback);
+      setFilteredProjects(categorizedFallback);
       setError(null);
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Infer project category based on title, description, and technologies
+  const inferProjectCategory = (project: Project): string => {
+    const text = `${project.title} ${project.description}`.toLowerCase();
+    const techs = project.technologies.map(t => typeof t === 'string' ? t : t.name).join(' ').toLowerCase();
+    
+    if (text.includes('blockchain') || text.includes('web3') || text.includes('smart contract') || techs.includes('ethereum') || techs.includes('solidity')) {
+      return 'Blockchain';
+    }
+    if (text.includes('ai') || text.includes('machine learning') || text.includes('neural') || techs.includes('tensorflow') || techs.includes('pytorch')) {
+      return 'AI';
+    }
+    if (text.includes('iot') || text.includes('sensor') || text.includes('arduino') || text.includes('raspberry')) {
+      return 'IoT';
+    }
+    return 'Web';
+  };
+
   useEffect(() => {
     fetchProjects();
   }, []);
 
+  // Filter projects when activeFilter changes
+  useEffect(() => {
+    if (activeFilter === 'All') {
+      setFilteredProjects(projects);
+    } else {
+      setFilteredProjects(projects.filter(project => project.category === activeFilter));
+    }
+    setCurrentIndex(0); // Reset to first project when filter changes
+  }, [activeFilter, projects]);
+
+  const handleFilterChange = (filter: string) => {
+    setActiveFilter(filter);
+  };
+
   const nextProject = () => {
-    setCurrentIndex((prev) => (prev + 1) % projects.length);
+    setCurrentIndex((prev) => (prev + 1) % filteredProjects.length);
   };
 
   const prevProject = () => {
-    setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
+    setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
   };
 
   const goToProject = (index: number) => {
@@ -77,11 +126,11 @@ const ProjectCarousel: React.FC = () => {
 
   // Auto-advance carousel every 8 seconds
   useEffect(() => {
-    if (projects.length <= 1) return;
+    if (filteredProjects.length <= 1) return;
     
     const interval = setInterval(nextProject, 8000);
     return () => clearInterval(interval);
-  }, [projects.length]);
+  }, [filteredProjects.length]);
 
   if (isLoading) {
     return (
@@ -97,15 +146,17 @@ const ProjectCarousel: React.FC = () => {
     );
   }
 
-  if (projects.length === 0) {
+  if (filteredProjects.length === 0) {
     return (
       <div className="text-center py-10">
-        <p className="text-slate-600 dark:text-slate-400">No projects found.</p>
+        <p className="text-slate-600 dark:text-slate-400">
+          {activeFilter === 'All' ? 'No projects found.' : `No ${activeFilter} projects found.`}
+        </p>
       </div>
     );
   }
 
-  const currentProject = projects[currentIndex];
+  const currentProject = filteredProjects[currentIndex];
 
   return (
     <section id="projects" className="py-20 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800">
@@ -119,9 +170,36 @@ const ProjectCarousel: React.FC = () => {
           <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-6">
             Featured <span className="text-gradient-teal">Projects</span>
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed mb-8">
             Explore my latest work showcasing full-stack development, AI integration, and production-ready solutions.
           </p>
+          
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap justify-center gap-3">
+            {filterCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleFilterChange(category)}
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 transform ${
+                  activeFilter === category
+                    ? 'bg-gradient-to-r from-teal-500 to-blue-600 text-white shadow-lg'
+                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+                }`}
+              >
+                {category}
+                {category !== 'All' && (
+                  <span className="ml-2 text-xs opacity-75">
+                    ({projects.filter(p => category === 'All' || p.category === category).length})
+                  </span>
+                )}
+                {category === 'All' && (
+                  <span className="ml-2 text-xs opacity-75">
+                    ({projects.length})
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Carousel Container */}
@@ -129,7 +207,7 @@ const ProjectCarousel: React.FC = () => {
           {/* Main Project Display */}
           <div className="relative overflow-hidden rounded-3xl shadow-2xl">
             <div className="flex transition-transform duration-700 ease-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-              {projects.map((project, index) => (
+              {filteredProjects.map((project, index) => (
                 <div key={project.id} className="w-full flex-shrink-0">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[500px] bg-white dark:bg-slate-900 p-8 lg:p-12">
                     {/* Project Image */}
@@ -252,7 +330,7 @@ const ProjectCarousel: React.FC = () => {
           </div>
 
           {/* Navigation Arrows */}
-          {projects.length > 1 && (
+          {filteredProjects.length > 1 && (
             <>
               <button
                 onClick={prevProject}
@@ -271,9 +349,9 @@ const ProjectCarousel: React.FC = () => {
         </div>
 
         {/* Project Indicators */}
-        {projects.length > 1 && (
+        {filteredProjects.length > 1 && (
           <div className="flex justify-center mt-8 space-x-2">
-            {projects.map((_, index) => (
+            {filteredProjects.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToProject(index)}
@@ -288,10 +366,13 @@ const ProjectCarousel: React.FC = () => {
         )}
 
         {/* Project Counter */}
-        {projects.length > 1 && (
+        {filteredProjects.length > 1 && (
           <div className="text-center mt-6">
             <p className="text-sm text-slate-500 dark:text-slate-400">
-              Project {currentIndex + 1} of {projects.length}
+              Project {currentIndex + 1} of {filteredProjects.length}
+              {activeFilter !== 'All' && (
+                <span className="ml-2 text-xs">({activeFilter} projects)</span>
+              )}
             </p>
           </div>
         )}

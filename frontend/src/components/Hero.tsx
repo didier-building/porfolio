@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Github, Twitter, Mail, Code, Briefcase } from 'lucide-react';
+import { ArrowDown, Github, Twitter, Mail, Code, Briefcase, Download } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
                 <span className="block text-gradient-teal">Didier</span>
               </h1>
               <p className="text-xl text-slate-600 dark:text-slate-300 font-medium">
-                Python | Django/DRF | Docker | Kubernetes
+                Building Intelligent Software & Web3 Solutions
               </p>
             </div>
 
@@ -75,18 +75,19 @@ const Hero: React.FC = () => {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <a 
-                href="#skills" 
+                href="/cv/Didier_Imanirahari_CV.pdf" 
+                download
                 className="btn-primary flex items-center justify-center gap-2"
               >
-                <Code size={20} />
-                View Skills
+                <Download size={20} />
+                Download CV
               </a>
               <a 
-                href="#contact" 
+                href="#projects" 
                 className="btn-secondary flex items-center justify-center gap-2"
               >
-                <Mail size={20} />
-                Get In Touch
+                <Briefcase size={20} />
+                View My Projects
               </a>
             </div>
             

@@ -15,6 +15,8 @@ export { default as Navbar } from './Navbar';
 export { default as Profiles } from './Profiles';
 export { default as ProjectBot } from './ProjectExplainerBot';
 export { default as Projects } from './Projects';
+export { default as Services } from './Services';
 export { default as Skills } from './Skills';
+export { default as TechnicalJournal } from './TechnicalJournal';
 export { default as ThemeToggle } from './ThemeToggle';
 export { default as Comms } from './Comms';
