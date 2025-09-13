@@ -24,6 +24,18 @@
     perspective: 1000px;
   }
 
+  .rotate-y-0 {
+    transform: rotateY(0deg);
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .transform-gpu {
+    transform: translateZ(0);
+  }
+
   .glass {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);

@@ -1,14 +1,12 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Navbar, Hero, About, Footer, ErrorBoundary } from './components';
+import AIAgentSecretary from './components/AIAgentSecretary';
+import ProjectCarousel from './components/ProjectCarousel';
 import RecruiterLanding from './pages/RecruiterLanding';
 
-const Projects = lazy(() => import('./components').then((m) => ({ default: m.Projects })));
 const Skills = lazy(() => import('./components').then((m) => ({ default: m.Skills })));
 const Experience = lazy(() => import('./components').then((m) => ({ default: m.Experience })));
 const Contact = lazy(() => import('./components').then((m) => ({ default: m.Contact })));
-const Journal = lazy(() => import('./components').then((m) => ({ default: m.Journal })));
-const JobMatch = lazy(() => import('./components').then((m) => ({ default: m.JobMatch })));
-const ProjectBot = lazy(() => import('./components').then((m) => ({ default: m.ProjectBot })));
 
 function App() {
   // Check if this is the recruiter microsite
@@ -22,9 +20,6 @@ function App() {
       '/skills': '#skills',
       '/experience': '#experience',
       '/contact': '#contact',
-      '/journal': '#journal',
-      '/ai/job-match': '#job-match',
-      '/ai/project-bot': '#project-bot',
     };
 
     const navigateToHash = (hash: string) => {
@@ -88,9 +83,7 @@ function App() {
         </section>
         
         <section id="projects">
-          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
-            <Projects />
-          </Suspense>
+          <ProjectCarousel />
         </section>
         
         <section id="about">
@@ -102,28 +95,12 @@ function App() {
             <Contact />
           </Suspense>
         </section>
-        
-        {/* AI Tools Section */}
-        <section id="journal" className="border-t border-slate-200 dark:border-slate-800">
-          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
-            <Journal />
-          </Suspense>
-        </section>
-        
-        <section id="job-match">
-          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
-            <JobMatch />
-          </Suspense>
-        </section>
-        
-        <section id="project-bot">
-          <Suspense fallback={<div className="flex justify-center items-center py-20"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div></div>}>
-            <ProjectBot />
-          </Suspense>
-        </section>
         </main>
 
         <Footer />
+        
+        {/* AI Agent Secretary - Single interactive assistant */}
+        <AIAgentSecretary />
       </div>
     </ErrorBoundary>
   );
