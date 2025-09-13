@@ -1,6 +1,6 @@
 import React from 'react';
 import { Code, Cloud, Database, Server, Layout, Terminal, Users, Wrench } from 'lucide-react';
-import { useSkills } from '../hooks/useSkills';
+import { fallbackSkills } from '../data/projectsData';
 
 // Skill level helpers
 const getSkillLevel = (proficiency: number): string => {
@@ -24,13 +24,19 @@ const TechIcon: React.FC<{ name: string }> = ({ name }) => {
   const icons: Record<string, React.ReactNode> = {
     'Python': <div className={iconClass}>🐍</div>,
     'Django': <div className={iconClass}>🎸</div>,
+    'Django REST Framework': <div className={iconClass}>🎸</div>,
     'React': <div className={iconClass}>⚛️</div>,
     'TypeScript': <div className={iconClass}>📘</div>,
+    'JavaScript': <div className={iconClass}>📜</div>,
     'PostgreSQL': <div className={iconClass}>🐘</div>,
+    'MySQL': <div className={iconClass}>🐬</div>,
     'Docker': <div className={iconClass}>🐳</div>,
     'Kubernetes': <div className={iconClass}>☸️</div>,
     'Git/GitHub': <div className={iconClass}>🔧</div>,
     'Linux': <div className={iconClass}>🐧</div>,
+    'Tailwind CSS': <div className={iconClass}>🎨</div>,
+    'FastAPI': <div className={iconClass}>⚡</div>,
+    'Celery': <div className={iconClass}>🌾</div>,
   };
   
   return icons[name] || <div className={iconClass}>⚡</div>;
@@ -145,17 +151,8 @@ const SkillCategory: React.FC<{
 };
 
 const Skills: React.FC = () => {
-  const { skills, loading, error } = useSkills();
-  
-  if (loading) return (
-    <div className="flex justify-center items-center py-20">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
-    </div>
-  );
-  
-  if (error) return (
-    <div className="text-center py-10 text-red-500">{error}</div>
-  );
+  // Use fallback skills directly for now since API is not working
+  const skills = fallbackSkills;
   
   // Enhanced skill categorization with better names
   const categoryMapping: Record<string, string> = {
