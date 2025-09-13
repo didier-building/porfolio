@@ -121,42 +121,42 @@ const AIAgentSecretary: React.FC = () => {
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`group relative p-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 ${
+          className={`group relative p-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95 ${
             isOpen
               ? 'bg-red-500 hover:bg-red-600'
               : 'bg-gradient-to-br from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700'
           }`}
         >
-          {/* Pulsing ring animation */}
+          {/* Reduced pulsing ring animation */}
           {!isOpen && (
-            <div className="absolute inset-0 rounded-full bg-teal-400 animate-ping opacity-20" />
+            <div className="absolute inset-0 rounded-full bg-teal-400 animate-ping opacity-15" />
           )}
           
           {/* Icon with smooth rotation */}
           <div className="relative z-10 text-white transition-transform duration-300">
             {isOpen ? (
-              <X size={24} className="transform rotate-0 group-hover:rotate-90 transition-transform duration-300" />
+              <X size={20} className="transform rotate-0 group-hover:rotate-90 transition-transform duration-300" />
             ) : (
-              <MessageCircle size={24} className="transform group-hover:rotate-12 transition-transform duration-300" />
+              <MessageCircle size={20} className="transform group-hover:rotate-12 transition-transform duration-300" />
             )}
           </div>
 
-          {/* Sparkle effects */}
+          {/* Reduced sparkle effects */}
           {!isOpen && (
             <>
               <Sparkles 
-                size={12} 
-                className="absolute -top-1 -right-1 text-amber-300 animate-pulse" 
+                size={10} 
+                className="absolute -top-0.5 -right-0.5 text-amber-300 animate-pulse" 
               />
-              <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-amber-300 rounded-full animate-pulse" />
+              <div className="absolute -bottom-0.5 -left-0.5 w-1.5 h-1.5 bg-amber-300 rounded-full animate-pulse" />
             </>
           )}
         </button>
       </div>
 
-      {/* Chat Window */}
+      {/* Chat Window - Made more compact */}
       <div
-        className={`fixed bottom-24 right-6 z-40 w-96 h-[500px] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 transition-all duration-500 transform ${
+        className={`fixed bottom-20 right-6 z-40 w-80 h-[420px] bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 transition-all duration-500 transform ${
           isOpen
             ? 'translate-y-0 opacity-100 scale-100'
             : 'translate-y-8 opacity-0 scale-95 pointer-events-none'
@@ -179,7 +179,7 @@ const AIAgentSecretary: React.FC = () => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 h-80">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 h-64">
           {messages.map((message, index) => (
             <div
               key={index}

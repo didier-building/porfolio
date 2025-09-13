@@ -51,23 +51,26 @@ const SkillCard: React.FC<{
   const levelColor = getSkillLevelColor(proficiency);
   
   return (
-    <div className="group relative bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 hover:shadow-lg hover:border-teal-300 dark:hover:border-teal-500/50 transition-all duration-300 hover:scale-[1.02] transform-gpu">
+    <div className="group relative bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 hover:shadow-lg hover:border-teal-300 dark:hover:border-teal-500/50 transition-all duration-300 hover:scale-[1.02] transform-gpu h-48 flex flex-col">
       {/* Glassmorphism effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-blue-500/5 dark:from-teal-500/10 dark:to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
       
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center space-x-3">
-            <TechIcon name={name} />
-            <h4 className="font-semibold text-slate-900 dark:text-white">{name}</h4>
+      <div className="relative z-10 flex flex-col h-full">
+        {/* Header with title and level badge */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center space-x-3 min-w-0 flex-1">
+            <div className="flex-shrink-0">
+              <TechIcon name={name} />
+            </div>
+            <h4 className="font-semibold text-slate-900 dark:text-white text-sm leading-tight truncate">{name}</h4>
           </div>
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${levelColor}`}>
+          <span className={`px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ml-2 ${levelColor}`}>
             {level}
           </span>
         </div>
         
-        {/* Progress Ring */}
-        <div className="flex items-center justify-center mb-3">
+        {/* Progress Ring - centered and consistent */}
+        <div className="flex items-center justify-center flex-1 mb-4">
           <div className="relative w-16 h-16">
             <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
               <path
@@ -93,15 +96,17 @@ const SkillCard: React.FC<{
           </div>
         </div>
         
-        {/* Tooltip on hover */}
-        {projectsUsed.length > 0 && (
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
-              Used in: {projectsUsed.slice(0, 2).join(', ')}
-              {projectsUsed.length > 2 && ` +${projectsUsed.length - 2} more`}
-            </p>
-          </div>
-        )}
+        {/* Projects tooltip - always positioned at bottom */}
+        <div className="h-8 flex items-end">
+          {projectsUsed.length > 0 && (
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full">
+              <p className="text-xs text-slate-600 dark:text-slate-400 text-center leading-tight">
+                Used in: {projectsUsed.slice(0, 2).join(', ')}
+                {projectsUsed.length > 2 && ` +${projectsUsed.length - 2} more`}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -128,15 +133,22 @@ const SkillCategory: React.FC<{
   };
   
   return (
-    <div className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300">
-      <div className="flex items-center mb-6">
-        <div className="mr-4 p-3 bg-teal-100 dark:bg-teal-900/30 rounded-xl text-teal-600 dark:text-teal-400">
+    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300">
+      {/* Category Header with enhanced styling */}
+      <div className="flex items-center mb-8 pb-4 border-b border-slate-200 dark:border-slate-700">
+        <div className="mr-4 p-3 bg-gradient-to-br from-teal-100 to-blue-100 dark:from-teal-900/40 dark:to-blue-900/40 rounded-xl text-teal-600 dark:text-teal-400 shadow-sm">
           {icon}
         </div>
-        <h3 className="text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
+        <div>
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{title}</h3>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            {skills.length} skill{skills.length !== 1 ? 's' : ''}
+          </p>
+        </div>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Improved responsive grid with consistent spacing */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 auto-rows-fr">
         {skills.map((skill, index) => (
           <SkillCard
             key={index}
@@ -212,7 +224,8 @@ const Skills: React.FC = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Improved grid layout with better spacing */}
+        <div className="space-y-12">
           {skillCategories.map((category, index) => (
             <SkillCategory
               key={index}
@@ -224,7 +237,7 @@ const Skills: React.FC = () => {
         </div>
         
         {/* Call to action */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
             <span className="text-slate-600 dark:text-slate-400">Want to see these skills in action?</span>
             <a 
