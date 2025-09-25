@@ -1,4 +1,5 @@
 // Terminal Portfolio Components
+export { AISecretary } from './AISecretary';
 export { TerminalFrame } from './TerminalFrame';
 export { SectionTitle } from './SectionTitle';
 export { TechChip } from './TechChip';

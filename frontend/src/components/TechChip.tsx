@@ -54,11 +54,7 @@ export function TechChip({
       title={proficiency ? `${name} - ${getProficiencyLevel(proficiency)} (${proficiency}%)` : name}
     >
       <span className="text-terminal-text">{name}</span>
-      {proficiency && (
-        <span className="text-xs text-terminal-text-dim">
-          {proficiency}%
-        </span>
-      )}
+
     </button>
   )
 }

@@ -51,7 +51,6 @@ services:
         condition: service_healthy
     volumes:
       - static_files:/app/staticfiles
-      - media_files:/app/media
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
       interval: 30s
@@ -73,4 +72,3 @@ volumes:
   postgres_data:
   redis_data:
   static_files:
-  media_files:

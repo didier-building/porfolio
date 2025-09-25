@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
@@ -11,12 +11,13 @@ RUN npm ci --only=production
 # Copy source code
 COPY . .
 
-# Build application
+# Build Next.js application
 RUN npm run build
 
-# Use nginx to serve static files
+# Production image with nginx
 FROM nginx:alpine
-COPY --from=0 /app/dist /usr/share/nginx/html
+COPY --from=builder /app/.next/static /usr/share/nginx/html/_next/static
+COPY --from=builder /app/public /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80

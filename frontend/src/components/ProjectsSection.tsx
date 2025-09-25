@@ -1,14 +1,46 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { SectionTitle } from './SectionTitle'
 import { CaseCard } from './CaseCard'
-import { portfolioData } from '@/data/portfolio'
+
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image_url: string;
+  image: string;
+  technologies: string[];
+  category: 'web' | 'cloud' | 'blockchain';
+  github_link: string | null;
+  live_demo: string | null;
+  links: {
+    github: string | null;
+    live: string | null;
+  };
+}
 
 export function ProjectsSection() {
   const searchParams = useSearchParams()
-  const { projects } = portfolioData
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/projects/')
+        const data = await response.json()
+        setProjects(data.results || [])
+      } catch (error) {
+        console.error('Failed to fetch projects:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProjects()
+  }, [])
 
   // Get selected skills from URL
   const selectedSkills = useMemo(() => {
@@ -32,6 +64,10 @@ export function ProjectsSection() {
     )
   }, [projects, selectedSkills])
 
+  if (loading) {
+    return <div className="text-terminal-text-dim">Loading projects...</div>
+  }
+
   return (
     <section id="projects" className="py-16">
       <SectionTitle cmd="ls projects/" />
@@ -50,7 +86,7 @@ export function ProjectsSection() {
             </div>
           ) : (
             <div>
-              <span className="text-terminal-accent">Total projects:</span> {projects.length}
+              <span className="text-terminal-accent">Showing:</span> {projects.length} projects
             </div>
           )}
         </div>

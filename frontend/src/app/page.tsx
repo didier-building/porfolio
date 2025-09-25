@@ -9,6 +9,7 @@ import { SkillsSection } from '@/components/SkillsSection'
 import { ExperienceSection } from '@/components/ExperienceSection'
 import { ProjectsSection } from '@/components/ProjectsSection'
 import { ContactSection } from '@/components/ContactSection'
+import { AISecretary } from '@/components/AISecretary'
 import { initTheme } from '@/lib/utils'
 
 function PortfolioContent() {
@@ -55,6 +56,9 @@ function PortfolioContent() {
           </div>
         </footer>
       </div>
+      
+      {/* AI Secretary - Floating Chat */}
+      <AISecretary />
     </TerminalFrame>
   )
 }

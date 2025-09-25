@@ -4,13 +4,37 @@ import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { SectionTitle } from './SectionTitle'
 import { TechChip } from './TechChip'
-import { portfolioData } from '@/data/portfolio'
+
+interface Skill {
+  id: number;
+  name: string;
+  category: string;
+  proficiency: number;
+}
 
 export function SkillsSection() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [selectedSkills, setSelectedSkills] = useState<string[]>([])
-  const { skills } = portfolioData
+  const [skills, setSkills] = useState<Skill[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Fetch skills from backend
+  useEffect(() => {
+    async function fetchSkills() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/skills/')
+        const data = await response.json()
+        setSkills(data.results || [])
+      } catch (error) {
+        console.error('Failed to fetch skills:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchSkills()
+  }, [])
 
   // Group skills by category
   const skillsByCategory = skills.reduce((acc, skill) => {
@@ -52,6 +76,10 @@ export function SkillsSection() {
   const clearSelection = () => {
     setSelectedSkills([])
     updateSkillsInUrl([])
+  }
+
+  if (loading) {
+    return <div className="text-terminal-text-dim">Loading skills...</div>
   }
 
   return (
@@ -106,7 +134,7 @@ export function SkillsSection() {
 
         <div className="mt-8 text-terminal-text-dim font-mono text-sm">
           <span className="text-terminal-accent">$</span> skills --help: Click any skill to filter projects. 
-          Proficiency levels: Expert (90%+), Advanced (75%+), Intermediate (50%+)
+          Proficiency levels: Expert, Advanced, Intermediate
         </div>
       </div>
     </section>

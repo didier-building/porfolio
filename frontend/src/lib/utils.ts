@@ -13,10 +13,11 @@ export function getTheme() {
 export function setTheme(theme: 'light' | 'dark') {
   if (typeof window === 'undefined') return
   localStorage.setItem('theme', theme)
+  const html = document.documentElement
   if (theme === 'dark') {
-    document.documentElement.classList.add('dark')
+    html.classList.add('dark')
   } else {
-    document.documentElement.classList.remove('dark')
+    html.classList.remove('dark')
   }
 }
 
@@ -24,4 +25,10 @@ export function initTheme() {
   if (typeof window === 'undefined') return
   const theme = getTheme()
   setTheme(theme as 'light' | 'dark')
+  // Also set initial class on html element
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
 }
