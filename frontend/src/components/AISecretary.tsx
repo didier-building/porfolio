@@ -22,7 +22,7 @@ export function AISecretary({ className = '' }: AISecretaryProps) {
     {
       id: 'welcome',
       role: 'assistant',
-      content: "Hello! I'm Didier's AI secretary. I can help you learn about his experience, projects, skills, and services. Use the quick questions below or ask me anything!",
+      content: "Hello! I&apos;m Didier&apos;s AI secretary. I can help you learn about his experience, projects, skills, and services. Use the quick questions below or ask me anything!",
       timestamp: new Date().toISOString()
     }
   ])
@@ -141,7 +141,7 @@ export function AISecretary({ className = '' }: AISecretaryProps) {
       {
         id: 'welcome',
         role: 'assistant',
-        content: "Hello! I'm Didier's AI secretary. I can help you learn about his experience, projects, skills, and services. Use the quick questions below or ask me anything!",
+        content: "Hello! I&apos;m Didier&apos;s AI secretary. I can help you learn about his experience, projects, skills, and services. Use the quick questions below or ask me anything!",
         timestamp: new Date().toISOString()
       }
     ])
@@ -179,7 +179,7 @@ export function AISecretary({ className = '' }: AISecretaryProps) {
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
             </div>
             <div>
-              <h3 className="font-mono text-terminal-text font-semibold">Didier's Secretary</h3>
+              <h3 className="font-mono text-terminal-text font-semibold">Didier&apos;s Secretary</h3>
               <p className="text-xs text-terminal-text-dim">AI Assistant</p>
             </div>
           </div>
@@ -268,7 +268,7 @@ export function AISecretary({ className = '' }: AISecretaryProps) {
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Ask about Didier's work, projects, or skills..."
+                  placeholder="Ask about Didier&apos;s work, projects, or skills..."
                   className="flex-1 bg-terminal-bg-light dark:bg-terminal-bg-light border border-terminal-border dark:border-terminal-border rounded-md px-3 py-2 text-terminal-text dark:text-terminal-text placeholder-terminal-text-dim dark:placeholder-terminal-text-dim font-mono text-sm focus:outline-none focus:ring-2 focus:ring-terminal-accent/50 focus:border-terminal-accent dark:focus:border-terminal-accent"
                   disabled={isLoading}
                   maxLength={1000}

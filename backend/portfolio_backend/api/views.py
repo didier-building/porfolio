@@ -5,6 +5,9 @@ from django.utils.decorators import method_decorator
 from django_ratelimit.decorators import ratelimit
 from django.core.mail import send_mail
 from django.conf import settings
+import logging
+
+logger = logging.getLogger('api')
 
 from .models import (
     Project, Skill, Experience, Education, Contact,
@@ -66,50 +69,55 @@ class ContactViewSet(viewsets.ModelViewSet):
 
     @method_decorator(ratelimit(key="ip", rate="5/m", method="POST", block=True))
     def create(self, request, *args, **kwargs):
-        # Basic honeypot check
-        if request.data.get("website"):
-            return Response({"message": "Spam detected"}, status=400)
-
         # Basic validation
         required_fields = ['name', 'email', 'message']
         for field in required_fields:
             if not request.data.get(field, '').strip():
                 return Response({"message": f"{field.title()} is required"}, status=400)
 
-        # Enhanced tracking
+        # Honeypot check
+        if request.data.get("website"):
+            return Response({"message": "Spam detected"}, status=400)
+
+        # Log contact attempt
+        ip_address = request.META.get('HTTP_X_FORWARDED_FOR', 
+                                    request.META.get('REMOTE_ADDR', 'unknown'))
+        logger.info(f"Contact form submission from {ip_address}: {request.data.get('email')}")
+        
+        # Create contact
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            # Add tracking information
-            contact = serializer.save(
-                ip_address=request.META.get('HTTP_X_FORWARDED_FOR', 
-                                          request.META.get('REMOTE_ADDR')),
-                user_agent=request.META.get('HTTP_USER_AGENT', '')
-            )
-            
-            # Send email notification
-            try:
-                send_mail(
-                    subject=f"Portfolio Contact: {contact.name}",
-                    message=f"Name: {contact.name}\nEmail: {contact.email}\n\nMessage:\n{contact.message}",
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.ADMIN_EMAIL],
-                    fail_silently=False,
+                # Add tracking information
+                contact = serializer.save(
+                    ip_address=request.META.get('HTTP_X_FORWARDED_FOR', 
+                                              request.META.get('REMOTE_ADDR')),
+                    user_agent=request.META.get('HTTP_USER_AGENT', '')
                 )
-            except Exception as e:
-                print(f"Email sending failed: {e}")
+                
+                # Send email notification
+                try:
+                    send_mail(
+                        subject=f"Portfolio Contact: {contact.name}",
+                        message=f"Name: {contact.name}\nEmail: {contact.email}\n\nMessage:\n{contact.message}",
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[settings.ADMIN_EMAIL],
+                        fail_silently=False,
+                    )
+                except Exception as e:
+                    print(f"Email sending failed: {e}")
+                
+                # Update analytics
+                from datetime import date
+                analytics, created = self.get_analytics_model().objects.get_or_create(
+                    date=date.today(),
+                    defaults={'contact_submissions': 1}
+                )
+                if not created:
+                    analytics.contact_submissions += 1
+                    analytics.save()
+                
+                return Response({"message": "Message sent successfully"}, status=201)
             
-            # Update analytics
-            from datetime import date
-            analytics, created = self.get_analytics_model().objects.get_or_create(
-                date=date.today(),
-                defaults={'contact_submissions': 1}
-            )
-            if not created:
-                analytics.contact_submissions += 1
-                analytics.save()
-            
-            return Response({"message": "Message sent successfully"}, status=201)
-        
         return Response(serializer.errors, status=400)
     
     def get_analytics_model(self):

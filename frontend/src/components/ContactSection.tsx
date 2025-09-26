@@ -4,6 +4,43 @@ import React, { useState } from 'react'
 import { Mail, Github, Copy, Send, Loader2 } from 'lucide-react'
 import { SectionTitle } from './SectionTitle'
 import { portfolioData } from '@/data/portfolio'
+// Security utilities
+const sanitizeInput = (input: any) => {
+  if (typeof input !== 'string') return input;
+  return input
+    .replace(/[<>]/g, '')
+    .replace(/javascript:/gi, '')
+    .replace(/on\w+=/gi, '')
+    .trim();
+};
+
+class RateLimiter {
+  constructor() {
+    this.requests = new Map();
+  }
+  
+  isAllowed(key, limit = 5, windowMs = 60000) {
+    const now = Date.now();
+    const windowStart = now - windowMs;
+    
+    if (!this.requests.has(key)) {
+      this.requests.set(key, []);
+    }
+    
+    const requests = this.requests.get(key);
+    const validRequests = requests.filter(time => time > windowStart);
+    
+    if (validRequests.length >= limit) {
+      return false;
+    }
+    
+    validRequests.push(now);
+    this.requests.set(key, validRequests);
+    return true;
+  }
+}
+
+const rateLimiter = new RateLimiter();
 
 interface ContactFormData {
   name: string
@@ -43,8 +80,29 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    // Rate limiting check
+    const clientId = 'contact_form';
+    if (!rateLimiter.isAllowed(clientId, 3, 300000)) {
+      setSubmitStatus('error')
+      return
+    }
+    
+    // Input sanitization
+    const sanitizedData = {
+      name: sanitizeInput(formData.name.trim()),
+      email: sanitizeInput(formData.email.trim()),
+      message: sanitizeInput(formData.message.trim())
+    }
+    
     // Basic validation
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+    if (!sanitizedData.name || !sanitizedData.email || !sanitizedData.message) {
+      setSubmitStatus('error')
+      return
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(sanitizedData.email)) {
       setSubmitStatus('error')
       return
     }
@@ -64,11 +122,7 @@ export function ContactSection() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          message: formData.message.trim(),
-        }),
+        body: JSON.stringify(sanitizedData),
       })
 
       if (response.ok) {

@@ -175,7 +175,7 @@ export async function POST(request: NextRequest) {
     try {
       // Get the generative model with safety settings
       const model = ai.getGenerativeModel({ 
-        model: 'gemini-1.5-flash',
+        model: 'gemini-2.0-flash',
         generationConfig: {
           temperature: 0.7,
           topP: 0.8,
