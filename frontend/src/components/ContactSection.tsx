@@ -15,11 +15,13 @@ const sanitizeInput = (input: any) => {
 };
 
 class RateLimiter {
+  private requests: Map<string, number[]>;
+  
   constructor() {
     this.requests = new Map();
   }
   
-  isAllowed(key, limit = 5, windowMs = 60000) {
+  isAllowed(key: string, limit = 5, windowMs = 60000): boolean {
     const now = Date.now();
     const windowStart = now - windowMs;
     
@@ -27,8 +29,8 @@ class RateLimiter {
       this.requests.set(key, []);
     }
     
-    const requests = this.requests.get(key);
-    const validRequests = requests.filter(time => time > windowStart);
+    const requests = this.requests.get(key) || [];
+    const validRequests = requests.filter((time: number) => time > windowStart);
     
     if (validRequests.length >= limit) {
       return false;
