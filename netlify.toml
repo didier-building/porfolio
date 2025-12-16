@@ -6,11 +6,12 @@
   command = "npm install && npm run build"
   
   # Directory that contains the deploy-ready HTML files and assets
+  # Path is relative to the base directory (frontend/.next)
   publish = ".next"
 
 [build.environment]
   # Node.js version for the build
-  NODE_VERSION = "18"
+  NODE_VERSION = "18.20.0"
 
 # Use Netlify's Next.js Runtime for proper Next.js support
 [[plugins]]
