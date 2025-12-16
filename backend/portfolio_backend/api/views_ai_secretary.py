@@ -88,16 +88,16 @@ class AISecretaryChatView(APIView):
         message_lower = message.lower()
         
         if any(word in message_lower for word in ['hello', 'hi', 'hey']):
-            return "Hello! I'm Didier's AI secretary. I can help you learn about his experience, projects, and skills. What would you like to know?"
+            return "Hello! I'm Didier's AI secretary. I can help you learn about his backend development experience, testing expertise, and projects. What would you like to know?"
         
         elif any(word in message_lower for word in ['projects', 'work', 'portfolio']):
-            return "Didier has worked on several projects including an AI-Enhanced Portfolio Platform, Order & Inventory Management System, and Blockchain Agricultural Supply Chain. He specializes in Python/Django backend development and React frontend. Which type of project interests you?"
+            return "Didier has worked on several projects including Order & Inventory Management System, Career Compass Platform, and Blockchain Agricultural Supply Chain. He specializes in Python/Django backend development with rigorous testing using PyTest and Unittest. Which type of project interests you?"
         
         elif any(word in message_lower for word in ['skills', 'technologies', 'tech']):
-            return "Didier's core skills include Python/Django (90%+), React/TypeScript (85%+), PostgreSQL, Docker, and Web3 technologies. He's particularly strong in backend development and full-stack solutions. What specific technology are you interested in?"
+            return "Didier's core skills include Python/Django (90%+), PyTest/Unittest (90%+), PostgreSQL, Docker/Kubernetes, CI/CD Pipelines, and Technical Documentation. He's particularly strong in backend development and comprehensive testing strategies. What specific technology are you interested in?"
         
         elif any(word in message_lower for word in ['contact', 'hire', 'available', 'work with']):
-            return "Didier is available for freelance and contract work! He specializes in backend development, full-stack applications, and Web3 solutions. You can reach him directly at didier53053@gmail.com to discuss your project requirements."
+            return "Didier is available for backend development and technical support work! He specializes in scalable APIs, comprehensive testing, and technical documentation. You can reach him directly at didier53053@gmail.com to discuss your project requirements."
         
         else:
             return f"I'd be happy to help you learn more about Didier's work! You asked about '{message}' - I can tell you about his projects, technical skills, experience, or how to contact him for work opportunities. What would you like to know?"

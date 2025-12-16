@@ -38,10 +38,10 @@ export interface Service {
 export const portfolioData = {
   personal: {
     name: "Didier Imanirahari",
-    role: "Backend/Full-Stack Engineer",
-    summary: "Building Intelligent Software & Web3 Solutions",
+    role: "Python Engineer | Backend & Testing Specialist",
+    summary: "Building Scalable Backend Solutions with Rigorous Testing",
     email: "didier53053@gmail.com",
-    location: "Kigali/Remote",
+    location: "Kigali, Rwanda",
     cv: "/cv/Didier_Imanirahari_CV.pdf",
     github: "https://github.com/didier-building",
     linkedin: "https://linkedin.com/in/didier-imanirahari",
@@ -163,120 +163,121 @@ export const portfolioData = {
     { id: 1, name: "Python", category: "Backend Development", proficiency: 95 },
     { id: 2, name: "Django", category: "Backend Development", proficiency: 90 },
     { id: 3, name: "Django REST Framework", category: "Backend Development", proficiency: 90 },
-    { id: 4, name: "FastAPI", category: "Backend Development", proficiency: 70 },
-    { id: 5, name: "REST/Webhooks", category: "Backend Development", proficiency: 85 },
-    { id: 6, name: "Celery", category: "Backend Development", proficiency: 80 },
-    { id: 7, name: "PyTest/UnitTest", category: "Backend Development", proficiency: 85 },
+    { id: 4, name: "SQL", category: "Backend Development", proficiency: 85 },
+    { id: 5, name: "REST APIs", category: "Backend Development", proficiency: 85 },
+    { id: 6, name: "Bash", category: "Backend Development", proficiency: 80 },
     
-    // Frontend Development
-    { id: 8, name: "React", category: "Frontend Development", proficiency: 85 },
-    { id: 9, name: "TypeScript", category: "Frontend Development", proficiency: 90 },
-    { id: 10, name: "JavaScript", category: "Frontend Development", proficiency: 85 },
-    { id: 11, name: "Tailwind CSS", category: "Frontend Development", proficiency: 90 },
-    { id: 12, name: "HTML/CSS", category: "Frontend Development", proficiency: 95 },
-    { id: 13, name: "Next.js", category: "Frontend Development", proficiency: 75 },
+    // Testing & Quality
+    { id: 7, name: "PyTest", category: "Testing & Quality", proficiency: 90 },
+    { id: 8, name: "Unittest", category: "Testing & Quality", proficiency: 90 },
+    { id: 9, name: "Integration Testing", category: "Testing & Quality", proficiency: 85 },
+    { id: 10, name: "Debugging", category: "Testing & Quality", proficiency: 90 },
+    { id: 11, name: "TDD", category: "Testing & Quality", proficiency: 85 },
+    { id: 12, name: "Code Review", category: "Testing & Quality", proficiency: 85 },
     
     // Database & Storage
-    { id: 14, name: "PostgreSQL", category: "Database & Storage", proficiency: 85 },
-    { id: 15, name: "MySQL", category: "Database & Storage", proficiency: 80 },
-    { id: 16, name: "Redis", category: "Database & Storage", proficiency: 75 },
-    { id: 17, name: "SQLite", category: "Database & Storage", proficiency: 85 },
+    { id: 13, name: "PostgreSQL", category: "Database & Storage", proficiency: 85 },
+    { id: 14, name: "MySQL", category: "Database & Storage", proficiency: 80 },
+    { id: 15, name: "Database Optimization", category: "Database & Storage", proficiency: 80 },
     
     // DevOps & Cloud
-    { id: 18, name: "Docker", category: "DevOps & Cloud", proficiency: 85 },
-    { id: 19, name: "Kubernetes", category: "DevOps & Cloud", proficiency: 70 },
-    { id: 20, name: "GitHub Actions", category: "DevOps & Cloud", proficiency: 80 },
-    { id: 21, name: "Linux", category: "DevOps & Cloud", proficiency: 85 },
-    { id: 22, name: "Nginx", category: "DevOps & Cloud", proficiency: 75 },
+    { id: 16, name: "Docker", category: "DevOps & Cloud", proficiency: 85 },
+    { id: 17, name: "Kubernetes", category: "DevOps & Cloud", proficiency: 70 },
+    { id: 18, name: "CI/CD Pipelines", category: "DevOps & Cloud", proficiency: 80 },
+    { id: 19, name: "Linux Administration", category: "DevOps & Cloud", proficiency: 85 },
+    { id: 20, name: "Git/GitHub", category: "DevOps & Cloud", proficiency: 90 },
     
-    // Tools & Methodologies
-    { id: 23, name: "Git/GitHub", category: "Tools & Methodologies", proficiency: 90 },
-    { id: 24, name: "VS Code", category: "Tools & Methodologies", proficiency: 95 },
-    { id: 25, name: "Postman", category: "Tools & Methodologies", proficiency: 85 },
-    { id: 26, name: "Agile/Scrum", category: "Tools & Methodologies", proficiency: 80 },
+    // Documentation
+    { id: 21, name: "Technical Writing", category: "Documentation", proficiency: 90 },
+    { id: 22, name: "API Documentation", category: "Documentation", proficiency: 85 },
   ] as Skill[],
 
   experience: [
     {
-      date: '2021 – Present',
-      title: 'Backend/Full-Stack Engineer',
-      organization: 'Independent/Contract · Kigali/Remote',
+      date: '2024 – Present',
+      title: 'Software Engineer & Technical Support',
+      organization: 'Bittwork Technologies Ltd · Kigali, Rwanda',
       description: [
-        'Designed and implemented Order & Inventory API (Django/DRF, PostgreSQL) with idempotent endpoints, Celery workers, and OpenAPI documentation',
-        'Built Ops & Customer Support Dashboard (React/TypeScript, Tailwind) with server-side filtering, JWT auth, and exception workflows',
-        'Enhanced DevEx with reusable workflows, pre-commit hooks, and ADRs - reduced onboarding from ~1 day to under 30 minutes',
-        'Practiced Kubernetes deployments using Deployments/Services/Ingress with blue/green rollouts',
-        'Collaborated with stakeholders to translate requirements into stable interfaces and delivery plans'
+        'Serving as a key technical resource for diagnosing and resolving complex code defects and system failures',
+        'Developing scalable APIs using Django and implementing automated testing workflows to ensure solution verification',
+        'Maintaining detailed technical documentation for root cause tracking, ensuring clarity and reproducibility of issues',
+        'Optimizing Python code performance and database queries to handle increased load efficiently'
+      ],
+      type: 'work' as const,
+    },
+    {
+      date: '2021 – 2024',
+      title: 'Independent Python Developer',
+      organization: 'Freelance · Remote',
+      description: [
+        'Architected and maintained modular backend systems for diverse clients, acting as the primary engineer for the full development lifecycle',
+        'Wrote comprehensive unit and integration tests to validate business logic and edge cases for custom Python applications',
+        'Refactored legacy codebases to improve readability and reliability, establishing strict coding standards',
+        'Provided deployment support and detailed technical guides for remote teams'
       ],
       type: 'work' as const,
     },
     {
       date: '2025',
-      title: 'Team Lead',
+      title: 'Team Lead & Backend Developer',
       organization: 'GDG Kigali Hackathon (NLPAY Academy)',
       description: [
-        'Led cross-functional team building AI learning platform in Kinyarwanda',
-        'Shipped demo backend and React client with coordinated Git workflows',
-        'Recognized for innovation and local impact in AI education'
+        'Led the development of an AI-powered platform, focusing on the accuracy and reliability of content delivery algorithms',
+        'Engineered a robust Django backend and implemented test cases to verify the integrity of translation integrations'
       ],
       type: 'work' as const,
     },
     {
-      date: '2024 – 2025',
-      title: 'Capstone Project',
-      organization: 'University of Rwanda',
+      date: '2024',
+      title: 'Backend Collaborator',
+      organization: 'Career Compass Project',
       description: [
-        'Designed Blockchain-Powered Agricultural Supply Chain with Django REST and Vyper smart contracts',
-        'Implemented produce tracking with ownership transfers and status updates',
-        'Developed comprehensive testing and API/contract documentation'
+        'Built a RESTful API with a focus on data validation and error handling',
+        'Collaborated on code reviews to ensure strict adherence to style guides and best practices',
+        'Integrated Docker to standardize the testing environment across the development team'
       ],
-      type: 'education' as const,
+      type: 'work' as const,
     },
     {
-      date: '10/2025',
-      title: 'BSc, Computer & Software Engineering',
+      date: 'Oct 2025',
+      title: 'BSc in Computer & Software Engineering',
       organization: 'University of Rwanda',
       description: [
         'Bachelor\'s degree in Computer & Software Engineering',
-        'Specialized in software architecture and distributed systems',
-        'Graduated with distinction in systems design and implementation'
+        'Awarded Government Scholarship for Academic Excellence',
+        'Graduated October 2025'
       ],
       type: 'education' as const,
     },
   ] as Experience[],
 
   achievements: [
-    'Built order/inventory backends with idempotent REST APIs, async workflows (Celery), and DB tuning',
-    'Shipped ops dashboards (React/TS) with role-based access, audit logs, and error boundaries', 
-    'Improved developer workflows: cut setup time from ~1 day to <30 minutes',
-    'Solid foundation in distributed systems, Linux/networking (CCNA), and Kubernetes (LFS250)'
+    'Over 4 years of hands-on experience in backend development, system architecture, and rigorous code testing',
+    'Specialized in designing scalable solutions with comprehensive test suites using PyTest and Unittest',
+    'Proven ability to debug complex issues in real-world repositories and provide detailed technical documentation',
+    'Strong foundation in distributed systems, Linux/networking (CCNA), and Kubernetes (LFS250)'
   ],
 
   services: [
     {
       title: "Backend Development",
-      description: "Robust APIs and server-side applications using Python, Django/DRF, and FastAPI with PostgreSQL/MySQL databases.",
-      features: ["REST/GraphQL APIs", "Database Design", "Authentication & Security", "Performance Optimization"],
+      description: "Robust APIs and server-side applications using Python, Django/DRF with PostgreSQL/MySQL databases. Focus on scalability, testing, and performance optimization.",
+      features: ["REST APIs", "Database Design", "Authentication & Security", "Performance Optimization"],
     },
     {
-      title: "Frontend Development", 
-      description: "Modern, responsive web applications using React, TypeScript, and Tailwind CSS with seamless user experiences.",
-      features: ["React/TypeScript", "Responsive Design", "Modern UI/UX", "Progressive Web Apps"],
-    },
-    {
-      title: "Blockchain & Web3",
-      description: "Decentralized applications, smart contracts, and blockchain integration for next-generation solutions.",
-      features: ["Smart Contracts", "DeFi Applications", "NFT Platforms", "Web3 Integration"],
+      title: "Testing & Quality Assurance",
+      description: "Comprehensive testing strategies using PyTest and Unittest. Writing test suites, debugging complex issues, and ensuring code reliability.",
+      features: ["Unit Testing", "Integration Testing", "Test-Driven Development", "Code Review"],
     },
     {
       title: "Cloud & DevOps",
-      description: "Scalable cloud infrastructure, containerization with Docker/Kubernetes, and automated CI/CD pipelines.",
-      features: ["Docker/Kubernetes", "CI/CD Pipelines", "Cloud Deployment", "Infrastructure as Code"],
+      description: "Scalable cloud infrastructure, containerization with Docker/Kubernetes, and automated CI/CD pipelines for reliable deployments.",
+      features: ["Docker/Kubernetes", "CI/CD Pipelines", "Linux Administration", "Infrastructure as Code"],
     },
     {
-      title: "Data & AI Solutions",
-      description: "Intelligent applications with AI/ML integration, data processing, and advanced analytics capabilities.",
-      features: ["AI/ML Integration", "Data Processing", "Intelligent Automation", "Analytics Dashboards"],
+      title: "Technical Documentation",
+      description: "Clear and comprehensive technical documentation, API documentation, and detailed technical guides for development teams.",
+      features: ["API Documentation", "Technical Writing", "Code Documentation", "System Architecture Docs"],
     }
   ]
 };
