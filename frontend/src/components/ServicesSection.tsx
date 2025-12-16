@@ -7,10 +7,9 @@ import { portfolioData } from '@/data/portfolio'
 
 const serviceIcons = {
   "Backend Development": <Server className="w-6 h-6" />,
-  "Frontend Development": <Globe className="w-6 h-6" />,
-  "Blockchain & Web3": <Blocks className="w-6 h-6" />,
+  "Testing & Quality Assurance": <Code className="w-6 h-6" />,
   "Cloud & DevOps": <Cloud className="w-6 h-6" />,
-  "Data & AI Solutions": <Brain className="w-6 h-6" />
+  "Technical Documentation": <Globe className="w-6 h-6" />
 }
 
 export function ServicesSection() {

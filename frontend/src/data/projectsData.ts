@@ -91,45 +91,31 @@ export const fallbackSkills = [
   { id: 1, name: "Python", category: "Backend Development", proficiency: 95 },
   { id: 2, name: "Django", category: "Backend Development", proficiency: 90 },
   { id: 3, name: "Django REST Framework", category: "Backend Development", proficiency: 90 },
-  { id: 4, name: "FastAPI", category: "Backend Development", proficiency: 70 },
-  { id: 5, name: "REST/Webhooks", category: "Backend Development", proficiency: 85 },
-  { id: 6, name: "Celery", category: "Backend Development", proficiency: 80 },
-  { id: 7, name: "PyTest/UnitTest", category: "Backend Development", proficiency: 85 },
+  { id: 4, name: "SQL", category: "Backend Development", proficiency: 85 },
+  { id: 5, name: "REST APIs", category: "Backend Development", proficiency: 85 },
+  { id: 6, name: "Bash", category: "Backend Development", proficiency: 80 },
   
-  // Frontend Development
-  { id: 8, name: "React", category: "Frontend Development", proficiency: 85 },
-  { id: 9, name: "TypeScript", category: "Frontend Development", proficiency: 75 },
-  { id: 10, name: "Tailwind CSS", category: "Frontend Development", proficiency: 90 },
-  { id: 11, name: "React Query", category: "Frontend Development", proficiency: 70 },
-  { id: 12, name: "JavaScript", category: "Frontend Development", proficiency: 85 },
+  // Testing & Quality
+  { id: 7, name: "PyTest", category: "Testing & Quality", proficiency: 90 },
+  { id: 8, name: "Unittest", category: "Testing & Quality", proficiency: 90 },
+  { id: 9, name: "Integration Testing", category: "Testing & Quality", proficiency: 85 },
+  { id: 10, name: "Debugging", category: "Testing & Quality", proficiency: 90 },
+  { id: 11, name: "TDD", category: "Testing & Quality", proficiency: 85 },
+  { id: 12, name: "Code Review", category: "Testing & Quality", proficiency: 85 },
   
-  // Data & Databases
-  { id: 13, name: "PostgreSQL", category: "Database", proficiency: 85 },
-  { id: 14, name: "MySQL", category: "Database", proficiency: 80 },
-  { id: 15, name: "Schema Design", category: "Database", proficiency: 85 },
-  { id: 16, name: "Indexing", category: "Database", proficiency: 80 },
-  { id: 17, name: "Migrations", category: "Database", proficiency: 85 },
+  // Database & Storage
+  { id: 13, name: "PostgreSQL", category: "Database & Storage", proficiency: 85 },
+  { id: 14, name: "MySQL", category: "Database & Storage", proficiency: 80 },
+  { id: 15, name: "Database Optimization", category: "Database & Storage", proficiency: 80 },
   
-  // DevOps & Infrastructure
-  { id: 18, name: "Docker", category: "Cloud & DevOps", proficiency: 85 },
-  { id: 19, name: "Kubernetes", category: "Cloud & DevOps", proficiency: 75 },
-  { id: 20, name: "GitHub Actions CI/CD", category: "Cloud & DevOps", proficiency: 80 },
-  { id: 21, name: "Linux", category: "Cloud & DevOps", proficiency: 85 },
-  { id: 22, name: "Nginx", category: "Cloud & DevOps", proficiency: 75 },
-  { id: 23, name: "Railway/Heroku/Netlify", category: "Cloud & DevOps", proficiency: 80 },
+  // DevOps & Cloud
+  { id: 16, name: "Docker", category: "DevOps & Cloud", proficiency: 85 },
+  { id: 17, name: "Kubernetes", category: "DevOps & Cloud", proficiency: 70 },
+  { id: 18, name: "CI/CD Pipelines", category: "DevOps & Cloud", proficiency: 80 },
+  { id: 19, name: "Linux Administration", category: "DevOps & Cloud", proficiency: 85 },
+  { id: 20, name: "Git/GitHub", category: "DevOps & Cloud", proficiency: 90 },
   
-  // Patterns & Architecture
-  { id: 24, name: "Idempotency Patterns", category: "Infrastructure", proficiency: 85 },
-  { id: 25, name: "Retries/Backoff", category: "Infrastructure", proficiency: 80 },
-  { id: 26, name: "Pagination", category: "Infrastructure", proficiency: 85 },
-  { id: 27, name: "RBAC", category: "Infrastructure", proficiency: 80 },
-  { id: 28, name: "Audit Logging", category: "Infrastructure", proficiency: 80 },
-  { id: 29, name: "Background Jobs", category: "Infrastructure", proficiency: 85 },
-  { id: 30, name: "Caching", category: "Infrastructure", proficiency: 80 },
-  
-  // Collaboration & Tools
-  { id: 31, name: "Git/GitHub", category: "Collaboration", proficiency: 90 },
-  { id: 32, name: "Agile/Scrum", category: "Collaboration", proficiency: 80 },
-  { id: 33, name: "ADRs/Runbooks", category: "Collaboration", proficiency: 85 },
-  { id: 34, name: "Technical Documentation", category: "Collaboration", proficiency: 90 }
+  // Documentation
+  { id: 21, name: "Technical Writing", category: "Documentation", proficiency: 90 },
+  { id: 22, name: "API Documentation", category: "Documentation", proficiency: 85 }
 ];
