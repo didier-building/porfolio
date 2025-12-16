@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Server, Globe, Blocks, Cloud, Brain, Code } from 'lucide-react'
+import { Server, Globe, Cloud, Code } from 'lucide-react'
 import { SectionTitle } from './SectionTitle'
 import { portfolioData } from '@/data/portfolio'
 
