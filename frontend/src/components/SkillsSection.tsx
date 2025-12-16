@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { SectionTitle } from './SectionTitle'
 import { TechChip } from './TechChip'
+import { fallbackSkills } from '@/data/projectsData'
 
 interface Skill {
   id: number;
@@ -19,15 +20,20 @@ export function SkillsSection() {
   const [skills, setSkills] = useState<Skill[]>([])
   const [loading, setLoading] = useState(true)
 
-  // Fetch skills from backend
+  // Fetch skills from backend with fallback
   useEffect(() => {
     async function fetchSkills() {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/skills/')
+        if (!response.ok) {
+          throw new Error('API not available')
+        }
         const data = await response.json()
         setSkills(data.results || [])
       } catch (error) {
         console.error('Failed to fetch skills:', error)
+        // Use fallback data when API is not available
+        setSkills(fallbackSkills)
       } finally {
         setLoading(false)
       }
