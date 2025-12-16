@@ -180,9 +180,9 @@ class SkillAPITest(BaseAPITest):
     def test_create_skill_as_admin(self):
         self.authenticate_as_admin()
         data = {
-            'name': 'React',
-            'proficiency': 80,
-            'category': 'Frontend'
+            'name': 'PyTest',
+            'proficiency': 90,
+            'category': 'Testing & Quality'
         }
         response = self.client.post(
             reverse('skill-list'),
