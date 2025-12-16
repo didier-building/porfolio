@@ -24,14 +24,7 @@ export function ProjectsSection() {
       } catch (error) {
         console.error('Failed to fetch projects:', error)
         // Use fallback data when API is not available
-        // Convert fallbackProjects to match Project interface
-        const formattedProjects: Project[] = fallbackProjects.map(p => ({
-          ...p,
-          image_url: p.image,
-          github_link: p.links.github,
-          live_demo: p.links.live
-        }))
-        setProjects(formattedProjects)
+        setProjects(fallbackProjects)
       } finally {
         setLoading(false)
       }

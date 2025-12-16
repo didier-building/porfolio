@@ -104,25 +104,25 @@ export const fallbackSkills = [
   { id: 12, name: "Code Review", category: "Testing & Quality", proficiency: 85 },
   
   // Blockchain & Web3
-  { id: 23, name: "Solidity", category: "Blockchain & Web3", proficiency: 75 },
-  { id: 24, name: "Vyper", category: "Blockchain & Web3", proficiency: 70 },
-  { id: 25, name: "Smart Contracts", category: "Blockchain & Web3", proficiency: 75 },
-  { id: 26, name: "Web3.js", category: "Blockchain & Web3", proficiency: 70 },
-  { id: 27, name: "Blockchain Fundamentals", category: "Blockchain & Web3", proficiency: 80 },
+  { id: 13, name: "Solidity", category: "Blockchain & Web3", proficiency: 75 },
+  { id: 14, name: "Vyper", category: "Blockchain & Web3", proficiency: 70 },
+  { id: 15, name: "Smart Contracts", category: "Blockchain & Web3", proficiency: 75 },
+  { id: 16, name: "Web3.js", category: "Blockchain & Web3", proficiency: 70 },
+  { id: 17, name: "Blockchain Fundamentals", category: "Blockchain & Web3", proficiency: 80 },
   
   // Database & Storage
-  { id: 13, name: "PostgreSQL", category: "Database & Storage", proficiency: 85 },
-  { id: 14, name: "MySQL", category: "Database & Storage", proficiency: 80 },
-  { id: 15, name: "Database Optimization", category: "Database & Storage", proficiency: 80 },
+  { id: 18, name: "PostgreSQL", category: "Database & Storage", proficiency: 85 },
+  { id: 19, name: "MySQL", category: "Database & Storage", proficiency: 80 },
+  { id: 20, name: "Database Optimization", category: "Database & Storage", proficiency: 80 },
   
   // DevOps & Cloud
-  { id: 16, name: "Docker", category: "DevOps & Cloud", proficiency: 85 },
-  { id: 17, name: "Kubernetes", category: "DevOps & Cloud", proficiency: 70 },
-  { id: 18, name: "CI/CD Pipelines", category: "DevOps & Cloud", proficiency: 80 },
-  { id: 19, name: "Linux Administration", category: "DevOps & Cloud", proficiency: 85 },
-  { id: 20, name: "Git/GitHub", category: "DevOps & Cloud", proficiency: 90 },
+  { id: 21, name: "Docker", category: "DevOps & Cloud", proficiency: 85 },
+  { id: 22, name: "Kubernetes", category: "DevOps & Cloud", proficiency: 70 },
+  { id: 23, name: "CI/CD Pipelines", category: "DevOps & Cloud", proficiency: 80 },
+  { id: 24, name: "Linux Administration", category: "DevOps & Cloud", proficiency: 85 },
+  { id: 25, name: "Git/GitHub", category: "DevOps & Cloud", proficiency: 90 },
   
   // Documentation
-  { id: 21, name: "Technical Writing", category: "Documentation", proficiency: 90 },
-  { id: 22, name: "API Documentation", category: "Documentation", proficiency: 85 }
+  { id: 26, name: "Technical Writing", category: "Documentation", proficiency: 90 },
+  { id: 27, name: "API Documentation", category: "Documentation", proficiency: 85 }
 ];
