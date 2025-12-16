@@ -4,22 +4,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { SectionTitle } from './SectionTitle'
 import { CaseCard } from './CaseCard'
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  image_url: string;
-  image: string;
-  technologies: string[];
-  category: 'web' | 'cloud' | 'blockchain';
-  github_link: string | null;
-  live_demo: string | null;
-  links: {
-    github: string | null;
-    live: string | null;
-  };
-}
+import { fallbackProjects } from '@/data/projectsData'
+import { type Project } from '@/data/portfolio'
 
 export function ProjectsSection() {
   const searchParams = useSearchParams()
@@ -30,10 +16,22 @@ export function ProjectsSection() {
     async function fetchProjects() {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/projects/')
+        if (!response.ok) {
+          throw new Error('API not available')
+        }
         const data = await response.json()
         setProjects(data.results || [])
       } catch (error) {
         console.error('Failed to fetch projects:', error)
+        // Use fallback data when API is not available
+        // Convert fallbackProjects to match Project interface
+        const formattedProjects: Project[] = fallbackProjects.map(p => ({
+          ...p,
+          image_url: p.image,
+          github_link: p.links.github,
+          live_demo: p.links.live
+        }))
+        setProjects(formattedProjects)
       } finally {
         setLoading(false)
       }

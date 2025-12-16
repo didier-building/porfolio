@@ -38,8 +38,8 @@ export interface Service {
 export const portfolioData = {
   personal: {
     name: "Didier Imanirahari",
-    role: "Python Engineer | Backend & Testing Specialist",
-    summary: "Building Scalable Backend Solutions with Rigorous Testing",
+    role: "Junior Backend Developer & Blockchain Enthusiast",
+    summary: "Building Scalable Backend Solutions with Blockchain Technology",
     email: "didier53053@gmail.com",
     location: "Kigali, Rwanda",
     cv: "/cv/Didier_Imanirahari_CV.pdf",
@@ -175,6 +175,13 @@ export const portfolioData = {
     { id: 11, name: "TDD", category: "Testing & Quality", proficiency: 85 },
     { id: 12, name: "Code Review", category: "Testing & Quality", proficiency: 85 },
     
+    // Blockchain & Web3
+    { id: 23, name: "Solidity", category: "Blockchain & Web3", proficiency: 75 },
+    { id: 24, name: "Vyper", category: "Blockchain & Web3", proficiency: 70 },
+    { id: 25, name: "Smart Contracts", category: "Blockchain & Web3", proficiency: 75 },
+    { id: 26, name: "Web3.js", category: "Blockchain & Web3", proficiency: 70 },
+    { id: 27, name: "Blockchain Fundamentals", category: "Blockchain & Web3", proficiency: 80 },
+    
     // Database & Storage
     { id: 13, name: "PostgreSQL", category: "Database & Storage", proficiency: 85 },
     { id: 14, name: "MySQL", category: "Database & Storage", proficiency: 80 },
@@ -239,6 +246,17 @@ export const portfolioData = {
       type: 'work' as const,
     },
     {
+      date: '2024',
+      title: 'Blockchain Basics Certificate',
+      organization: 'Cyfrin Updraft',
+      description: [
+        'Completed comprehensive blockchain fundamentals course',
+        'Learned smart contract development, blockchain architecture, and Web3 technologies',
+        'Gained hands-on experience with Solidity and blockchain development tools'
+      ],
+      type: 'education' as const,
+    },
+    {
       date: 'Oct 2025',
       title: 'BSc in Computer & Software Engineering',
       organization: 'University of Rwanda',
@@ -253,6 +271,7 @@ export const portfolioData = {
 
   achievements: [
     'Over 4 years of hands-on experience in backend development, system architecture, and rigorous code testing',
+    'Blockchain enthusiast with Cyfrin Block Basics certification, specializing in smart contract development',
     'Specialized in designing scalable solutions with comprehensive test suites using PyTest and Unittest',
     'Proven ability to debug complex issues in real-world repositories and provide detailed technical documentation',
     'Strong foundation in distributed systems, Linux/networking (CCNA), and Kubernetes (LFS250)'
@@ -263,6 +282,11 @@ export const portfolioData = {
       title: "Backend Development",
       description: "Robust APIs and server-side applications using Python, Django/DRF with PostgreSQL/MySQL databases. Focus on scalability, testing, and performance optimization.",
       features: ["REST APIs", "Database Design", "Authentication & Security", "Performance Optimization"],
+    },
+    {
+      title: "Blockchain Development",
+      description: "Smart contract development and blockchain integration using Solidity and Vyper. Building decentralized applications with Web3 technologies and blockchain fundamentals.",
+      features: ["Smart Contracts", "Solidity/Vyper", "Web3 Integration", "Blockchain Architecture"],
     },
     {
       title: "Testing & Quality Assurance",

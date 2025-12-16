@@ -103,6 +103,13 @@ export const fallbackSkills = [
   { id: 11, name: "TDD", category: "Testing & Quality", proficiency: 85 },
   { id: 12, name: "Code Review", category: "Testing & Quality", proficiency: 85 },
   
+  // Blockchain & Web3
+  { id: 23, name: "Solidity", category: "Blockchain & Web3", proficiency: 75 },
+  { id: 24, name: "Vyper", category: "Blockchain & Web3", proficiency: 70 },
+  { id: 25, name: "Smart Contracts", category: "Blockchain & Web3", proficiency: 75 },
+  { id: 26, name: "Web3.js", category: "Blockchain & Web3", proficiency: 70 },
+  { id: 27, name: "Blockchain Fundamentals", category: "Blockchain & Web3", proficiency: 80 },
+  
   // Database & Storage
   { id: 13, name: "PostgreSQL", category: "Database & Storage", proficiency: 85 },
   { id: 14, name: "MySQL", category: "Database & Storage", proficiency: 80 },
